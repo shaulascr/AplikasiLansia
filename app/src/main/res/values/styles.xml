@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomBlueButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="cornerRadius">@dimen/custom_btn_corner</item>
+        <item name="backgroundTint">@color/blue2</item>
+        <item name="android:textAllCaps">false</item>
+<!--        <item name="android:textAppearance">?attr/textAppearanceButton</item>-->
+<!--        <item name="android:paddingLeft">@dimen/mtrl_btn_padding_left</item>-->
+<!--        <item name="android:paddingRight">@dimen/mtrl_btn_padding_right</item>-->
+<!--        <item name="android:paddingTop">@dimen/mtrl_btn_padding_top</item>-->
+<!--        <item name="android:paddingBottom">@dimen/mtrl_btn_padding_bottom</item>-->
+    </style>
+
+    <dimen name="custom_btn_corner">13dp</dimen>
+</resources>
