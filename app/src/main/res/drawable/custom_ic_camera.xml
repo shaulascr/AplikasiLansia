@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- background_circle.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@color/blue1" />
+    <corners android:radius="100dp" /> <!-- Mengatur radius sudut sesuai dengan diameter gambar -->
+</shape>

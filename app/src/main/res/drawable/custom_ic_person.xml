@@ -10,7 +10,8 @@
             <corners android:radius="13dp"/>
         </shape>
     </item>
-    <item android:drawable="@drawable/ic_gender" android:gravity="center"
-        android:width="20dp"
-        android:height="26dp"/>
+    <item android:drawable="@drawable/ic_person" android:gravity="center"
+        android:height="19dp"
+        android:width="19dp"
+        />
 </layer-list>
