@@ -8,6 +8,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
     private ImageView viewPasswordBtn;
     private TextView birthdateTextView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +42,15 @@ public class RegisterActivity extends AppCompatActivity {
         setPasswordToggle();
         loginFromRegister();
         setupDatePicker(birthdateTextView);
+
+        Button registerBtn = findViewById(R.id.btn_regis);
+        registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(RegisterActivity.this, MainActivity.class);
+                startActivity(intent1);
+            }
+        });
     }
 
     private void setPasswordToggle () {

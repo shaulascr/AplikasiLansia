@@ -218,6 +218,7 @@
             </RelativeLayout>
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_regis"
                 style="@style/CustomBlueButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -256,6 +257,7 @@
 
 
             <com.google.android.material.button.MaterialButton
+
                 style="@style/GoogleRegButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

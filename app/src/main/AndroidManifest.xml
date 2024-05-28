@@ -16,6 +16,10 @@
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AplikasiLansia"/>
+        <activity
             android:name=".LoginActivity"
             android:exported="false"
             android:theme="@style/Theme.AplikasiLansia" />
@@ -28,11 +32,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="false"
-            android:label="@string/title_activity_welcome"
-            android:theme="@style/Theme.AplikasiLansia" />
+<!--        <activity-->
+<!--            android:name=".MainActivity"-->
+<!--            android:exported="false"-->
+<!--            android:label="@string/title_activity_welcome"-->
+<!--            android:theme="@style/Theme.AplikasiLansia" />-->
     </application>
 
 </manifest>

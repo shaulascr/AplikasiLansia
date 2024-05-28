@@ -61,6 +61,10 @@
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="previous">Previous</string>
+    <string name="title_home">Beranda</string>
+    <string name="title_tes_depresi">Tingkat Depresi</string>
+    <string name="title_news"><![CDATA[Berita & Tips]]></string>
+    <string name="title_profile">Profil</string>
 
 
     <string-array name="gender_array">

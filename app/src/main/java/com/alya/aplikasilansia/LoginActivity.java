@@ -1,8 +1,10 @@
 package com.alya.aplikasilansia;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -17,6 +19,7 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     private EditText passwordInput;
     private ImageView viewPasswordBtn;
+    private Button loginBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,15 @@ public class LoginActivity extends AppCompatActivity {
 
 //        setSupportActionBar(binding.toolbar);
         setPasswordToggle();
+
+        loginBtn = findViewById(R.id.btn_login);
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent1);
+            }
+        });
     }
 
     private void setPasswordToggle () {
