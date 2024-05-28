@@ -9,19 +9,16 @@
     android:background="@color/blue1"
     android:gravity="center"
     >
-
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardCornerRadius="25dp">
-
         <LinearLayout
             android:layout_width="350dp"
             android:layout_height="500dp"
             android:paddingVertical="40dp"
             android:paddingHorizontal="18dp"
             android:orientation="vertical">
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -29,7 +26,6 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:textAlignment="center"/>
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -38,7 +34,6 @@
                 android:textAlignment="center"
                 android:paddingHorizontal="5dp"
                 android:layout_marginBottom="20dp"/>
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -46,7 +41,6 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="5dp"/>
-
             <EditText
                 android:id="@+id/email_input"
                 android:layout_width="match_parent"
@@ -58,7 +52,6 @@
                 android:hint="Email anda"
                 android:inputType="textEmailAddress"
                 android:minHeight="48dp" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -66,13 +59,11 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="5dp"/>
-
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 >
-
                 <EditText
                     android:id="@+id/password_login"
                     android:layout_width="match_parent"
@@ -83,7 +74,6 @@
                     android:hint="Kata sandi anda"
                     android:inputType="textPassword"
                     android:minHeight="48dp" />
-
                 <ImageView
                     android:id="@+id/view_password_btn"
                     android:layout_width="wrap_content"
@@ -92,9 +82,7 @@
                     android:layout_centerVertical="true"
                     android:background="@android:color/transparent"
                     android:src="@drawable/view_password" />
-
             </RelativeLayout>
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -114,7 +102,6 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 style="@style/CustomBlueButton" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -122,9 +109,6 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:textColor="@color/blue2"/>
-
         </LinearLayout>
-
     </androidx.cardview.widget.CardView>
-
 </LinearLayout>

@@ -24,7 +24,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -51,7 +50,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
     private void togglePasswordVisibility(EditText editText, ImageView imageView) {
         if (editText.getInputType() == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
             editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -63,5 +61,4 @@ public class LoginActivity extends AppCompatActivity {
         // Memindahkan kursor ke akhir teks
         editText.setSelection(editText.getText().length());
     }
-
 }
