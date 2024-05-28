@@ -25,7 +25,6 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class RegisterActivity extends AppCompatActivity {
-
     private android.text.InputType InputType;
     private EditText passwordInput;
     private ImageView viewPasswordBtn;
@@ -36,9 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
         birthdateTextView = findViewById(R.id.birthdate_textview);
-
         setPasswordToggle();
         loginFromRegister();
         setupDatePicker(birthdateTextView);
@@ -63,20 +60,15 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
     private void loginFromRegister () {
         TextView loginFromRegTv = findViewById(R.id.masukRegTv);
-
         String text = "Sudah punya akun? Masuk";
         SpannableString spannableString = new SpannableString(text);
-
         int blueColor = ContextCompat.getColor(this, R.color.blue2);
         ForegroundColorSpan blueColorSpan = new ForegroundColorSpan(blueColor);
         spannableString.setSpan(blueColorSpan, text.indexOf("Masuk"), text.indexOf("Masuk") + "Masuk".length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
         // Make the word "Masuk" clickable
         ClickableSpan clickableSpan = new ClickableSpan() {
-
             @Override
             public void onClick(@NonNull View widget) {
                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
@@ -84,11 +76,9 @@ public class RegisterActivity extends AppCompatActivity {
             }
         };
         spannableString.setSpan(clickableSpan, text.indexOf("Masuk"), text.indexOf("Masuk") + "Masuk".length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
         loginFromRegTv.setText(spannableString);
         loginFromRegTv.setMovementMethod(LinkMovementMethod.getInstance());
     }
-
     private void togglePasswordVisibility(EditText editText, ImageView imageView) {
         if (editText.getInputType() == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
             editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -100,7 +90,6 @@ public class RegisterActivity extends AppCompatActivity {
         // Memindahkan kursor ke akhir teks
         editText.setSelection(editText.getText().length());
     }
-
     private void setupDatePicker(TextView birthdateTextView) {
         birthdateTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,26 +98,21 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
     private void showDatePickerDialog() {
         Calendar calendar = Calendar.getInstance();
-
         // Create a date picker with constraints
         CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder();
         constraintsBuilder.setOpenAt(calendar.getTimeInMillis());
-
         MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Select your birthdate")
                 .setCalendarConstraints(constraintsBuilder.build())
                 .build();
-
         datePicker.addOnPositiveButtonClickListener(selection -> {
             // Format the selected date and set it to the TextView
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             String formattedDate = format.format(selection);
             birthdateTextView.setText(formattedDate);
         });
-
         datePicker.show(getSupportFragmentManager(), "DATE_PICKER");
     }
 }
