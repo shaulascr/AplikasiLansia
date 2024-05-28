@@ -5,247 +5,294 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue1"
-    android:gravity="center"
     tools:context=".RegisterActivity">
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginVertical="60dp"
-        app:cardCornerRadius="25dp">
-        <LinearLayout
-            android:layout_width="350dp"
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingVertical="30dp"
+        android:gravity="center_horizontal">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Selamat Datang"
-                android:textAlignment="center"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:paddingHorizontal="5dp"
-                android:text="Anda harus membuat akun untuk masuk"
-                android:textAlignment="center"
-                android:textSize="16sp" />
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                >
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/reg_profile_image"
-                    android:layout_width="85dp"
-                    android:layout_height="85dp"
-                    android:src="@drawable/img"
-                    />
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_alignBottom="@id/reg_profile_image"
-                    android:layout_alignEnd="@id/reg_profile_image"
-                    android:src="@drawable/ic_camera"
-                    android:background="@drawable/custom_ic_camera"
-                    android:padding="8dp"
-                    android:scaleType="fitCenter"
-                    android:adjustViewBounds="true"/>
-            </RelativeLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="Nama"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-            <EditText
-                android:id="@+id/name_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/custom_edit_text"
-                android:drawableLeft="@drawable/custom_ic_person"
-                android:drawablePadding="10dp"
-                android:hint="Nama anda"
-                android:inputType="text"
-                android:minHeight="48dp" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="Email"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-            <EditText
-                android:id="@+id/email_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/custom_edit_text"
-                android:drawableLeft="@drawable/custom_ic_email"
-                android:drawablePadding="10dp"
-                android:hint="Email anda"
-                android:inputType="textPassword"
-                android:minHeight="48dp" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="Jenis Kelamin"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/custom_edit_text">
-                <ImageView
-                    android:id="@+id/spinner_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/custom_ic_gender"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:padding="0dp"/>
-                <Spinner
-                    android:id="@+id/spinner_gender"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="3dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_toEndOf="@id/spinner_icon"
-                    android:minHeight="48dp"
-                    android:spinnerMode="dropdown"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:entries="@array/gender_array"/>
-            </RelativeLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="Tanggal Lahir"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/custom_edit_text">
-                <ImageView
-                    android:id="@+id/ic_date_reg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/custom_ic_date"/>
-                <TextView
-                    android:id="@+id/birthdate_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_toEndOf="@id/ic_date_reg"
-                    android:layout_marginStart="3dp"
-                    android:layout_centerVertical="true"
-                    android:hint="Pilih Tanggal Lahir"
-                    android:textSize="18dp"
-                    android:padding="10dp"
-                    android:textColor="@android:color/black" />
-            </RelativeLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="Kata Sandi"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                >
-                <EditText
-                    android:id="@+id/regPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/custom_edit_text"
-                    android:drawableLeft="@drawable/custom_ic_password"
-                    android:drawablePadding="10dp"
-                    android:hint="Kata sandi anda"
-                    android:inputType="textPassword"
-                    android:minHeight="48dp" />
-                <ImageView
-                    android:id="@+id/view_password_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/view_password" />
-            </RelativeLayout>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_regis"
-                style="@style/CustomBlueButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:paddingVertical="8dp"
-                android:text="Buat Akun"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+            android:layout_gravity="center_horizontal"
+            app:cardCornerRadius="25dp">
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1"
-                    android:background="@color/grey" />
+                android:orientation="vertical"
+                android:padding="20dp">
                 <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Selamat Datang"
+                    android:textAlignment="center"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:paddingHorizontal="5dp"
+                    android:text="Anda harus membuat akun untuk masuk"
+                    android:textAlignment="center"
+                    android:textSize="16sp" />
+
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Atau"
+                    android:layout_gravity="center">
+
+                    <RelativeLayout
+                        android:id="@+id/layoutPhotoReg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginVertical="5dp">
+
+                        <View
+                            android:id="@+id/stroke_view"
+                            android:layout_width="95dp"
+                            android:layout_height="95dp"
+                            android:background="@drawable/outline_circle"
+                            android:layout_centerInParent="true" />
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/profile_image"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/img" />
+
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_alignBottom="@id/layoutPhotoReg"
+                        android:layout_alignEnd="@id/layoutPhotoReg"
+                        android:src="@drawable/ic_camera"
+                        android:background="@drawable/custom_ic_camera"
+                        android:padding="8dp"
+                        android:scaleType="fitCenter"
+                        android:adjustViewBounds="true"/>
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Nama"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/name_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/custom_edit_text"
+                    android:drawableLeft="@drawable/custom_ic_person"
+                    android:drawablePadding="10dp"
+                    android:hint="Nama anda"
+                    android:inputType="text"
+                    android:minHeight="48dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Email"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/email_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/custom_edit_text"
+                    android:drawableStart="@drawable/custom_ic_email"
+                    android:drawablePadding="10dp"
+                    android:hint="Email anda"
+                    android:inputType="textEmailAddress"
+                    android:minHeight="48dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Jenis Kelamin"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/custom_edit_text">
+
+                    <ImageView
+                        android:id="@+id/spinner_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/custom_ic_gender"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:padding="0dp"/>
+
+                    <Spinner
+                        android:id="@+id/spinner_gender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_toEndOf="@id/spinner_icon"
+                        android:minHeight="48dp"
+                        android:spinnerMode="dropdown"
+                        tools:ignore="TouchTargetSizeCheck"
+                        android:entries="@array/gender_array"/>
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Tanggal Lahir"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/custom_edit_text">
+
+                    <ImageView
+                        android:id="@+id/ic_date_reg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/custom_ic_date"/>
+
+                    <TextView
+                        android:id="@+id/birthdate_textview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toEndOf="@id/ic_date_reg"
+                        android:layout_marginStart="3dp"
+                        android:layout_centerVertical="true"
+                        android:hint="Pilih Tanggal Lahir"
+                        android:textSize="18dp"
+                        android:padding="10dp"
+                        android:textColor="@android:color/black" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Kata Sandi"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp" >
+
+                    <EditText
+                        android:id="@+id/regPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/custom_edit_text"
+                        android:drawableLeft="@drawable/custom_ic_password"
+                        android:drawablePadding="10dp"
+                        android:hint="Kata sandi anda"
+                        android:inputType="textPassword"
+                        android:minHeight="48dp" />
+
+                    <ImageView
+                        android:id="@+id/view_password_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/view_password" />
+
+                </RelativeLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_regis"
+                    style="@style/CustomBlueButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingVertical="8dp"
+                    android:text="Buat Akun"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/grey" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Atau"
+                        android:layout_marginVertical="6dp"
+                        android:layout_marginHorizontal="18dp"
+                        android:gravity="center" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/grey" />
+
+                </LinearLayout>
+
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/GoogleRegButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="8dp"
+                    android:text="Buat Akun dengan Google"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:icon="@drawable/logo_google"
+                    app:iconTint="@null"
+                    app:iconTintMode="src_in"
+                    app:iconPadding="9dp"
+                    app:iconGravity="textStart"/>
+
+                <TextView
+                    android:id="@+id/masukRegTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginVertical="6dp"
-                    android:layout_marginHorizontal="18dp"
-                    android:gravity="center" />
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1"
-                    android:background="@color/grey" />
+                    android:gravity="center"
+                    android:text="Sudah punya akun? Masuk" />
+
             </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
+    </LinearLayout>
 
-            <com.google.android.material.button.MaterialButton
-
-                style="@style/GoogleRegButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="8dp"
-                android:text="Buat Akun dengan Google"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:icon="@drawable/logo_google"
-                app:iconTint="@null"
-                app:iconTintMode="src_in"
-                app:iconPadding="9dp"
-                app:iconGravity="textStart"/>
-            <TextView
-                android:id="@+id/masukRegTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="6dp"
-                android:gravity="center"
-                android:text="Sudah punya akun? Masuk" />
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
 </ScrollView>
