@@ -7,9 +7,10 @@
     android:layout_gravity="center">
 
     <ImageView
+        android:layout_marginTop="25dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/onboard1"/>
+        android:layout_height="485dp"
+        android:src="@drawable/onboard_vector1" />
 
     <TextView
         android:layout_width="match_parent"
@@ -28,6 +29,10 @@
         android:textSize="18sp"
         android:textAlignment="center"
         android:paddingHorizontal="35dp"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="100dp"/>
 
 
 </LinearLayout>

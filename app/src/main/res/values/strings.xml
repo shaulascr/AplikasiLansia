@@ -42,8 +42,8 @@
     </string>
 
     <string name="title_activity_welcome">Home Screen</string>
-    <string name="next">NEXT</string>
-    <string name="skip">SKIP</string>
+    <string name="next">Lanjut</string>
+    <string name="skip">Kembali</string>
     <string name="start">GOT IT</string>
 
     <string name="slide_1_title">Screen 1</string>

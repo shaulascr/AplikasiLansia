@@ -6,9 +6,10 @@
     android:background="@color/white">
 
     <ImageView
+        android:layout_marginTop="25dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/onboard1"/>
+        android:layout_height="485dp"
+        android:src="@drawable/onboard_vector_2"/>
 
     <TextView
         android:layout_width="match_parent"

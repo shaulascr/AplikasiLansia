@@ -13,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +28,7 @@ public class OnboardingActivity extends AppCompatActivity {
     private TextView[] dots;
     private int[] layouts;
     private Button btnSkip, btnNext;
+    private Space space;
     private com.alya.aplikasilansia.Preferences preferences;
 
     @Override
@@ -51,6 +53,7 @@ public class OnboardingActivity extends AppCompatActivity {
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         btnSkip = (Button) findViewById(R.id.btn_skip);
         btnNext = (Button) findViewById(R.id.btn_next);
+        space = (Space) findViewById(R.id.space_onboard);
 
 
         // layouts of all onboarding sliders
@@ -134,6 +137,7 @@ public class OnboardingActivity extends AppCompatActivity {
                 // last page. make button text to GOT IT
                 btnNext.setText(getString(R.string.start));
                 btnSkip.setVisibility(View.GONE);
+                space.setVisibility(View.GONE);
             } else {
                 // still pages are left
                 btnNext.setText(getString(R.string.next));
