@@ -83,6 +83,9 @@
     <string name="profile_name">Nama Pengguna</string>
     <string name="save">Simpan</string>
     <string name="cancel">Batal</string>
+    <string name="angka_tensi">--/--</string>
+    <string name="menit_tensi">--</string>
+    <string name="cari_pelayanan">Cari Pelayanan Kesehatan di Sekitar Anda</string>
 
     <string-array name="gender_array">
         <item>Laki-laki</item>
