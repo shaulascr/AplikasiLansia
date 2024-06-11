@@ -42,10 +42,26 @@
         <item name="cornerRadius">50dp</item>
         <item name="backgroundTint">@color/white</item>
         <item name="android:textAllCaps">false</item>
-        <item name="android:padding">10dp</item>
         <item name="strokeColor">@color/blue2</item>
         <item name="strokeWidth">2dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
         <item name="android:stateListAnimator">@null</item> <!-- Disable elevation -->
+    </style>
+
+    <style name="WhiteRoundButtonNoOutline" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/blue2</item>
+        <item name="android:textStyle">bold</item>
+        <item name="cornerRadius">50dp</item>
+        <item name="backgroundTint">@color/white</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:paddingLeft">14dp</item>
+        <item name="android:paddingRight">14dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="elevation">4dp</item>
     </style>
 
     <dimen name="custom_btn_corner">13dp</dimen>

@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.alya.aplikasilansia.R;
 
@@ -16,7 +18,7 @@ import com.alya.aplikasilansia.R;
  * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,6 +29,8 @@ public class ProfileFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private Button editProfile;
+    private TextView personalProfile;
+    private TextView healthProfile;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -57,6 +61,7 @@ public class ProfileFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -67,17 +72,43 @@ public class ProfileFragment extends Fragment {
 
         // Find the button
         editProfile = view.findViewById(R.id.btn_editProfile); // Replace with your button's actual ID
+        editProfile.setOnClickListener(this);
+        personalProfile = view.findViewById(R.id.btnPersonalData);
+        personalProfile.setOnClickListener(this);
+        healthProfile = view.findViewById(R.id.btnHealthData);
+        healthProfile.setOnClickListener(this);
 
-        // Set OnClickListener for the button
-        editProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create an intent to start the EditProfileActivity
-                Intent intent = new Intent(getActivity(), EditProfileActivity.class);
-                startActivity(intent);
-            }
-        });
+        personalProfile.setBackgroundResource(R.drawable.text_blue_underlined);
+        healthProfile.setBackgroundResource(R.drawable.text_transparant);
 
+        if (savedInstanceState == null) {
+            replaceFragment(new ProfilePersonalFragment());
+        }
         return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.btn_editProfile) {
+            Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+            startActivity(intent);
+        } else if (v.getId() == R.id.btnPersonalData) {
+            replaceFragment(new ProfilePersonalFragment());
+            personalProfile.setBackgroundResource(R.drawable.text_blue_underlined);
+            healthProfile.setBackgroundResource(R.drawable.text_transparant);
+        } else if (v.getId() == R.id.btnHealthData) {
+            replaceFragment(new ProfileHealthFragment());
+            healthProfile.setBackgroundResource(R.drawable.text_blue_underlined);
+            personalProfile.setBackgroundResource(R.drawable.text_transparant);
+        }
+        // Create an intent to start the EditProfileActivity
+
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.profile_frame, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

@@ -26,75 +26,76 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Selamat Datang"
+                    android:text="@string/welcome_login"
                     android:textAlignment="center"
-                    android:textSize="24sp"
+                    android:layout_marginVertical="15dp"
+                    android:textSize="26sp"
                     android:textStyle="bold" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
                     android:paddingHorizontal="5dp"
-                    android:text="Anda harus membuat akun untuk masuk"
+                    android:text="@string/register_welcome"
                     android:textAlignment="center"
                     android:textSize="16sp" />
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center">
+<!--                <RelativeLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center">-->
 
-                    <RelativeLayout
-                        android:id="@+id/layoutPhotoReg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_marginVertical="5dp">
+<!--                    <RelativeLayout-->
+<!--                        android:id="@+id/layoutPhotoReg"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:gravity="center"-->
+<!--                        android:layout_marginVertical="5dp">-->
 
-                        <View
-                            android:id="@+id/stroke_view"
-                            android:layout_width="95dp"
-                            android:layout_height="95dp"
-                            android:background="@drawable/outline_circle"
-                            android:layout_centerInParent="true" />
+<!--                        <View-->
+<!--                            android:id="@+id/stroke_view"-->
+<!--                            android:layout_width="95dp"-->
+<!--                            android:layout_height="95dp"-->
+<!--                            android:background="@drawable/outline_circle"-->
+<!--                            android:layout_centerInParent="true" />-->
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/profile_image"
-                            android:layout_width="90dp"
-                            android:layout_height="90dp"
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/img" />
+<!--                        <de.hdodenhof.circleimageview.CircleImageView-->
+<!--                            android:id="@+id/profile_image"-->
+<!--                            android:layout_width="90dp"-->
+<!--                            android:layout_height="90dp"-->
+<!--                            android:layout_centerInParent="true"-->
+<!--                            android:src="@drawable/img" />-->
 
-                    </RelativeLayout>
+<!--                    </RelativeLayout>-->
 
-                    <ImageView
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_alignBottom="@id/layoutPhotoReg"
-                        android:layout_alignEnd="@id/layoutPhotoReg"
-                        android:src="@drawable/ic_camera"
-                        android:background="@drawable/custom_ic_camera"
-                        android:padding="8dp"
-                        android:scaleType="fitCenter"
-                        android:adjustViewBounds="true"/>
-                </RelativeLayout>
+<!--                    <ImageView-->
+<!--                        android:layout_width="35dp"-->
+<!--                        android:layout_height="35dp"-->
+<!--                        android:layout_alignBottom="@id/layoutPhotoReg"-->
+<!--                        android:layout_alignEnd="@id/layoutPhotoReg"-->
+<!--                        android:src="@drawable/ic_camera"-->
+<!--                        android:background="@drawable/custom_ic_camera"-->
+<!--                        android:padding="8dp"-->
+<!--                        android:scaleType="fitCenter"-->
+<!--                        android:adjustViewBounds="true"/>-->
+<!--                </RelativeLayout>-->
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:text="Nama"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/nama"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/name_input"
+                    android:id="@+id/name_input_reg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="20dp"
                     android:background="@drawable/custom_edit_text"
-                    android:drawableLeft="@drawable/custom_ic_person"
+                    android:drawableStart="@drawable/custom_ic_person"
                     android:drawablePadding="10dp"
                     android:hint="Nama anda"
                     android:inputType="text"
@@ -103,16 +104,16 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="10dp"
                     android:text="Email"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/email_input"
+                    android:id="@+id/email_input_reg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="20dp"
                     android:background="@drawable/custom_edit_text"
                     android:drawableStart="@drawable/custom_ic_email"
                     android:drawablePadding="10dp"
@@ -123,7 +124,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="10dp"
                     android:text="Jenis Kelamin"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -131,7 +132,7 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="20dp"
                     android:background="@drawable/custom_edit_text">
 
                     <ImageView
@@ -150,7 +151,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="3dp"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="20dp"
                         android:layout_toEndOf="@id/spinner_icon"
                         android:minHeight="48dp"
                         android:spinnerMode="dropdown"
@@ -161,7 +162,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="10dp"
                     android:text="Tanggal Lahir"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -169,7 +170,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="20dp"
                     android:background="@drawable/custom_edit_text">
 
                     <ImageView
@@ -181,7 +182,7 @@
                         android:src="@drawable/custom_ic_date"/>
 
                     <TextView
-                        android:id="@+id/birthdate_textview"
+                        android:id="@+id/tv_birthDateReg"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_toEndOf="@id/ic_date_reg"
@@ -196,22 +197,22 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:text="Kata Sandi"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/password"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp" >
+                    android:layout_marginBottom="20dp" >
 
                     <EditText
                         android:id="@+id/regPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/custom_edit_text"
-                        android:drawableLeft="@drawable/custom_ic_password"
+                        android:drawableStart="@drawable/custom_ic_password"
                         android:drawablePadding="10dp"
                         android:hint="Kata sandi anda"
                         android:inputType="textPassword"
@@ -243,6 +244,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:layout_marginVertical="15dp"
                     android:gravity="center_vertical">
 
                     <View
@@ -269,6 +271,7 @@
 
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRegGoogle"
                     style="@style/GoogleRegButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -282,13 +285,33 @@
                     app:iconPadding="9dp"
                     app:iconGravity="textStart"/>
 
-                <TextView
-                    android:id="@+id/masukRegTv"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="6dp"
-                    android:gravity="center"
-                    android:text="Sudah punya akun? Masuk" />
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="12dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:text="@string/already_have_acc" />
+                    <Space
+                        android:layout_width="6sp"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/masukRegTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:text="@string/masuk"
+                        android:gravity="center"
+                        android:textColor="@color/blue2"/>
+                </LinearLayout>
+
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>

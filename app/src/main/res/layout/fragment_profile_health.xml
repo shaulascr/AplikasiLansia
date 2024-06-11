@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.profile.ProfileHealthFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:padding="18dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/riwayatPenyakit"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/custom_ic_disease"
+                    android:importantForAccessibility="no"/>
+
+                <com.google.android.flexbox.FlexboxLayout
+                    android:id="@+id/flexbox_disease"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:paddingStart="56dp"
+                    android:paddingEnd="8dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/custom_edit_text"
+                    android:drawablePadding="8dp"
+                    android:text="Nama Iya, masuk dr gerbang kavagraria dseb superindo dan pompa, bensin.  .lurus kete pos satpam ke kanan lurus, aj rumah k 2dari ujung kanan pagar hitam tinggi"
+                    android:textSize="18sp"
+                    android:orientation="horizontal"
+                    app:flexWrap="wrap">
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="37dp"-->
+<!--                        android:text="tes"-->
+<!--                        android:gravity="center"-->
+<!--                        android:textSize="18dp"-->
+<!--                        android:background="@drawable/item_disease"-->
+<!--                        android:paddingHorizontal="12dp"-->
+<!--                        android:layout_margin="6dp"/>-->
+
+                </com.google.android.flexbox.FlexboxLayout>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lamaPenyakit"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/custom_edit_text"
+                android:text="Nama user"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                app:drawableStartCompat="@drawable/custom_ic_timedis"
+                android:drawablePadding="8dp"
+                android:layout_marginBottom="20dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/care_giver"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/custom_edit_text"
+                android:text="Nama user"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                app:drawableStartCompat="@drawable/custom_ic_crgiver"
+                android:drawablePadding="8dp"
+                android:layout_marginBottom="20dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/status_kawin"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/custom_edit_text"
+                android:text="Nama user"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                app:drawableStartCompat="@drawable/custom_ic_mstatus"
+                android:drawablePadding="8dp"
+                android:layout_marginBottom="20dp"/>
+
+
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/CustomBlueButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/keluar"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="15dp"
+            app:icon="@drawable/ic_logout"
+            app:iconPadding="9dp"
+            app:iconGravity="textStart"/>
+
+    </LinearLayout>
+
+
+</ScrollView>

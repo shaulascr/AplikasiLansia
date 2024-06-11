@@ -79,13 +79,31 @@
     <string name="jeniskelamin">Jenis Kelamin</string>
     <string name="tanggallahir">Tanggal Lahir</string>
     <string name="usia">Usia</string>
-    <string name="keluar">Keluar</string>
+    <string name="keluar">Keluar Akun</string>
     <string name="profile_name">Nama Pengguna</string>
     <string name="save">Simpan</string>
     <string name="cancel">Batal</string>
     <string name="angka_tensi">--/--</string>
     <string name="menit_tensi">--</string>
     <string name="cari_pelayanan">Cari Pelayanan Kesehatan di Sekitar Anda</string>
+    <string name="profilepersonal">Data Pribadi</string>
+    <string name="riwayatPenyakit">Riwayat Penyakit</string>
+    <string name="lamaPenyakit">Lama Menderita Penyakit</string>
+    <string name="care_giver">Yang Merawat Saat Sakit</string>
+    <string name="status_kawin">Status Perkawinan</string>
+    <string name="profilehealth">Data Kesehatan</string>
+    <string name="welcome_login">Selamat Datang,</string>
+    <string name="welcome_login_2">Masukkan email dan kata sandi anda untuk masuk</string>
+    <string name="forgot_pass"><u>Lupa kata sandi?</u></string>
+    <string name="masuk">Masuk</string>
+    <string name="create_account">Belum punya akun? </string>
+    <string name="password">Kata Sandi</string>
+    <string name="register_welcome">Anda harus membuat akun untuk masuk</string>
+    <string name="already_have_acc">Sudah punya akun?</string>
+    <string name="create_to_reg"> Buat Akun</string>
+    <string name="news_content">Setelah menginjak usia lanjut, kebanyakan orang mengurangi aktivitas sehari-hari, karena stamina sudah jauh berkurang, punya kondisi kesehatan tertentu, atau tidak ada kesempatan. Padahal, orang lanjut usia (lansia) justru harus tetap aktif dengan melakukan beragam aktivitas yang berguna setiap hari agar lansia sehat dan bugar. Apa manfaat dari melakukan aktivitas bagi lansia dan aktivitas apa saja yang bisa dilakukan? Aktivitas, baik fisik, sosial, maupun kegiatan berguna lainnya, bisa memberikan beragam manfaat</string>
+    <string name="back">Kembali</string>
+    <string name="dengarkan">Dengarkan</string>
 
     <string-array name="gender_array">
         <item>Laki-laki</item>

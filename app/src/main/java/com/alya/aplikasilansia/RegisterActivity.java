@@ -2,20 +2,13 @@ package com.alya.aplikasilansia;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -26,19 +19,29 @@ import java.util.Locale;
 
 public class RegisterActivity extends AppCompatActivity {
     private android.text.InputType InputType;
-    private EditText passwordInput;
+    private EditText passwordInputReg;
+    private EditText nameInputReg;
+    private EditText emailInputReg;
+    private EditText genderInputReg;
+    private EditText dateInputReg;
     private ImageView viewPasswordBtn;
     private TextView birthdateTextView;
+    private Button btnRegister;
+    private Button btnRegisterGoogle;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        birthdateTextView = findViewById(R.id.birthdate_textview);
+        birthdateTextView = findViewById(R.id.tv_birthDateReg);
         setPasswordToggle();
         loginFromRegister();
         setupDatePicker(birthdateTextView);
+
+        nameInputReg = findViewById(R.id.name_input_reg);
+        emailInputReg = findViewById(R.id.email_input_reg);
 
         Button registerBtn = findViewById(R.id.btn_regis);
         registerBtn.setOnClickListener(new View.OnClickListener() {
@@ -51,33 +54,24 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void setPasswordToggle () {
-        passwordInput = findViewById(R.id.regPassword);
+        passwordInputReg = findViewById(R.id.regPassword);
         viewPasswordBtn = findViewById(R.id.view_password_btn);
         viewPasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                togglePasswordVisibility(passwordInput, viewPasswordBtn);
+                togglePasswordVisibility(passwordInputReg, viewPasswordBtn);
             }
         });
     }
     private void loginFromRegister () {
         TextView loginFromRegTv = findViewById(R.id.masukRegTv);
-        String text = "Sudah punya akun? Masuk";
-        SpannableString spannableString = new SpannableString(text);
-        int blueColor = ContextCompat.getColor(this, R.color.blue2);
-        ForegroundColorSpan blueColorSpan = new ForegroundColorSpan(blueColor);
-        spannableString.setSpan(blueColorSpan, text.indexOf("Masuk"), text.indexOf("Masuk") + "Masuk".length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        // Make the word "Masuk" clickable
-        ClickableSpan clickableSpan = new ClickableSpan() {
+        loginFromRegTv.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(@NonNull View widget) {
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(intent);
+            public void onClick(View v) {
+                Intent intent1 = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(intent1);
             }
-        };
-        spannableString.setSpan(clickableSpan, text.indexOf("Masuk"), text.indexOf("Masuk") + "Masuk".length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        loginFromRegTv.setText(spannableString);
-        loginFromRegTv.setMovementMethod(LinkMovementMethod.getInstance());
+        });
     }
     private void togglePasswordVisibility(EditText editText, ImageView imageView) {
         if (editText.getInputType() == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -20,6 +21,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passwordInput;
     private ImageView viewPasswordBtn;
     private Button loginBtn;
+    private TextView createAccBtn;
+    private EditText et_emailLogin;
+    private EditText et_passLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,10 @@ public class LoginActivity extends AppCompatActivity {
 
 //        setSupportActionBar(binding.toolbar);
         setPasswordToggle();
+        createAccountFromLogin();
+
+        et_emailLogin = findViewById(R.id.email_input);
+        et_passLogin = findViewById(R.id.password_login);
 
         loginBtn = findViewById(R.id.btn_login);
         loginBtn.setOnClickListener(new View.OnClickListener() {
@@ -60,5 +68,16 @@ public class LoginActivity extends AppCompatActivity {
         }
         // Memindahkan kursor ke akhir teks
         editText.setSelection(editText.getText().length());
+    }
+
+    private void createAccountFromLogin () {
+        TextView createAccBtn = findViewById(R.id.btnCreateAcc);
+        createAccBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent1);
+            }
+        });
     }
 }
