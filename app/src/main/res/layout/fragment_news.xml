@@ -7,83 +7,97 @@
     android:background="@color/white"
     tools:context=".ui.news.NewsFragment">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/headNews"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="25dp"
-        app:cardCornerRadius="13dp"
-        app:cardElevation="15dp">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/headNewsImg"
-                android:layout_width="match_parent"
-                android:layout_height="130dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/img_2"/>
-
-            <RelativeLayout
-                android:id="@+id/headNewsBottom"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/headNews"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/headNewsImg"
-                android:padding="12dp"
-                android:background="@color/blue2">
+                android:layout_margin="25dp"
+                app:cardCornerRadius="13dp"
+                app:cardElevation="15dp">
 
-                <!-- Add your title content here, e.g., TextView -->
-                <TextView
-                    android:id="@+id/headNewsTitle"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="5 Olahraga untuk Lansia yang Efektif Jaga Kebugaran Tubuh"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/headNewsTitle"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    <ImageView
+                        android:id="@+id/headNewsImg"
+                        android:layout_width="match_parent"
+                        android:layout_height="130dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_2"/>
 
-                    <TextView
-                        android:id="@+id/headNewsCat"
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:id="@+id/headNewsBottom"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Tipe Kesehatan"
-                        android:textColor="@color/white"/>
+                        android:layout_below="@id/headNewsImg"
+                        android:padding="12dp"
+                        android:background="@color/white">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" • "
-                        android:textSize="18sp"
-                        android:textColor="@color/white"
-                        android:layout_below="@id/headNewsTitle"
-                        android:layout_toRightOf="@id/headNewsCat"/>
+                        <!-- Add your title content here, e.g., TextView -->
+                        <TextView
+                            android:id="@+id/headNewsTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="5 Olahraga untuk Lansia yang Efektif Jaga Kebugaran Tubuh"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:fontFamily="@font/inter_bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1 hari yang lalu"
-                        android:textColor="@color/white"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/headNewsTitle"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
 
-                </LinearLayout>
-            </RelativeLayout>
+                            <TextView
+                                android:id="@+id/headNewsCat"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Tipe Kesehatan"
+                                android:fontFamily="@font/inter_medium"
+                                android:textColor="@color/black"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" • "
+                                android:textSize="18sp"
+                                android:textColor="@color/black"
+                                android:layout_below="@id/headNewsTitle"
+                                android:layout_toRightOf="@id/headNewsCat"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="1 hari yang lalu"
+                                android:fontFamily="@font/inter_medium"
+                                android:textColor="@color/black"/>
+
+                        </LinearLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_news_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/headNews"
+                tools:listitem="@layout/item_news"/>
+
         </RelativeLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/headNews"
-        tools:listitem="@layout/item_news"/>
+    </ScrollView>
 
 
 </RelativeLayout>

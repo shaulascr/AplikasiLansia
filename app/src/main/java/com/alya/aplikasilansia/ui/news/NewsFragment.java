@@ -9,8 +9,13 @@ import android.view.ViewGroup;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alya.aplikasilansia.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,20 +33,13 @@ public class NewsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private CardView headNews;
+    private RecyclerView newsRV;
 
     public NewsFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment NewsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static NewsFragment newInstance(String param1, String param2) {
         NewsFragment fragment = new NewsFragment();
         Bundle args = new Bundle();
@@ -66,6 +64,7 @@ public class NewsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news, container, false);
         headNews = view.findViewById(R.id.headNews);
+        newsRV = view.findViewById(R.id.rv_news_list);
 
         headNews.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +75,30 @@ public class NewsFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        newsRecyclerViewList();
+
         return view;
+    }
+
+    private void newsRecyclerViewList() {
+        // Create a list of News objects
+        List<News> newsList = new ArrayList<>();
+        newsList.add(new News("5 Cara Untuk Hidup Lebih Sehat","26-05-2034","Tips Kesehatan"));
+        newsList.add(new News("5 Cara Untuk Hidup Lebih Sehat","26-05-2034","Tips Kesehatan"));
+        newsList.add(new News("5 Cara Untuk Hidup Lebih Sehat","26-05-2034","Tips Kesehatan"));
+
+        // Create an adapter for the RecyclerView and pass the list of News objects
+        NewsAdapter adapter = new NewsAdapter(newsList);
+        newsRV.setAdapter(adapter);
+
+        newsRV.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        adapter.setOnItemClickListener(new NewsAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                //
+            }
+        });
     }
 }

@@ -1,4 +1,4 @@
-package com.alya.aplikasilansia.ui.profile;
+package com.alya.aplikasilansia.ui.editprofile;
 
 import android.os.Bundle;
 import android.view.View;

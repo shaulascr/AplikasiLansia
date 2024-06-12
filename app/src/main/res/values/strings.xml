@@ -104,9 +104,23 @@
     <string name="news_content">Setelah menginjak usia lanjut, kebanyakan orang mengurangi aktivitas sehari-hari, karena stamina sudah jauh berkurang, punya kondisi kesehatan tertentu, atau tidak ada kesempatan. Padahal, orang lanjut usia (lansia) justru harus tetap aktif dengan melakukan beragam aktivitas yang berguna setiap hari agar lansia sehat dan bugar. Apa manfaat dari melakukan aktivitas bagi lansia dan aktivitas apa saja yang bisa dilakukan? Aktivitas, baik fisik, sosial, maupun kegiatan berguna lainnya, bisa memberikan beragam manfaat</string>
     <string name="back">Kembali</string>
     <string name="dengarkan">Dengarkan</string>
+    <string name="reminder">Pengingat</string>
+    <string name="reminder_ongoing">Sedang Berlangsung</string>
+    <string name="add_reminder">Tambah Pengingat</string>
+    <string name="filter_reminder">Filter Pengingat</string>
+    <string name="health_care">Pelayanan Kesehatan</string>
+    <string name="health_care_2">Cari dan temukan layanan kesehatan di sekitar Anda</string>
+    <string name="health_search_hint">Pilih Kota Anda</string>
 
     <string-array name="gender_array">
         <item>Laki-laki</item>
         <item>Perempuan</item>
+    </string-array>
+
+    <string-array name="filter_reminder">
+        <item>Semua Pengingat</item>
+        <item>Hari Ini</item>
+        <item>Minggu Ini</item>
+        <item>Bulan Ini</item>
     </string-array>
 </resources>

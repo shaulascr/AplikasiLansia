@@ -317,6 +317,7 @@
                         android:src="@drawable/layanan_kesehatan"
                         android:scaleType="fitCenter" />
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_to_healthcare"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="4dp"
