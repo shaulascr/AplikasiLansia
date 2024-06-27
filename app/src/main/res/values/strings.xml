@@ -111,6 +111,19 @@
     <string name="health_care">Pelayanan Kesehatan</string>
     <string name="health_care_2">Cari dan temukan layanan kesehatan di sekitar Anda</string>
     <string name="health_search_hint">Pilih Kota Anda</string>
+    <string name="lihat_detail">Lihat Detail</string>
+    <string name="riwayat">Riwayat</string>
+    <string name="mulai_cek">Mulai Tes</string>
+    <string name="cek_depresi_text_2">Mulailah perjalanan Anda menuju kesejahteraan mental dengan satu tes sederhana. Mulai sekarang dengan Nula</string>
+    <string name="cek_depresi_text_1">Tidak yakin dengan perasaan Anda?</string>
+    <string name="ubah">Ubah</string>
+    <string name="delete">Hapus</string>
+    <string name="create_reminder">Tambah Reminder</string>
+    <string name="edit_ic_reminder">Edit Ikon Pengingat</string>
+    <string name="reminder_title">Judul Pengingat</string>
+    <string name="catatan">Catatan</string>
+    <string name="hari">Hari</string>
+    <string name="jam">Jam</string>
 
     <string-array name="gender_array">
         <item>Laki-laki</item>

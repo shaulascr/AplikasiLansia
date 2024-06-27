@@ -20,7 +20,7 @@
             android:text="@string/back"
             android:textSize="16sp"
             android:layout_marginStart="14dp"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="3dp"/>
 
     </LinearLayout>
@@ -47,7 +47,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardElevation="16dp"
+                app:cardElevation="10dp"
                 android:elevation="32dp"
                 app:cardCornerRadius="20dp"
                 android:layout_margin="20dp">
@@ -55,7 +55,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="18dp"
+                    android:layout_marginVertical="6dp"
+                    android:layout_marginHorizontal="16dp"
                     android:padding="12dp">
 
                     <TextView
@@ -103,34 +104,49 @@
                         app:layout_constraintTop_toBottomOf="@id/tv_reminder_name"
                         app:layout_constraintStart_toEndOf="@id/ImgReminder"/>
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_add_reminder"
-                        style="@style/BlueRoundButtonNoOutline"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/add_reminder"
-                        android:textSize="18sp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="5dp"
-                        app:layout_constraintTop_toBottomOf="@id/tv_reminder_date"
-                        app:layout_constraintStart_toEndOf="@id/ImgReminder"/>
-
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
                 
             </androidx.cardview.widget.CardView>
 
-
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_add_reminder"
+                style="@style/CustomBlueRoundButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_reminder"
+                android:textSize="18sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_reminder_date"
+                app:layout_constraintStart_toEndOf="@id/ImgReminder"/>
 
             <Spinner
                 android:id="@+id/dropdown_reminder_filter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="12dp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="14dp"
                 android:elevation="14dp"
                 app:elevation="14dp"
+                android:background="@drawable/rounded_shadow"
                 android:entries="@array/gender_array" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:translationY="-25dp"
+                android:background="#E0E5E9"
+                android:paddingTop="35dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_filtered_reminder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/item_filtered_reminder"/>
+
+            </RelativeLayout>
 
         </LinearLayout>
 

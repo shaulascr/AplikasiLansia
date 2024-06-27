@@ -141,6 +141,7 @@
                             android:text="10.00"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_to_reminder"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

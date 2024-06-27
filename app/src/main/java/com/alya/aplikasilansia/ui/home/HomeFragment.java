@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.alya.aplikasilansia.R;
 import com.alya.aplikasilansia.ui.healthcare.HealthCareActivity;
+import com.alya.aplikasilansia.ui.reminder.ReminderActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,6 +69,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         Button toHealthCare = view.findViewById(R.id.btn_to_healthcare);
         toHealthCare.setOnClickListener(this);
 
+        Button toReminder = view.findViewById(R.id.btn_to_reminder);
+        toReminder.setOnClickListener(this);
+
         return view;
     }
 
@@ -75,6 +79,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if (v.getId() == R.id.btn_to_healthcare) {
             Intent intent = new Intent(getActivity(), HealthCareActivity.class);
+            startActivity(intent);
+        } else if (v.getId() == R.id.btn_to_reminder) {
+            Intent intent = new Intent(getActivity(), ReminderActivity.class);
             startActivity(intent);
         }
     }
