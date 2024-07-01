@@ -29,6 +29,7 @@
                 android:layout_marginBottom="10dp" />
 
             <TextView
+                android:id="@+id/tv_username_profile"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@drawable/custom_edit_text"
@@ -48,6 +49,7 @@
                 android:layout_marginBottom="10dp" />
 
             <TextView
+                android:id="@+id/tv_email"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@drawable/custom_edit_text"
@@ -97,6 +99,7 @@
                         android:layout_marginBottom="10dp" />
 
                     <TextView
+                        android:id="@+id/tv_date_profile"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:background="@drawable/custom_edit_text"
@@ -143,6 +146,7 @@
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_keluar"
             style="@style/CustomBlueButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

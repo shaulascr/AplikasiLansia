@@ -6,59 +6,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.alya.aplikasilansia.R;
-import com.alya.aplikasilansia.ui.healthcare.HealthCareActivity;
-import com.alya.aplikasilansia.ui.reminder.ReminderActivity;
+import com.alya.aplikasilansia.data.User;
+import com.alya.aplikasilansia.ui.profile.ProfileViewModel;
+import com.alya.aplikasilansia.ui.quiz.QuizActivity;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class HomeFragment extends Fragment implements View.OnClickListener {
+public class HomeFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Button tensiDarah;
+    private ProfileViewModel profileViewModel;
+    private TextView userNameHome;
 
     public HomeFragment() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,23 +39,27 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        Button toHealthCare = view.findViewById(R.id.btn_to_healthcare);
-        toHealthCare.setOnClickListener(this);
+        // Now you can find your views within the inflated layout
+        tensiDarah = view.findViewById(R.id.cek_tensi);
+        userNameHome = view.findViewById(R.id.txt_name);
 
-        Button toReminder = view.findViewById(R.id.btn_to_reminder);
-        toReminder.setOnClickListener(this);
+        tensiDarah.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(getActivity(), QuizActivity.class);
+                startActivity(intent1);
+            }
+        });
+
+        profileViewModel.getUserLiveData().observe(getViewLifecycleOwner(), new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                if (user != null) {
+                    userNameHome.setText(user.getUserName());
+                }
+            }
+        });
 
         return view;
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.btn_to_healthcare) {
-            Intent intent = new Intent(getActivity(), HealthCareActivity.class);
-            startActivity(intent);
-        } else if (v.getId() == R.id.btn_to_reminder) {
-            Intent intent = new Intent(getActivity(), ReminderActivity.class);
-            startActivity(intent);
-        }
     }
 }

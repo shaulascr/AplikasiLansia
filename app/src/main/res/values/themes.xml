@@ -4,6 +4,9 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="colorSecondary">@color/white</item>
+        <item name="android:statusBarColor" tools:targetApi="30">?attr/colorSecondary</item>
+        <item name="android:windowBackground" tools:targetApi="30">?attr/colorSecondary</item>
 
     </style>
 
