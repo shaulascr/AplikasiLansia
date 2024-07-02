@@ -16,6 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AplikasiLansia"
         tools:targetApi="31">
+        <activity android:name=".ui.quiz.QuizActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.editprofile.EditProfileActivity"
             android:exported="false" />

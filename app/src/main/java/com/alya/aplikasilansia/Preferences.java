@@ -14,7 +14,7 @@ public class Preferences {
     // Shared preferences file name
     private static final String PREF_NAME = "welcome";
 
-    private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
+    private static final String IS_FIRST_TIME_LAUNCH = "true";
 
     public Preferences(Context context) {
         this._context = context;

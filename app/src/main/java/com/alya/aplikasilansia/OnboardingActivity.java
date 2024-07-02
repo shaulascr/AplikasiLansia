@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,9 +38,12 @@ public class OnboardingActivity extends AppCompatActivity {
 
         // Checking for first time launch - before calling setContentView()
         preferences = new Preferences(this);
+        Log.d("OnboardingActivity", "isFirstTimeLaunch: " + preferences.isFirstTimeLaunch());
         if (!preferences.isFirstTimeLaunch()) {
+            Log.d("OnboardingActivity", "Not first time launch, going to home screen.");
             launchHomeScreen();
-            finish();
+            finish(); // Ensure the onboarding activity finishes
+            return;
         }
 
         // Making notification bar transparent
@@ -120,6 +124,7 @@ public class OnboardingActivity extends AppCompatActivity {
     }
 
     private void launchHomeScreen() {
+        Log.d("OnboardingActivity", "Launching home screen.");
         preferences.setFirstTimeLaunch(false);
         startActivity(new Intent(OnboardingActivity.this, LoginActivity.class));
         finish();
@@ -173,9 +178,6 @@ public class OnboardingActivity extends AppCompatActivity {
     public class MyViewPagerAdapter extends PagerAdapter {
         private LayoutInflater layoutInflater;
 
-        public MyViewPagerAdapter() {
-        }
-
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -185,7 +187,6 @@ public class OnboardingActivity extends AppCompatActivity {
 
             return view;
         }
-
         @Override
         public int getCount() {
             return layouts.length;
@@ -195,7 +196,6 @@ public class OnboardingActivity extends AppCompatActivity {
         public boolean isViewFromObject(View view, Object obj) {
             return view == obj;
         }
-
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
