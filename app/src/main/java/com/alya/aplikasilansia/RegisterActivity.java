@@ -25,11 +25,9 @@ import java.util.Locale;
 
 public class RegisterActivity extends AppCompatActivity {
     private android.text.InputType InputType;
-    private EditText passwordInputReg;
-    private EditText nameInputReg;
-    private EditText emailInputReg;
-    private EditText genderInputReg;
+    private EditText passwordInputReg, nameInputReg, emailInputReg, genderInputReg;
     private ImageView viewPasswordBtn;
+
     private TextView birthdateTextView;
     private Button btnRegister;
     private Button btnRegisterGoogle;

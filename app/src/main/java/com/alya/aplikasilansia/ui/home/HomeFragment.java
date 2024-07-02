@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -16,12 +17,14 @@ import com.alya.aplikasilansia.R;
 import com.alya.aplikasilansia.data.User;
 import com.alya.aplikasilansia.ui.profile.ProfileViewModel;
 import com.alya.aplikasilansia.ui.quiz.QuizActivity;
+import com.bumptech.glide.Glide;
 
 public class HomeFragment extends Fragment {
 
     private Button tensiDarah;
     private ProfileViewModel profileViewModel;
     private TextView userNameHome;
+    private ImageView profileImage;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -42,6 +45,7 @@ public class HomeFragment extends Fragment {
         // Now you can find your views within the inflated layout
         tensiDarah = view.findViewById(R.id.cek_tensi);
         userNameHome = view.findViewById(R.id.txt_name);
+        profileImage = view.findViewById(R.id.profile_image_home);
 
         tensiDarah.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +60,14 @@ public class HomeFragment extends Fragment {
             public void onChanged(User user) {
                 if (user != null) {
                     userNameHome.setText(user.getUserName());
+                    if (user.getProfileImageUrl() != null) {
+                        Glide.with(HomeFragment.this)
+                                .load(user.getProfileImageUrl())
+                                .into(profileImage);
+                    } else {
+                        // Handle no profile image case
+                        profileImage.setImageResource(R.drawable.img);
+                    }
                 }
             }
         });

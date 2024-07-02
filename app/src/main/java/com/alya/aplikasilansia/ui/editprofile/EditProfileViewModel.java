@@ -1,4 +1,4 @@
-package com.alya.aplikasilansia.ui.profile;
+package com.alya.aplikasilansia.ui.editprofile;
 
 import android.net.Uri;
 
@@ -9,13 +9,12 @@ import androidx.lifecycle.ViewModel;
 import com.alya.aplikasilansia.data.User;
 import com.alya.aplikasilansia.data.UserRepository;
 
-public class ProfileViewModel extends ViewModel {
+public class EditProfileViewModel extends ViewModel {
     private MutableLiveData<User> userLiveData;
     private MutableLiveData<String> updateResultLiveData;
-
     private UserRepository userRepository;
 
-    public ProfileViewModel() {
+    public EditProfileViewModel() {
         userLiveData = new MutableLiveData<>();
         updateResultLiveData = new MutableLiveData<>();
         userRepository = new UserRepository();
@@ -31,7 +30,7 @@ public class ProfileViewModel extends ViewModel {
     }
 
     // Fetch user data method
-    private void fetchUser() {
+    public void fetchUser() {
         userLiveData = userRepository.fetchUser();
     }
 
@@ -39,10 +38,4 @@ public class ProfileViewModel extends ViewModel {
     public void updateProfile(String newUserName, String email, String birthDate, Uri profileImageUri) {
         userRepository.updateProfile(newUserName, email, birthDate, profileImageUri, updateResultLiveData);
     }
-
-    public void signOut() {
-        userRepository.signOut();
-    }
 }
-
-

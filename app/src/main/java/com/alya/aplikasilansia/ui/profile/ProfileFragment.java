@@ -6,16 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alya.aplikasilansia.R;
-import com.alya.aplikasilansia.data.User;
 import com.alya.aplikasilansia.ui.editprofile.EditProfileActivity;
+import com.bumptech.glide.Glide;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
@@ -24,6 +24,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private Button editProfile;
     private TextView personalProfile, healthProfile;
     private TextView userNameProfile;
+    private ImageView imageProfile;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -42,6 +43,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
+
         // Find the button
         editProfile = view.findViewById(R.id.btn_editProfile); // Replace with your button's actual ID
         editProfile.setOnClickListener(this);
@@ -51,6 +53,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         healthProfile.setOnClickListener(this);
 
         userNameProfile = view.findViewById(R.id.profile_userName);
+        imageProfile = view.findViewById(R.id.profile_image);
 
         personalProfile.setBackgroundResource(R.drawable.text_blue_underlined);
         healthProfile.setBackgroundResource(R.drawable.text_transparant);
@@ -58,11 +61,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         if (savedInstanceState == null) {
             replaceFragment(new ProfilePersonalFragment());
         }
-        profileViewModel.getUserLiveData().observe(getViewLifecycleOwner(), new Observer<User>() {
-            @Override
-            public void onChanged(User user) {
-                if (user != null) {
-                    userNameProfile.setText(user.getUserName());
+        profileViewModel.getUserLiveData().observe(getViewLifecycleOwner(), user -> {
+            if (user != null) {
+                userNameProfile.setText(user.getUserName());
+                if (user.getProfileImageUrl() != null) {
+                    Glide.with(ProfileFragment.this)
+                            .load(user.getProfileImageUrl())
+                            .into(imageProfile);
+                } else {
+                    // Handle no profile image case
+                    imageProfile.setImageResource(R.drawable.img);
                 }
             }
         });
