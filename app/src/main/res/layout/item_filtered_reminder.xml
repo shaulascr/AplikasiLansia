@@ -57,7 +57,7 @@
                 android:layout_toEndOf="@id/img_reminder_ic"/>
 
             <TextView
-                android:id="@+id/tv_reminder_filter"
+                android:id="@+id/tv_desc_reminder_filter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Diminum setelah makan, minum air putih yang banyak"
@@ -68,7 +68,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_reminder_filter"
+                android:layout_below="@id/tv_desc_reminder_filter"
                 android:layout_toEndOf="@id/img_reminder_ic"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">

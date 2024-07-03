@@ -15,13 +15,18 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.alya.aplikasilansia.R;
 import com.alya.aplikasilansia.data.User;
+import com.alya.aplikasilansia.ui.bloodpressure.BloodPressureActivity;
+import com.alya.aplikasilansia.ui.healthcare.HealthCareActivity;
 import com.alya.aplikasilansia.ui.profile.ProfileViewModel;
-import com.alya.aplikasilansia.ui.quiz.QuizActivity;
+import com.alya.aplikasilansia.ui.reminder.ReminderActivity;
 import com.bumptech.glide.Glide;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private Button tensiDarah;
+    private Button toHealthCare;
+    private Button toReminder;
+    private Button toBP;
     private ProfileViewModel profileViewModel;
     private TextView userNameHome;
     private ImageView profileImage;
@@ -42,18 +47,26 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        toHealthCare = view.findViewById(R.id.btn_to_healthcare);
+        toHealthCare.setOnClickListener(this);
+
+        toReminder = view.findViewById(R.id.btn_to_reminder);
+        toReminder.setOnClickListener(this);
+
+        toBP = view.findViewById(R.id.btn_to_bloodpresure);
+        toBP.setOnClickListener(this);
         // Now you can find your views within the inflated layout
-        tensiDarah = view.findViewById(R.id.cek_tensi);
+//        tensiDarah = view.findViewById(R.id.cek_tensi);
         userNameHome = view.findViewById(R.id.txt_name);
         profileImage = view.findViewById(R.id.profile_image_home);
 
-        tensiDarah.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent1 = new Intent(getActivity(), QuizActivity.class);
-                startActivity(intent1);
-            }
-        });
+//        tensiDarah.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent1 = new Intent(getActivity(), QuizActivity.class);
+//                startActivity(intent1);
+//            }
+//        });
 
         profileViewModel.getUserLiveData().observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
@@ -73,5 +86,19 @@ public class HomeFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.btn_to_healthcare) {
+            Intent intent = new Intent(getActivity(), HealthCareActivity.class);
+            startActivity(intent);
+        } else if (v.getId() == R.id.btn_to_reminder) {
+            Intent intent = new Intent(getActivity(), ReminderActivity.class);
+            startActivity(intent);
+        } else if (v.getId() == R.id.btn_to_bloodpresure) {
+            Intent intent = new Intent(getActivity(), BloodPressureActivity.class);
+            startActivity(intent);
+        }
     }
 }

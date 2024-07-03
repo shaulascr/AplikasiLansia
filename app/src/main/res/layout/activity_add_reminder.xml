@@ -26,7 +26,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="12dp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -38,6 +39,7 @@
                 android:textColor="@color/black"/>
 
             <ImageView
+                android:id="@+id/img_edit_ic_reminder"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:layout_gravity="center_horizontal"
@@ -45,12 +47,14 @@
                 android:background="@drawable/outline_circle"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/tv_edit_ic_reminder"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/edit_ic_reminder"
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:textAlignment="center"
+                android:layout_gravity="center_horizontal"
                 android:textColor="@color/black"/>
 
             <LinearLayout
@@ -91,6 +95,7 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -99,16 +104,43 @@
                             android:textStyle="bold"
                             android:layout_marginBottom="10dp" />
 
-                        <TextView
-                            android:layout_width="match_parent"
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
                             android:layout_height="48dp"
-                            android:background="@drawable/custom_edit_text"
-                            android:hint="Pilih hari"
-                            android:textSize="18sp"
-                            android:gravity="center_vertical"
-                            app:drawableStartCompat="@drawable/custom_ic_calendar"
-                            android:drawablePadding="8dp"
-                            android:layout_marginBottom="20dp"/>
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/custom_edit_text">
+
+                            <ImageView
+                                android:id="@+id/spinner_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/custom_ic_calendar"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:padding="0dp"/>
+
+                            <Spinner
+                                android:id="@+id/spinner_gender"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toEndOf="@id/spinner_icon"
+                                android:minHeight="48dp"
+                                android:spinnerMode="dropdown"
+                                tools:ignore="TouchTargetSizeCheck"
+                                android:entries="@array/day_array"/>
+                        </RelativeLayout>
+
+                        <!--                        <TextView-->
+                        <!--                            android:layout_width="match_parent"-->
+                        <!--                            android:layout_height="48dp"-->
+                        <!--                            android:background="@drawable/custom_edit_text"-->
+                        <!--                            android:hint="Pilih hari"-->
+                        <!--                            android:textSize="18sp"-->
+                        <!--                            android:gravity="center_vertical"-->
+                        <!--                            app:drawableStartCompat="@drawable/custom_ic_calendar"-->
+                        <!--                            android:drawablePadding="8dp"-->
+                        <!--                            android:layout_marginBottom="20dp"/>-->
                     </LinearLayout>
 
                     <Space
@@ -129,7 +161,8 @@
                             android:textStyle="bold"
                             android:layout_marginBottom="10dp" />
 
-                        <EditText
+                        <TextView
+                            android:id="@+id/tv_hour_reminder"
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
                             android:background="@drawable/custom_edit_text"

@@ -177,21 +177,24 @@
                     android:textSize="26sp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toEndOf="@id/img_tensi"/>
+
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/cek_tensi"
+                    android:id="@+id/btn_to_bloodpresure"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Catat Tensi"
                     android:layout_gravity="center"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="8dp"
                     android:backgroundTint="@color/blue2"
                     android:fontFamily="@font/inter_bold"
-                    android:textSize="18sp"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="8dp"
                     android:paddingHorizontal="32dp"
-                    app:layout_constraintStart_toEndOf="@id/img_tensi"
+                    android:text="Catat Tensi"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/txt_tensi"/>
+                    app:layout_constraintStart_toEndOf="@id/img_tensi"
+                    app:layout_constraintTop_toBottomOf="@id/txt_tensi"
+                    app:layout_constraintVertical_bias="0.0" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout

@@ -124,16 +124,32 @@
     <string name="catatan">Catatan</string>
     <string name="hari">Hari</string>
     <string name="jam">Jam</string>
+    <string name="blood_pressure">Tensi Darah</string>
+    <string name="blood_pressure_desc">Masukkan tensi darah Anda secara berkala sehingga terpantau dengan baik</string>
+    <string name="bp">Tekanan Darah</string>
+    <string name="pulse">Denyut Nadi</string>
+    <string name="history">Riwayat</string>
+    <string name="save_bp_pulse">Simpan Tensi</string>
 
     <string-array name="gender_array">
         <item>Laki-laki</item>
         <item>Perempuan</item>
     </string-array>
 
+    <string-array name="day_array">
+        <item>Senin</item>
+        <item>Selasa</item>
+        <item>Rabu</item>
+        <item>Kamis</item>
+        <item>Jumat</item>
+        <item>Sabtu</item>
+        <item>Minggu</item>
+    </string-array>
+
     <string-array name="filter_reminder">
         <item>Semua Pengingat</item>
         <item>Hari Ini</item>
-        <item>Minggu Ini</item>
-        <item>Bulan Ini</item>
+        <item>Besok</item>
+        <item>Yang Akan Datang</item>
     </string-array>
 </resources>
