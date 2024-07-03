@@ -2,11 +2,19 @@ package com.alya.aplikasilansia.data;
 
 import android.net.Uri;
 
+import java.util.List;
+
 public class User {
     private String email;
     private String birthDate;
     private String userName;
     private Uri profileImageUrl;
+    private String caregiver;
+
+    private String maritalStatus;
+
+
+    private List<String> medHistory;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -18,6 +26,15 @@ public class User {
         this.userName = userName;
         this.profileImageUrl = profileImageUrl;
     }
+//    public User(String email, String birthDate, String userName, Uri profileImageUrl, String caregiver, String maritalStatus, List<String> medHistory) {
+//        this.email = email;
+//        this.birthDate = birthDate;
+//        this.userName = userName;
+//        this.profileImageUrl = profileImageUrl;
+//        this.caregiver = caregiver;
+//        this.maritalStatus = maritalStatus;
+//        this.medHistory = medHistory;
+//    }
 
     public String getEmail() {
         return email;
@@ -48,5 +65,28 @@ public class User {
 
     public void setProfileImageUrl(Uri profileImageUrl) {
         this.profileImageUrl = profileImageUrl;
+    }
+    public String getCaregiver() {
+        return caregiver;
+    }
+
+    public void setCaregiver(String caregiver) {
+        this.caregiver = caregiver;
+    }
+
+    public String getMaritalStatus() {
+        return maritalStatus;
+    }
+
+    public void setMaritalStatus(String maritalStatus) {
+        this.maritalStatus = maritalStatus;
+    }
+
+    public List<String> getMedHistory() {
+        return medHistory;
+    }
+
+    public void setMedHistory(List<String> medHistory) {
+        this.medHistory = medHistory;
     }
 }
