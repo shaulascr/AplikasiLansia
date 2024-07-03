@@ -1,16 +1,13 @@
 package com.alya.aplikasilansia.ui.check;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
 import com.alya.aplikasilansia.R;
-import com.alya.aplikasilansia.ui.quiz.QuizActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,7 +24,6 @@ public class CheckFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private Button btnCekDepresi;
 
     public CheckFragment() {
         // Required empty public constructor
@@ -64,21 +60,6 @@ public class CheckFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_check, container, false);
-
-        btnCekDepresi = view.findViewById(R.id.cek_depresi);
-        toCekDepresi(btnCekDepresi);
-
-        return view;
-    }
-
-    public void toCekDepresi (Button btnCekDepresi){
-        btnCekDepresi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent1 = new Intent(getActivity(), QuizActivity.class);
-                startActivity(intent1);
-            }
-        });
+        return inflater.inflate(R.layout.fragment_check, container, false);
     }
 }

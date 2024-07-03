@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.quiz.QuizActivity">
 
     <!-- Back Button -->
     <Button
@@ -18,7 +18,7 @@
 
     <!-- Number RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/recyclerView_quiz"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/buttonBack"
@@ -32,7 +32,7 @@
         android:id="@+id/questionText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/recyclerView"
+        android:layout_below="@id/recyclerView_quiz"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
@@ -55,8 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="YA"
-            android:background="@drawable/rounded_button_background"
-            style="@style/CustomBlueRoundButton"/>
+            android:background="@drawable/rounded_button_background"/>
 
         <Button
             android:id="@+id/buttonNo"
@@ -64,8 +63,7 @@
             android:layout_height="wrap_content"
             android:text="TIDAK"
             android:layout_marginStart="16dp"
-            android:background="@drawable/rounded_button_background"
-            style="@style/CustomBlueRoundButton"/>
+            android:background="@drawable/rounded_button_background"/>
     </LinearLayout>
 
     <!-- Navigation Buttons -->
@@ -83,8 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sebelumnya"
-            android:background="@drawable/rounded_button_background"
-            style="@style/CustomBlueRoundButton"/>
+            android:background="@drawable/rounded_button_background"/>
 
         <Button
             android:id="@+id/buttonNext"
@@ -92,9 +89,9 @@
             android:layout_height="wrap_content"
             android:text="Selanjutnya"
             android:layout_marginStart="16dp"
-            android:background="@drawable/rounded_button_background"
-            style="@style/CustomBlueRoundButton"/>
+            android:background="@drawable/rounded_button_background"/>
     </LinearLayout>
 
 </RelativeLayout>
+
 

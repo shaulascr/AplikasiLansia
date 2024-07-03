@@ -4,80 +4,82 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.alya.aplikasilansia.data.Question;
+import com.alya.aplikasilansia.data.QuizRepository;
+
+import java.util.List;
+
 public class QuizViewModel extends ViewModel {
 
-    private static final int TOTAL_QUESTIONS = 10; // Example: 10 questions
-    private MutableLiveData<Integer> currentQuestion = new MutableLiveData<>(0);
-    private MutableLiveData<Boolean[]> answers = new MutableLiveData<>(new Boolean[TOTAL_QUESTIONS]);
-    private MutableLiveData<String> questionText = new MutableLiveData<>();
-    private String[] questionList = {
-            "What is the capital of France?",
-            "Who painted the Mona Lisa?",
-            "In which year did World War II end?",
-            "What is the largest planet in our solar system?",
-            "Who wrote 'Pride and Prejudice'?",
-            "What is the chemical symbol for water?",
-            "Who discovered penicillin?",
-            "Which country is famous for kangaroos?",
-            "Who invented the telephone?",
-            "Which continent is the largest by land area?"
-    };
+    private final QuizRepository quizRepository;
+    private final LiveData<List<Question>> questions;
+    private final MutableLiveData<Boolean[]> answers;
+    private final MutableLiveData<Integer> currentQuestion;
+    private final MutableLiveData<Integer> totalScore;
 
     public QuizViewModel() {
-        updateQuestionText();
+        quizRepository = new QuizRepository();
+        questions = quizRepository.getQuestions();
+        answers = new MutableLiveData<>(new Boolean[getTotalQuestions()]);
+        currentQuestion = new MutableLiveData<>(0);
+        totalScore = new MutableLiveData<>(0);
     }
 
-    public LiveData<Integer> getCurrentQuestion() {
-        return currentQuestion;
+    public LiveData<List<Question>> getQuestions() {
+        return questions;
     }
 
     public LiveData<Boolean[]> getAnswers() {
         return answers;
     }
 
-    public LiveData<String> getQuestionText() {
-        return questionText;
+    public LiveData<Integer> getCurrentQuestion() {
+        return currentQuestion;
+    }
+
+    public LiveData<Integer> getTotalScore() {
+        return totalScore;
+    }
+
+    public int getTotalQuestions() {
+        return questions.getValue() != null ? questions.getValue().size() : 0;
     }
 
     public void selectQuestion(int index) {
         currentQuestion.setValue(index);
-        updateQuestionText();
     }
 
-    public void answerQuestion(boolean answer) {
-        Boolean[] answersArray = answers.getValue();
-        if (answersArray != null) {
-            answersArray[currentQuestion.getValue()] = answer;
-            answers.setValue(answersArray);
+    public void answerQuestion(boolean isCorrect, int score) {
+        int currentIndex = currentQuestion.getValue();
+        Boolean[] currentAnswers = answers.getValue();
+        if (currentAnswers != null && currentAnswers[currentIndex] == null) {
+            currentAnswers[currentIndex] = isCorrect;
+            answers.setValue(currentAnswers);
+
+            int currentScore = totalScore.getValue();
+            if (isCorrect) {
+                totalScore.setValue(currentScore + score);
+            }
         }
     }
 
     public void navigateToPrevious() {
-        Integer currentIndex = currentQuestion.getValue();
-        if (currentIndex != null && currentIndex > 0) {
+        int currentIndex = currentQuestion.getValue();
+        if (currentIndex > 0) {
             currentQuestion.setValue(currentIndex - 1);
-            updateQuestionText();
         }
     }
 
     public void navigateToNext() {
-        Integer currentIndex = currentQuestion.getValue();
-        if (currentIndex != null && currentIndex < TOTAL_QUESTIONS - 1) {
+        int currentIndex = currentQuestion.getValue();
+        if (currentIndex < getTotalQuestions() - 1) {
             currentQuestion.setValue(currentIndex + 1);
-            updateQuestionText();
         }
-    }
-
-    private void updateQuestionText() {
-        Integer currentIndex = currentQuestion.getValue();
-        if (currentIndex != null) {
-            questionText.setValue(questionList[currentIndex]);
-        }
-    }
-
-    public int getTotalQuestions() {
-        return TOTAL_QUESTIONS;
     }
 }
+
+
+
+
 
 
