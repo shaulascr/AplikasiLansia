@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,9 +33,11 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView birthdateTextView;
     private Button btnRegister;
     private Button btnRegisterGoogle;
+    private Spinner spinnerGender;
     private FirebaseAuth mAuth;
     private static final String TAG = "RegisterActivity";
     private RegisterViewModel registerViewModel;
+    private String selectedGender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
         nameInputReg = findViewById(R.id.name_input_reg);
         emailInputReg = findViewById(R.id.email_input_reg);
         birthdateTextView = findViewById(R.id.tv_birthDateReg);
+        spinnerGender = findViewById(R.id.spinner_gender);
 
         mAuth = FirebaseAuth.getInstance();
         Button registerBtn = findViewById(R.id.btn_regis);
@@ -60,7 +65,14 @@ public class RegisterActivity extends AppCompatActivity {
                 String birthDate = birthdateTextView.getText().toString().trim();
                 String userName = nameInputReg.getText().toString().trim();
 
-                registerViewModel.register(email, password, birthDate, userName);
+                if (selectedGender == null || selectedGender.isEmpty()) {
+                    Toast.makeText(RegisterActivity.this, "Please select a gender", Toast.LENGTH_SHORT).show();
+                    return; // Exit the method without proceeding
+                }
+
+                registerViewModel.register(email, password, birthDate, userName, selectedGender);
+//                Intent intentReg2 = new Intent(RegisterActivity.this, RegisterStep2Activity.class);
+//                startActivity(intentReg2);
             }
         });
 
@@ -69,8 +81,10 @@ public class RegisterActivity extends AppCompatActivity {
             public void onChanged(FirebaseUser firebaseUser) {
                 if (firebaseUser != null) {
                     Log.d(TAG, "createUserWithEmail:success");
-                    Intent intent2 = new Intent(RegisterActivity.this, LoginActivity.class);
-                    startActivity(intent2);
+                    Intent intentReg2 = new Intent(RegisterActivity.this, RegisterStep2Activity.class);
+                    startActivity(intentReg2);
+//                    Intent intent2 = new Intent(RegisterActivity.this, LoginActivity.class);
+//                    startActivity(intent2);
                 }
             }
         });
@@ -83,6 +97,20 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Authentication failed: " + error,
                             Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        spinnerGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedGender = parent.getItemAtPosition(position).toString();
+                // You can now use `selectedGender` as needed
+                Log.d(TAG, "Selected gender: " + selectedGender);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Handle case where nothing is selected (if needed)
             }
         });
     }
@@ -144,14 +172,14 @@ public class RegisterActivity extends AppCompatActivity {
         datePicker.show(getSupportFragmentManager(), "DATE_PICKER");
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            Intent intent2 = new Intent(RegisterActivity.this, LoginActivity.class);
-            startActivity(intent2);
-        }
-    }
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        // Check if user is signed in (non-null) and update UI accordingly.
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        if(currentUser != null){
+//            Intent intent2 = new Intent(RegisterActivity.this, LoginActivity.class);
+//            startActivity(intent2);
+//        }
+//    }
 }

@@ -16,7 +16,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UserRepository {
@@ -44,12 +46,20 @@ public class UserRepository {
                     if (snapshot.exists()) {
                         String birthDate = snapshot.child("birthDate").getValue(String.class);
                         String userName = snapshot.child("userName").getValue(String.class);
+                        String gender = snapshot.child("gender").getValue(String.class);
                         String imageUrl = snapshot.child("profileImageUrl").getValue(String.class);
+                        String caregiver = snapshot.child("caregiver").getValue(String.class);
+                        String maritalStatus = snapshot.child("maritalStatus").getValue(String.class);
 
+                        // Retrieve medHistory as a List<String>
+                        List<inputMedHistory> medHistory = new ArrayList<>();
+                        for (DataSnapshot medHistorySnapshot : snapshot.child("medHistory").getChildren()) {
+                            medHistory.add(medHistorySnapshot.getValue(inputMedHistory.class));
+                        }
                         // Convert string imageUrl to Uri
                         Uri profileImageUri = (imageUrl != null) ? Uri.parse(imageUrl) : null;
 
-                        User userProfile = new User(email, birthDate, userName, profileImageUri);
+                        User userProfile = new User(email, birthDate, userName, gender, profileImageUri, caregiver, maritalStatus, medHistory);
                         userLiveData.setValue(userProfile);
                     }
                 }
@@ -65,13 +75,13 @@ public class UserRepository {
         return userLiveData;
     }
 
-    public void register(String email, String password, String birthDate, String userName, MutableLiveData<FirebaseUser> userLiveData, MutableLiveData<String> errorLiveData) {
+    public void register(String email, String password, String birthDate, String userName, String gender, String caregiver, String maritalStatus, List<inputMedHistory> medHistory, MutableLiveData<FirebaseUser> userLiveData, MutableLiveData<String> errorLiveData) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser user = mAuth.getCurrentUser();
                         if (user != null) {
-                            User additionalUserInfo = new User(email, birthDate, userName, null);
+                            User additionalUserInfo = new User(email, birthDate, userName, gender,  null, caregiver, maritalStatus, medHistory);
                             mDatabase.child("users").child(user.getUid()).setValue(additionalUserInfo);
                             userLiveData.postValue(user);
                         }
@@ -145,6 +155,38 @@ public class UserRepository {
                     Log.e("UserRepository", "Failed to upload profile image: " + e.getMessage());
                 });
     }
+
+    public void updateMedHistory(List<inputMedHistory> newMedHistory, MutableLiveData<String> updateResultLiveData) {
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+
+        if (firebaseUser != null) {
+            DatabaseReference userRef = mDatabase.child("users").child(firebaseUser.getUid()).child("medHistory");
+
+            userRef.setValue(newMedHistory)
+                    .addOnSuccessListener(aVoid -> updateResultLiveData.postValue("Medical history updated successfully"))
+                    .addOnFailureListener(e -> updateResultLiveData.postValue("Failed to update medical history: " + e.getMessage()));
+        } else {
+            updateResultLiveData.postValue("User not authenticated");
+        }
+    }
+
+    public void updateMedData(String caregiver, String maritalStatus, MutableLiveData<String> updateResultLiveData) {
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+
+        if (firebaseUser != null) {
+            DatabaseReference userRef = mDatabase.child("users").child(firebaseUser.getUid());
+            Map<String, Object> updates = new HashMap<>();
+            updates.put("caregiver", caregiver);
+            updates.put("maritalStatus", maritalStatus);
+
+            userRef.updateChildren(updates)
+                    .addOnSuccessListener(aVoid -> updateResultLiveData.postValue("Medical data updated successfully"))
+                    .addOnFailureListener(e -> updateResultLiveData.postValue("Failed to update medical data: " + e.getMessage()));
+        } else {
+            updateResultLiveData.postValue("User not authenticated");
+        }
+    }
+
 }
 
 

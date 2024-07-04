@@ -130,10 +130,25 @@
     <string name="pulse">Denyut Nadi</string>
     <string name="history">Riwayat</string>
     <string name="save_bp_pulse">Simpan Tensi</string>
+    <string name="lengkapi_data">Lengkapi Data Kesehatan</string>
+    <string name="lengkapi_data_2">Berikan riwayat penyakit Anda beserta lama Anda menderita</string>
+    <string name="penyakit">Penyakit</string>
+    <string name="lamanya">Lamanya</string>
+    <string name="tambah_penyakit">Tambah Penyakit</string>
+    <string name="simpan_riwayat_penyakit">Simpan Riwayat Penyakit</string>
+    <string name="tambah_foto">Tambah foto anda</string>
+    <string name="lengkapi_data_3">Lengkapi data kesehatan sesuai kebutuhan Anda</string>
 
     <string-array name="gender_array">
         <item>Laki-laki</item>
         <item>Perempuan</item>
+    </string-array>
+
+    <string-array name="filter_reminder">
+        <item>Semua Pengingat</item>
+        <item>Hari</item>
+        <item>Besok</item>
+        <item>Yang Akan Datang</item>
     </string-array>
 
     <string-array name="day_array">
@@ -146,10 +161,27 @@
         <item>Minggu</item>
     </string-array>
 
-    <string-array name="filter_reminder">
-        <item>Semua Pengingat</item>
-        <item>Hari Ini</item>
-        <item>Besok</item>
-        <item>Yang Akan Datang</item>
+    <string-array name="care_giver">
+        <item>--Pilih yang Merawat--</item>
+        <item>Istri</item>
+        <item>Suami</item>
+        <item>Anak Laki-Laki</item>
+        <item>Anak Perempuan</item>
+        <item>Cucu Laki-Laki</item>
+        <item>Cucu Perempuan</item>
+        <item>Menantu Laki-Laki</item>
+        <item>Menantu Perempuan</item>
+        <item>Saudara Lain</item>
+        <item>Saudara Jauh</item>
+        <item>Orang Lain</item>
+    </string-array>
+
+
+    <string-array name="marital_status">
+        <item>--Pilih Status Perkawinan--</item>
+        <item>Belum Kawin</item>
+        <item>Kawin</item>
+        <item>Cerai Hidup</item>
+        <item>Cerai Mati</item>
     </string-array>
 </resources>

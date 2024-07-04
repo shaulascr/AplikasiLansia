@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue1"
+    tools:context=".RegisterStep2Activity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_gravity="center"
+                app:cardCornerRadius="25dp">
+
+                <LinearLayout
+                    android:id="@+id/first_input_medhistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="18dp"
+                    android:paddingVertical="14dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="15dp"
+                        android:paddingHorizontal="20dp"
+                        android:text="@string/lengkapi_data"
+                        android:textAlignment="center"
+                        android:textSize="26sp"
+                        android:textStyle="bold" />
+
+                    <RelativeLayout
+                        android:layout_width="125dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:layout_marginVertical="5dp">
+
+                        <View
+                            android:id="@+id/stroke_view"
+                            android:layout_width="125dp"
+                            android:layout_height="125dp"
+                            android:background="@drawable/outline_circle"
+                            android:layout_centerInParent="true" />
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/profile_image_edit"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:layout_centerInParent="true" />
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/custom_ic_camera"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentEnd="true"/>
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="10dp"
+                        android:paddingHorizontal="20dp"
+                        android:text="@string/tambah_foto"
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="20dp"
+                        android:layout_marginBottom="30dp"
+                        android:paddingHorizontal="5dp"
+                        android:text="@string/lengkapi_data_3"
+                        android:textAlignment="center"
+                        android:textSize="20sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="6dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="14dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:text="@string/penyakit"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <EditText
+                                android:id="@+id/et_penyakit"
+                                android:layout_width="200dp"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/custom_edit_text"
+                                android:hint="Contoh: TBC"
+                                android:minHeight="48dp"
+                                android:padding="12dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_med_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:text="@string/lamanya"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tv_med_time"
+                                android:orientation="horizontal">
+
+                                <EditText
+                                    android:id="@+id/et_lamanya"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/custom_edit_text"
+                                    android:minHeight="48dp"
+                                    android:padding="12dp"
+                                    tools:ignore="SpeakableTextPresentCheck" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="6dp"
+                                    android:fontFamily="@font/inter_medium"
+                                    android:text="@string/hari"
+                                    android:textSize="18sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <FrameLayout
+                        android:id="@+id/input_medhistory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_add_medhistory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="10dp"
+                        android:text="@string/tambah_penyakit"
+                        android:layout_gravity="center_horizontal"
+                        app:cornerRadius="13dp"
+                        android:textSize="18sp"
+                        android:backgroundTint="@color/blue1"
+                        android:fontFamily="@font/inter_bold"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_save_medhistory"
+                        style="@style/CustomBlueRoundButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/simpan_riwayat_penyakit"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="30dp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+</ScrollView>

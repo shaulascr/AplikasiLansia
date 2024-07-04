@@ -10,31 +10,31 @@ public class User {
     private String userName;
     private Uri profileImageUrl;
     private String caregiver;
-
     private String maritalStatus;
 
-
-    private List<String> medHistory;
+    private String gender;
+    private List<inputMedHistory> medHistory;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public User(String email, String birthDate, String userName, Uri profileImageUrl) {
-        this.email = email;
-        this.birthDate = birthDate;
-        this.userName = userName;
-        this.profileImageUrl = profileImageUrl;
-    }
-//    public User(String email, String birthDate, String userName, Uri profileImageUrl, String caregiver, String maritalStatus, List<String> medHistory) {
+//    public User(String email, String birthDate, String userName, Uri profileImageUrl) {
 //        this.email = email;
 //        this.birthDate = birthDate;
 //        this.userName = userName;
 //        this.profileImageUrl = profileImageUrl;
-//        this.caregiver = caregiver;
-//        this.maritalStatus = maritalStatus;
-//        this.medHistory = medHistory;
 //    }
+    public User(String email, String birthDate, String userName, String gender, Uri profileImageUrl, String caregiver, String maritalStatus, List<inputMedHistory> medHistory) {
+        this.email = email;
+        this.birthDate = birthDate;
+        this.userName = userName;
+        this.gender = gender;
+        this.profileImageUrl = profileImageUrl;
+        this.caregiver = caregiver;
+        this.maritalStatus = maritalStatus;
+        this.medHistory = medHistory;
+    }
 
     public String getEmail() {
         return email;
@@ -82,11 +82,19 @@ public class User {
         this.maritalStatus = maritalStatus;
     }
 
-    public List<String> getMedHistory() {
+    public List<inputMedHistory> getMedHistory() {
         return medHistory;
     }
 
-    public void setMedHistory(List<String> medHistory) {
+    public void setMedHistory(List<inputMedHistory> medHistory) {
         this.medHistory = medHistory;
     }
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
 }
