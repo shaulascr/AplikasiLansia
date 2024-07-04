@@ -114,10 +114,13 @@ public class UserRepository {
         if (firebaseUser != null) {
             DatabaseReference userRef = mDatabase.child("users").child(firebaseUser.getUid());
             Map<String, Object> updates = new HashMap<>();
-            updates.put("userName", newUserName);
-            // Optionally update other fields like email and birthDate
-            // Example: updates.put("email", email);
-            // Example: updates.put("birthDate", birthDate);
+//            updates.put("userName", newUserName);
+//            // Optionally update other fields like email and birthDate
+//             updates.put("email", email);
+//             updates.put("birthDate", birthDate);
+            if (newUserName != null) updates.put("userName", newUserName);
+            if (email != null) updates.put("email", email);
+            if (birthDate != null) updates.put("birthDate", birthDate);
 
             // Update profile in Realtime Database
             userRef.updateChildren(updates)

@@ -29,8 +29,9 @@ public class RegisterViewModel extends ViewModel {
         userRepository.updateMedHistory(medHistory, updateResultLiveData);
     }
 
-    public void registerHealt2(String caregiver, String maritalStatus) {
+    public void registerHealth2(String caregiver, String maritalStatus) {
         userRepository.updateMedData(caregiver, maritalStatus, updateResultLiveData);
     }
+
 }
 

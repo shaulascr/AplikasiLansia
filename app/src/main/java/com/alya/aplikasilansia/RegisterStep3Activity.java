@@ -1,6 +1,7 @@
 package com.alya.aplikasilansia;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,12 @@ public class RegisterStep3Activity extends AppCompatActivity {
         btnSaveMedData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String selectedCareGiver = spinnerCareGiver.getSelectedItem().toString();
+                String selectedMaritalStatus = spinnerMaritalStatus.getSelectedItem().toString();
 
+                registerViewModel.registerHealth2(selectedCareGiver, selectedMaritalStatus);
+                Intent intent = new Intent(RegisterStep3Activity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
