@@ -36,7 +36,8 @@
                 android:textStyle="bold"
                 android:textSize="26sp"
                 android:textAlignment="center"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:layout_marginBottom="6dp"/>
 
             <ImageView
                 android:id="@+id/img_edit_ic_reminder"
@@ -46,16 +47,16 @@
                 android:layout_marginVertical="12dp"
                 android:background="@drawable/outline_circle"/>
 
-            <TextView
-                android:id="@+id/tv_edit_ic_reminder"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_edit_ic_reminder"
+                style="@style/CustomBlueRoundButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/edit_ic_reminder"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:textAlignment="center"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@color/black"/>
+                android:textSize="18sp"
+                app:icon="@drawable/ic_edit"
+                android:layout_marginTop="6dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -73,7 +74,7 @@
                     android:layout_marginBottom="10dp"/>
 
                 <EditText
-                    android:id="@+id/email_input"
+                    android:id="@+id/input_judul_reminder"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
@@ -120,7 +121,7 @@
                                 android:padding="0dp"/>
 
                             <Spinner
-                                android:id="@+id/spinner_gender"
+                                android:id="@+id/spinner_day_reminder"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
@@ -185,6 +186,7 @@
                     android:layout_marginBottom="10dp"/>
 
                 <EditText
+                    android:id="@+id/input_desc_reminder"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginBottom="20dp"
@@ -204,6 +206,7 @@
                     android:layout_marginBottom="20dp">
 
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_create_reminder"
                         style="@style/CustomBlueRoundButton"
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
