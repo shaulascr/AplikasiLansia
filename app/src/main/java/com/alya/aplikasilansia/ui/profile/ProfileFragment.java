@@ -20,7 +20,6 @@ import com.bumptech.glide.Glide;
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private ProfileViewModel profileViewModel;
-
     private Button editProfile;
     private TextView personalProfile, healthProfile;
     private TextView userNameProfile;

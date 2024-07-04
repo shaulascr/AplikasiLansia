@@ -3,95 +3,107 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_quiz"
     tools:context=".ui.quiz.QuizActivity">
 
-    <!-- Back Button -->
-    <Button
-        android:id="@+id/buttonBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Kembali"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:background="@drawable/rounded_button_background"
-        style="@style/CustomBlueRoundButton"/>
-
-    <!-- Number RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_quiz"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/buttonBack"
-        android:layout_marginTop="16dp"
-        android:padding="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"/>
+        android:layout_margin="24dp"
+        android:layout_marginTop="24dp"/>
 
-    <!-- Question Text -->
-    <TextView
-        android:id="@+id/questionText"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_question"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/recyclerView_quiz"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sagittis nisi sit amet auctor sagittis."
-        android:textSize="16sp"
-        android:textAlignment="center"/>
-
-    <!-- Answer Buttons -->
-    <LinearLayout
-        android:id="@+id/answerButtons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/questionText"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal"
-        android:gravity="center">
-
-        <Button
-            android:id="@+id/buttonYes"
+        android:layout_marginVertical="16dp"
+        android:layout_marginHorizontal="36dp"
+        android:paddingVertical="16dp"
+        android:backgroundTint="@color/white"
+        app:cardElevation="16dp">
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="YA"
-            android:background="@drawable/rounded_button_background"/>
+            android:layout_gravity="center_horizontal">
+            <TextView
+                android:id="@+id/questionText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Question Text"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="32dp"
+                android:textSize="18sp"/>
 
-        <Button
-            android:id="@+id/buttonNo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TIDAK"
-            android:layout_marginStart="16dp"
-            android:background="@drawable/rounded_button_background"/>
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/buttonLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/questionText"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
 
-    <!-- Navigation Buttons -->
+                <Button
+                    android:id="@+id/buttonYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Yes"
+                    style="@style/CustomWhiteRoundButton"
+                    android:layout_marginEnd="16dp"/>
+
+                <Button
+                    android:id="@+id/buttonNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomWhiteRoundButton"
+                    android:text="No"/>
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
     <LinearLayout
-        android:id="@+id/navigationButtons"
-        android:layout_width="match_parent"
+        android:id="@+id/navigationLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/answerButtons"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/cv_question"
         android:layout_marginTop="16dp"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/buttonPrevious"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sebelumnya"
-            android:background="@drawable/rounded_button_background"/>
+            android:text="Previous"
+            android:layout_marginEnd="16dp"
+            style="@style/CustomBlueRoundButton"/>
 
         <Button
             android:id="@+id/buttonNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Selanjutnya"
-            android:layout_marginStart="16dp"
-            android:background="@drawable/rounded_button_background"/>
+            android:text="Next"
+            style="@style/CustomBlueRoundButton"/>
     </LinearLayout>
 
+    <Button
+        android:id="@+id/buttonEndQuiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="End Quiz"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/navigationLayout"
+        android:layout_marginTop="16dp"/>
+
 </RelativeLayout>
+
 
 

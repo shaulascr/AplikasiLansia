@@ -71,6 +71,20 @@
         <item name="android:stateListAnimator">@null</item> <!-- Disable elevation -->
     </style>
 
+    <style name="numberDisplay" parent="Widget.MaterialComponents.Button">
+        <item name="android:textStyle">bold</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="backgroundTint">@color/white</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:textSize">24sp</item>
+        <item name="strokeColor">@color/blue1</item>
+        <item name="strokeWidth">2dp</item>
+    </style>
+
     <style name="WhiteRoundButtonNoOutline" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@color/blue2</item>
         <item name="android:textStyle">bold</item>

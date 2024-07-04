@@ -9,69 +9,56 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alya.aplikasilansia.R;
+import com.alya.aplikasilansia.data.Question;
 
 import java.util.List;
 
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder> {
 
-    private final List<Integer> questions;
-    private final Boolean[] answers;
+    private List<Question> questions;
     private final OnQuestionClickListener onQuestionClickListener;
 
     public interface OnQuestionClickListener {
         void onQuestionClick(int position);
     }
 
-    public QuestionAdapter(List<Integer> questions, Boolean[] answers, OnQuestionClickListener onQuestionClickListener) {
+    public QuestionAdapter(List<Question> questions, OnQuestionClickListener onQuestionClickListener) {
         this.questions = questions;
-        this.answers = answers;
         this.onQuestionClickListener = onQuestionClickListener;
-    }
-
-    public static class QuestionViewHolder extends RecyclerView.ViewHolder {
-        Button buttonQuestion;
-
-        public QuestionViewHolder(View view) {
-            super(view);
-            buttonQuestion = view.findViewById(R.id.buttonQuestion);
-        }
     }
 
     @NonNull
     @Override
     public QuestionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.number_item, parent, false);
-        return new QuestionViewHolder(view);
+        return new QuestionViewHolder(view, onQuestionClickListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull QuestionViewHolder holder, int position) {
-        int questionNumber = questions.get(position);
-        holder.buttonQuestion.setText(String.valueOf(questionNumber));
-
-        Boolean answer = answers[position];
-        if (answer != null) {
-            if (answer) {
-                holder.buttonQuestion.setBackgroundResource(R.drawable.answered_yes_background);
-            } else {
-                holder.buttonQuestion.setBackgroundResource(R.drawable.answered_no_background);
-            }
-        } else {
-            holder.buttonQuestion.setBackgroundResource(R.drawable.unanswered_background);
-        }
-
-        holder.buttonQuestion.setOnClickListener(v -> onQuestionClickListener.onQuestionClick(position));
+        holder.buttonQuestion.setText(String.valueOf(position + 1)); // This line sets the question number
     }
 
     @Override
     public int getItemCount() {
         return questions.size();
     }
+
+    public static class QuestionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        public Button buttonQuestion;
+        OnQuestionClickListener onQuestionClickListener;
+
+        public QuestionViewHolder(@NonNull View itemView, OnQuestionClickListener onQuestionClickListener) {
+            super(itemView);
+            buttonQuestion = itemView.findViewById(R.id.buttonQuestion);
+            this.onQuestionClickListener = onQuestionClickListener;
+            buttonQuestion.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            onQuestionClickListener.onQuestionClick(getAdapterPosition());
+        }
+    }
 }
-
-
-
-
-
-
-

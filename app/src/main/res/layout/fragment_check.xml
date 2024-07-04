@@ -49,6 +49,7 @@
                 android:layout_toLeftOf="@id/img_depression_test"/>
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_mulai_tes"
                 style="@style/CustomBlueRoundButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
