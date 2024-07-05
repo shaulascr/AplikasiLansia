@@ -1,28 +1,47 @@
 package com.alya.aplikasilansia.ui.reminder;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alya.aplikasilansia.R;
+import com.alya.aplikasilansia.data.Reminder;
 import com.alya.aplikasilansia.ui.newreminder.AddReminderActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class ReminderActivity extends AppCompatActivity implements View.OnClickListener {
 
     Spinner filterSpinner;
     RecyclerView filteredReminderRV;
+    FilteredReminderAdapter adapter;
+    private Reminder firstTodayReminder; // Define as a member variable
+    ReminderViewModel reminderViewModel;
+    private TextView tvReminderName;
+    private TextView tvReminderDate;
+    private ImageView ImgReminder;
+    private String selectedFilter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +57,154 @@ public class ReminderActivity extends AppCompatActivity implements View.OnClickL
         setupSpinner(filterSpinner);
 
         filteredReminderRecyclerView();
+
+        reminderViewModel = new ViewModelProvider(this).get(ReminderViewModel.class);
+        Log.d(TAG, "TRY fetched");
+
+        tvReminderName = findViewById(R.id.tv_reminder_name);
+        tvReminderDate = findViewById(R.id.tv_reminder_date);
+        ImgReminder = findViewById(R.id.img_reminder);
+
+    }
+
+    private void filterData(String selectedFilter) {
+        reminderViewModel.getReminderLiveData().observe(this, reminders -> {
+            if (reminders != null) {
+                List<Object> filteredItems = filterReminders(reminders, selectedFilter);
+                adapter.updateList(filteredItems);
+                updateFirstTodayReminderUI();
+
+            } else {
+                Toast.makeText(ReminderActivity.this, "No data fetched", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private List<Object> filterReminders(List<Reminder> reminders, String selectedFilter) {
+        List<Object> items = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+
+        // Sort reminders by date
+        reminders.sort((r1, r2) -> {
+            try {
+                Date date1 = sdf.parse(r1.getTimestamp());
+                Date date2 = sdf.parse(r2.getTimestamp());
+                return date1.compareTo(date2);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return 0;
+            }
+        });
+        // Initialize date comparisons
+        Calendar today = Calendar.getInstance();
+        Calendar tomorrow = (Calendar) today.clone();
+        tomorrow.add(Calendar.DAY_OF_YEAR, 1);
+
+        boolean addedTodayHeader = false;
+        boolean addedTomorrowHeader = false;
+        boolean addedUpcomingHeader = false;
+
+
+        for (Reminder reminder : reminders) {
+            try {
+                Date reminderDate = sdf.parse(reminder.getTimestamp());
+                Calendar reminderCalendar = Calendar.getInstance();
+                reminderCalendar.setTime(reminderDate);
+
+                if (firstTodayReminder == null) {
+                    firstTodayReminder = reminder;
+                    Log.d(TAG, "First today reminder set: " + firstTodayReminder.getTitle());
+                    continue;
+                }
+
+                switch (selectedFilter) {
+                    case "Semua Pengingat":
+                        // Add headers based on date comparison
+                        if (isSameDay(today, reminderCalendar)) {
+                            if (!addedTodayHeader) {
+                                items.add("Hari Ini");
+                                addedTodayHeader = true;
+                            }
+                        } else if (isSameDay(tomorrow, reminderCalendar)) {
+                            if (!addedTomorrowHeader) {
+                                items.add("Besok");
+                                addedTomorrowHeader = true;
+                            }
+                        } else if (reminderCalendar.after(tomorrow)) {
+                            if (!addedUpcomingHeader) {
+                                items.add("Yang Akan Datang");
+                                addedUpcomingHeader = true;
+                            }
+                        }
+                        // Add reminder after its header
+                        items.add(reminder);
+                        break;
+                    case "Hari Ini":
+                        if (isSameDay(today, reminderCalendar)) {
+                            if (!addedTodayHeader) {
+                                items.add("Hari Ini");
+                                addedTodayHeader = true;
+                            }
+                            items.add(reminder);
+                        }
+                        break;
+                    case "Besok":
+                        if (isSameDay(tomorrow, reminderCalendar)) {
+                            if(!addedTomorrowHeader) {
+                                items.add("Besok");
+                                addedTomorrowHeader = true;
+                            }
+                            items.add(reminder);
+                        }
+                        break;
+                    case "Yang Akan Datang":
+                        if (reminderCalendar.after(tomorrow)) {
+                            if (!addedUpcomingHeader) {
+                                items.add("Yang Akan Datang");
+                                addedUpcomingHeader = true;
+                            }
+                            items.add(reminder);
+                        }
+                        break;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return items;
+    }
+
+    private void updateFirstTodayReminderUI() {
+        if (firstTodayReminder != null) {
+            Log.d(TAG, "Updating UI with first today reminder: " + firstTodayReminder.getTitle());
+            tvReminderName.setText(firstTodayReminder.getTitle());
+            tvReminderDate.setText(formatDate(firstTodayReminder.getTimestamp()));
+            ImgReminder.setImageResource(firstTodayReminder.getIcon());
+        } else {
+            Log.d(TAG, "No first today reminder to update UI with");
+        }
+    }
+    private String formatDate(String timestamp) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat outputFormat = new SimpleDateFormat("'Hari ini pukul' HH:mm", new Locale("id", "ID"));
+        try {
+            Date date = sdf.parse(timestamp);
+            return outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return timestamp;
+        }
+    }
+
+    private boolean isSameDay(Calendar cal1, Calendar cal2) {
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
+    }
+
+    private boolean isTomorrow(Calendar cal1, Calendar cal2) {
+        Calendar tomorrow = (Calendar) cal1.clone();
+        tomorrow.add(Calendar.DAY_OF_YEAR, 1);
+        return tomorrow.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                tomorrow.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
     }
 
     @Override
@@ -50,32 +217,24 @@ public class ReminderActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+
+
     private void setupSpinner(Spinner spinner) {
         String[] filterReminder = getResources().getStringArray(R.array.filter_reminder);
 
-        // Create an ArrayAdapter using a simple spinner item layout
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, filterReminder);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, filterReminder);
 
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        filterSpinner.setAdapter(adapter);
+        filterSpinner.setAdapter(spinnerAdapter);
 
-//        filterSpinner.setSelection(0, false);
         filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // Handle item selection
-                if (position == 0) {
-                    // First item ("Semua Pengingat") is selected, handle as needed (e.g., show message)
-                    Toast.makeText(ReminderActivity.this, "Please select a valid option", Toast.LENGTH_SHORT).show();
-                } else {
-                    // Perform actions based on selected item (exclude the first item)
-                    String selectedFilter = filterReminder[position];
-                    Toast.makeText(ReminderActivity.this, "Selected: " + selectedFilter, Toast.LENGTH_SHORT).show();
-                }
+                // Get the selected item and filter the data
+                selectedFilter = filterReminder[position];
+                filterData(selectedFilter);
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 // Handle case when nothing is selected
@@ -88,22 +247,7 @@ public class ReminderActivity extends AppCompatActivity implements View.OnClickL
         filteredReminderRV = findViewById(R.id.rv_filtered_reminder);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         filteredReminderRV.setLayoutManager(layoutManager);
-
-        // Create a list of FilteredReminder objects (replace with your actual data)
-        List<FilteredReminder> filteredReminderList = new ArrayList<>();
-        filteredReminderList.add(new FilteredReminder("New Reminder 1", "2024-07-01", "In this updated code, the FilteredReminder constructor properly initializes the fields, and the bind method in the ReminderViewHolder sets the TextViews and ImageView with the correct data from the FilteredReminder object.", R.drawable.kiwi));
-        filteredReminderList.add(new FilteredReminder("New Reminder 2", "2024-07-02", "Description 2", R.drawable.white_round_pill));
-        FilteredReminderAdapter filteredReminderAdapter = new FilteredReminderAdapter(filteredReminderList);
-        filteredReminderRV.setAdapter(filteredReminderAdapter);
-    }
-
-    private void filterData(String selectedFilter) {
-        // Replace with your logic to filter reminder data based on selectedFilter
-        // Example: update filteredReminderList and notify adapter
-        List<FilteredReminder> filteredList = new ArrayList<>();
-        // Filter your original list based on selectedFilter
-        // Example: filteredList = filterOriginalList(selectedFilter);
-
-//        filteredReminderAdapter.updateList(filteredList); // Update adapter with filtered data
+        adapter = new FilteredReminderAdapter(new ArrayList<>()); // Initialize with an empty list
+        filteredReminderRV.setAdapter(adapter);
     }
 }

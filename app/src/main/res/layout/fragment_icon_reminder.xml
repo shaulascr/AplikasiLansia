@@ -19,20 +19,12 @@
         android:layout_gravity="center"
         android:background="@drawable/custom_edit_text">
 
-        <ImageView
-            android:layout_width="60dp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_icon_reminder"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:src="@drawable/kiwi"
-            tools:ignore="ContentDescription" />
-
-        <!-- Repeat for all images -->
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:src="@drawable/white_round_pill"
-            tools:ignore="ContentDescription" />
+            tools:ignore="SpeakableTextPresentCheck"
+            tools:listitem="@layout/item_icon_reminder"/>
 
     </com.google.android.flexbox.FlexboxLayout>
 

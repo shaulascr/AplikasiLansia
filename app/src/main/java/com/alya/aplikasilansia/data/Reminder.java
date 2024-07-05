@@ -7,25 +7,24 @@ public class Reminder {
     private String desc;
     private String userId;
 
-    public String getTimestamp() {
-        return timestamp;
-    }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
+
+    private int icon;
+
 
     private String timestamp;
 
     public Reminder() {}
 
-    public Reminder(String userId, String title, String day, String time, String desc, String timestamp){
+    public Reminder(String userId, String title, String day, String time, String desc, String timestamp, Integer icon){
         this.userId = userId;
         this.title = title;
         this.day = day;
         this.time = time;
         this.desc = desc;
         this.timestamp = timestamp;
+        this.icon = icon;
+
     }
     public String getTitle() {
         return title;
@@ -65,7 +64,20 @@ public class Reminder {
     public void setUserId(String userId) {
         this.userId = userId;
     }
+    public String getTimestamp() {
+        return timestamp;
+    }
 
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
 
+    public int getIcon() {
+        return icon;
+    }
+
+    public void setIcon(int icon) {
+        this.icon = icon;
+    }
 
 }

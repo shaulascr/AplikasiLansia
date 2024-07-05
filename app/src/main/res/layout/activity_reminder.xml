@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/layout_bottom_gray"
     android:orientation="vertical"
     tools:context=".ui.reminder.ReminderActivity">
 
@@ -71,7 +71,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
-                        android:id="@+id/ImgReminder"
+                        android:id="@+id/img_reminder"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:layout_marginTop="10dp"
@@ -90,7 +90,7 @@
                         android:textColor="@color/black"
                         android:layout_marginStart="20dp"
                         app:layout_constraintTop_toBottomOf="@id/tvOngoingReminder"
-                        app:layout_constraintStart_toEndOf="@id/ImgReminder"/>
+                        app:layout_constraintStart_toEndOf="@id/img_reminder"/>
 
                     <TextView
                         android:id="@+id/tv_reminder_date"
@@ -102,7 +102,7 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="5dp"
                         app:layout_constraintTop_toBottomOf="@id/tv_reminder_name"
-                        app:layout_constraintStart_toEndOf="@id/ImgReminder"/>
+                        app:layout_constraintStart_toEndOf="@id/img_reminder"/>
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -120,7 +120,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="16dp"
                 app:layout_constraintTop_toBottomOf="@id/tv_reminder_date"
-                app:layout_constraintStart_toEndOf="@id/ImgReminder"/>
+                app:layout_constraintStart_toEndOf="@id/img_reminder"/>
 
             <Spinner
                 android:id="@+id/dropdown_reminder_filter"

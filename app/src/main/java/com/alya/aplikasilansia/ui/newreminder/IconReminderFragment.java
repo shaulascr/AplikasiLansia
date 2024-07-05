@@ -6,41 +6,44 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alya.aplikasilansia.R;
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexboxLayoutManager;
+import com.google.android.flexbox.JustifyContent;
 import com.google.android.material.button.MaterialButton;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link IconReminderFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class IconReminderFragment extends DialogFragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private RecyclerView recyclerView;
+    private IconReminderAdapter adapter;
+    private List<IconReminder> iconReminderList;
+    private MaterialButton btnCloseReminderDialog;
+    private OnIconSelectedListener mListener; // Define mListener
+
+    public interface OnIconSelectedListener {
+        void onIconSelected(int iconResId);
+    }
+
+    // Setter method for mListener
+    public void setOnIconSelectedListener(OnIconSelectedListener listener) {
+        mListener = listener;
+    }
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private MaterialButton btnCloseReminderDialog;
-
     public IconReminderFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment IconReminderFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static IconReminderFragment newInstance(String param1, String param2) {
         IconReminderFragment fragment = new IconReminderFragment();
         Bundle args = new Bundle();
@@ -65,6 +68,48 @@ public class IconReminderFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_icon_reminder, container, false);
         btnCloseReminderDialog = view.findViewById(R.id.closeReminderDialog);
         btnCloseReminderDialog.setOnClickListener(v -> dismiss());
+
+        recyclerView = view.findViewById(R.id.rv_icon_reminder);
+        recyclerView.setHasFixedSize(true);
+
+        // Set up FlexboxLayoutManager
+        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getContext());
+        layoutManager.setFlexDirection(FlexDirection.ROW);
+        layoutManager.setJustifyContent(JustifyContent.SPACE_EVENLY);
+        recyclerView.setLayoutManager(layoutManager);
+
+        iconReminderList = new ArrayList<>();
+        iconReminderList.add(new IconReminder(R.drawable.kiwi));
+        iconReminderList.add(new IconReminder(R.drawable.kiwi));
+        iconReminderList.add(new IconReminder(R.drawable.kiwi));
+        iconReminderList.add(new IconReminder(R.drawable.kiwi));
+        iconReminderList.add(new IconReminder(R.drawable.kiwi));
+        iconReminderList.add(new IconReminder(R.drawable.white_round_pill));
+        iconReminderList.add(new IconReminder(R.drawable.white_round_pill));
+        iconReminderList.add(new IconReminder(R.drawable.white_round_pill));
+        iconReminderList.add(new IconReminder(R.drawable.white_round_pill));
+        // Add more items as needed
+
+        adapter = new IconReminderAdapter(getContext(), iconReminderList);
+        recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new IconReminderAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                IconReminder clickedItem = iconReminderList.get(position);
+                int drawableId = clickedItem.getSrcIcon();
+                if (mListener != null) {
+                    mListener.onIconSelected(drawableId); // Notify listener of selected icon
+                }
+                dismiss(); // Close the fragment dialog
+            }
+        });
+
+
+        btnCloseReminderDialog = view.findViewById(R.id.closeReminderDialog);
+        btnCloseReminderDialog.setOnClickListener(v -> dismiss());
         return view;
     }
+
+
 }

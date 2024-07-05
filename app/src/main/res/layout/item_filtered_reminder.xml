@@ -5,16 +5,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_reminder_day_filter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Hari Reminder"
-        android:textSize="26sp"
-        android:layout_marginTop="12dp"
-        android:layout_marginHorizontal="18dp"
-        android:fontFamily="@font/inter_bold"/>
-
     <androidx.cardview.widget.CardView
         android:id="@+id/card_reminder_filter"
         android:layout_width="match_parent"
@@ -47,14 +37,35 @@
                 android:layout_toEndOf="@id/img_reminder_ic"
                 android:layout_alignParentEnd="true"/>
 
-            <TextView
-                android:id="@+id/tv_reminder_date_filter"
+            <LinearLayout
+                android:id="@+id/layout_reminder_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Hari ini pukul 12.00"
-                android:textSize="18sp"
+                android:orientation="horizontal"
                 android:layout_below="@id/tv_reminder_name_filter"
-                android:layout_toEndOf="@id/img_reminder_ic"/>
+                android:layout_toEndOf="@id/img_reminder_ic">
+
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_reminder_day"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Hari ini"-->
+<!--                    android:textSize="18sp" />-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text=" pukul "-->
+<!--                    android:textSize="18sp" />-->
+
+                <TextView
+                    android:id="@+id/tv_reminder_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12.00"
+                    android:textSize="18sp"/>
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/tv_desc_reminder_filter"
@@ -62,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:text="Diminum setelah makan, minum air putih yang banyak"
                 android:textSize="16sp"
-                android:layout_below="@id/tv_reminder_date_filter"
+                android:layout_below="@id/layout_reminder_date"
                 android:layout_toEndOf="@id/img_reminder_ic"/>
 
             <LinearLayout

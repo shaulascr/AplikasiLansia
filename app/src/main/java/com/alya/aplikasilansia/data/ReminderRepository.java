@@ -17,6 +17,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ReminderRepository {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -28,8 +31,8 @@ public class ReminderRepository {
         mStorage = FirebaseStorage.getInstance().getReference("reminders");
     }
 
-    public MutableLiveData<Reminder> fetchReminder() {
-        MutableLiveData<Reminder> reminderLiveData = new MutableLiveData<>();
+    public MutableLiveData<List<Reminder>> fetchReminder() {
+        MutableLiveData<List<Reminder>> reminderLiveData = new MutableLiveData<>();
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
 
         if (firebaseUser != null) {
@@ -38,17 +41,23 @@ public class ReminderRepository {
             userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()){
-                       String userId = snapshot.child("userId").getValue(String.class);
-                       String title = snapshot.child("title").getValue(String.class);
-                       String day = snapshot.child("day").getValue(String.class);
-                       String time = snapshot.child("time").getValue(String.class);
-                       String desc = snapshot.child("description").getValue(String.class);
-                       String timestamp = snapshot.child("timestamp").getValue(String.class);
+                    List<Reminder> reminders = new ArrayList<>();
 
-                       Reminder userReminder = new Reminder(userId, title, day, time, desc, timestamp);
-                       reminderLiveData.setValue(userReminder);
+                    for (DataSnapshot reminderSnapshot : snapshot.getChildren()) {
+                        String userId = reminderSnapshot.child("userId").getValue(String.class);
+                        if (userId.equals(firebaseUser.getUid())) {
+                            String title = reminderSnapshot.child("title").getValue(String.class);
+                            String day = reminderSnapshot.child("day").getValue(String.class);
+                            String time = reminderSnapshot.child("time").getValue(String.class);
+                            String desc = reminderSnapshot.child("desc").getValue(String.class);
+                            String timestamp = reminderSnapshot.child("timestamp").getValue(String.class);
+                            Integer icon = reminderSnapshot.child("icon").getValue(Integer.class);
+
+                            Reminder reminder = new Reminder(userId, title, day, time, desc, timestamp, icon);
+                            reminders.add(reminder);
+                        }
                     }
+                    reminderLiveData.setValue(reminders); // Set LiveData value here
                 }
 
                 @Override
@@ -61,12 +70,12 @@ public class ReminderRepository {
         return reminderLiveData;
     }
 
-    public void createReminder(String title, String day, String time, String desc, String timestamp, MutableLiveData<FirebaseUser> reminderLiveData, MutableLiveData<String> errorLiveData) {
+    public void createReminder(String title, String day, String time, String desc, String timestamp, Integer icon, MutableLiveData<FirebaseUser> reminderLiveData, MutableLiveData<String> errorLiveData) {
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
         if (firebaseUser != null) {
             String userId = firebaseUser.getUid();
             Log.d(TAG, "User ID: " + userId); // Log the user ID to verify it's correct
-            Reminder reminder = new Reminder(userId, title, day, time, desc, timestamp);
+            Reminder reminder = new Reminder(userId, title, day, time, desc, timestamp, icon);
             DatabaseReference remindersRef = mDatabase.child("reminders").child(userId).push();
             remindersRef.setValue(reminder)
                     .addOnSuccessListener(aVoid -> {

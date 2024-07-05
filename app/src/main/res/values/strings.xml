@@ -146,7 +146,7 @@
 
     <string-array name="filter_reminder">
         <item>Semua Pengingat</item>
-        <item>Hari</item>
+        <item>Hari Ini</item>
         <item>Besok</item>
         <item>Yang Akan Datang</item>
     </string-array>

@@ -28,12 +28,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class AddReminderActivity extends AppCompatActivity implements View.OnClickListener {
+public class AddReminderActivity extends AppCompatActivity implements View.OnClickListener, IconReminderFragment.OnIconSelectedListener {
 
     private TextView tvHourReminder;
     private Button btnIconReminder;
     private Button btnCreateReminder;
     private ImageView imgIconReminder;
+    private int selectedIconResourceId;
+
     private EditText inputTitleReminder;
     private EditText inputDescReminder;
     private Spinner dayReminder;
@@ -49,7 +51,7 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
         btnIconReminder = findViewById(R.id.btn_edit_ic_reminder);
         dialogIconReminder(btnIconReminder);
 
-        imgIconReminder = findViewById(R.id.img_edit_ic_reminder);
+        imgIconReminder = findViewById(R.id.img_edit_ic_reminder); // set the src of this to selected src in the previous fragment
 
         Button btnBackFromAddReminder = findViewById(R.id.btn_back_addreminder);
         btnBackFromAddReminder.setOnClickListener(this);
@@ -100,7 +102,13 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
         String desc = inputDescReminder.getText().toString().trim();
         String timestamp = calculateTimestamp(selectedDay, selectedTime);
 
-        addReminderViewModel.createReminder(title, selectedDay, selectedTime, desc, timestamp);
+        if (selectedIconResourceId != 0) {
+            addReminderViewModel.createReminder(title, selectedDay, selectedTime, desc, timestamp, selectedIconResourceId);
+        } else {
+            // Handle case where no icon is selected
+            Toast.makeText(this, "Please select an icon", Toast.LENGTH_SHORT).show();
+            // Optionally, you can prevent reminder creation or provide default behavior
+        }
 //        addReminderViewModel.createReminder(title, selectedDay, selectedTime, desc);
 
     }
@@ -119,8 +127,15 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
                 IconReminderFragment iconReminderFragment = new IconReminderFragment();
                 iconReminderFragment.show(getSupportFragmentManager(), "IconReminderDialog");
 //                Toast.makeText(this, "Button Clicked!", Toast.LENGTH_SHORT).show();
+                iconReminderFragment.setOnIconSelectedListener(AddReminderActivity.this); // Set listener
             }
         });
+    }
+    @Override
+    public void onIconSelected(int iconResId) {
+        // Update ImageView with selected icon
+        imgIconReminder.setImageResource(iconResId);
+        selectedIconResourceId = iconResId; // Save selected icon resource ID to use later
     }
 
     private void setTimePicker(TextView tvHourReminder) {
@@ -174,25 +189,45 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         return sdf.format(targetDate.getTime());
     }
-
     private int getDayOfWeek(String day) {
         switch (day) {
-            case "Sunday":
-                return Calendar.SUNDAY;
-            case "Monday":
+            case "Senin":
                 return Calendar.MONDAY;
-            case "Tuesday":
+            case "Selasa":
                 return Calendar.TUESDAY;
-            case "Wednesday":
+            case "Rabu":
                 return Calendar.WEDNESDAY;
-            case "Thursday":
+            case "Kamis":
                 return Calendar.THURSDAY;
-            case "Friday":
+            case "Jumat":
                 return Calendar.FRIDAY;
-            case "Saturday":
+            case "Sabtu":
                 return Calendar.SATURDAY;
+            case "Minggu":
+                return Calendar.SUNDAY;
             default:
-                return -1;
+                return -1; // Handle invalid input or edge cases
         }
     }
+
+//    private int getDayOfWeek(String day) {
+//        switch (day) {
+//            case "Sunday":
+//                return Calendar.SUNDAY;
+//            case "Monday":
+//                return Calendar.MONDAY;
+//            case "Tuesday":
+//                return Calendar.TUESDAY;
+//            case "Wednesday":
+//                return Calendar.WEDNESDAY;
+//            case "Thursday":
+//                return Calendar.THURSDAY;
+//            case "Friday":
+//                return Calendar.FRIDAY;
+//            case "Saturday":
+//                return Calendar.SATURDAY;
+//            default:
+//                return -1;
+//        }
+//    }
 }
