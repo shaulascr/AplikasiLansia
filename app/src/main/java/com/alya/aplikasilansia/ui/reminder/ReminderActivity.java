@@ -111,8 +111,11 @@ public class ReminderActivity extends AppCompatActivity implements View.OnClickL
                 reminderCalendar.setTime(reminderDate);
 
                 if (firstTodayReminder == null) {
-                    firstTodayReminder = reminder;
-                    Log.d(TAG, "First today reminder set: " + firstTodayReminder.getTitle());
+                    if (isSameDay(today, reminderCalendar)) {
+                        if (reminderCalendar.after(Calendar.getInstance())) {
+                            firstTodayReminder = reminder;
+                            Log.d(TAG, "First today reminder set: " + firstTodayReminder.getTitle());                        }
+                    }
                     continue;
                 }
 
@@ -120,9 +123,11 @@ public class ReminderActivity extends AppCompatActivity implements View.OnClickL
                     case "Semua Pengingat":
                         // Add headers based on date comparison
                         if (isSameDay(today, reminderCalendar)) {
-                            if (!addedTodayHeader) {
-                                items.add("Hari Ini");
-                                addedTodayHeader = true;
+                            if (reminderCalendar.after(Calendar.getInstance())) {
+                                if (!addedTodayHeader) {
+                                    items.add("Hari Ini");
+                                    addedTodayHeader = true;
+                                }
                             }
                         } else if (isSameDay(tomorrow, reminderCalendar)) {
                             if (!addedTomorrowHeader) {

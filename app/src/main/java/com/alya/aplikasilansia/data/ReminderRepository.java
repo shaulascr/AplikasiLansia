@@ -93,4 +93,24 @@ public class ReminderRepository {
         }
     }
 
+    public void deleteReminder(String reminderId, MutableLiveData<String> errorLiveData) {
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        if (firebaseUser != null) {
+            String userId = firebaseUser.getUid();
+            DatabaseReference reminderRef = mDatabase.child("reminders").child(userId).child(reminderId);
+
+            reminderRef.removeValue()
+                    .addOnSuccessListener(aVoid -> {
+                        Log.d(TAG, "Reminder deleted successfully");
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e(TAG, "Failed to delete reminder: " + e.getMessage());
+                        errorLiveData.postValue("Failed to delete reminder: " + e.getMessage());
+                    });
+        } else {
+            errorLiveData.postValue("User not authenticated");
+        }
+    }
+
+
 }
