@@ -1,6 +1,7 @@
 package com.alya.aplikasilansia.ui.quiz;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,10 +17,11 @@ import com.alya.aplikasilansia.data.Question;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 public class QuizActivity extends AppCompatActivity {
 
@@ -82,12 +84,12 @@ public class QuizActivity extends AppCompatActivity {
 
         // Button click listeners
         buttonYes.setOnClickListener(v -> {
-            quizViewModel.updateUserAnswer(1, true); // Update user's answer to true (Yes)
+            quizViewModel.updateUserAnswer(quizViewModel.getCurrentQuestionIndex(), true); // Update user's answer to true (Yes)
             moveToNextQuestion();
         });
 
         buttonNo.setOnClickListener(v -> {
-            quizViewModel.updateUserAnswer(0, false); // Update user's answer to false (No)
+            quizViewModel.updateUserAnswer(quizViewModel.getCurrentQuestionIndex(), false); // Update user's answer to false (No)
             moveToNextQuestion();
         });
 
@@ -104,9 +106,14 @@ public class QuizActivity extends AppCompatActivity {
                     boolean userAnswer = getUserAnswerForQuestion(i);
                     userAnswers.put("question_" + i, userAnswer);
                 }
-                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                String quizId = generateQuizId(); // Replace with actual quiz ID generation logic
-                quizViewModel.endQuiz(userId, quizId, userAnswers);
+
+                if (userAnswers.size() == answeredQuestions.size()) {  // Check if all questions are answered
+                    String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    String quizId = generateQuizId();
+                    quizViewModel.endQuiz(userId, quizId, userAnswers);
+                } else {
+                    Toast.makeText(QuizActivity.this, "Please answer all questions before ending the quiz.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -143,14 +150,22 @@ public class QuizActivity extends AppCompatActivity {
 
     // Replace with actual quiz ID generation logic
     private String generateQuizId() {
-        return UUID.randomUUID().toString(); // Generate a random UUID as quiz ID
+        // Use the current time with a specific format as the quiz ID
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mmss");
+        return sdf.format(new Date());
     }
 
     private boolean getUserAnswerForQuestion(int questionIndex) {
-        // Implement logic to retrieve the user's answer for the question at questionIndex
-        // This could involve tracking the answers in the ViewModel or another approach
-        // For now, let's return a dummy value
-        return true; // Replace with actual answer logic
+        List<Boolean> userAnswers = quizViewModel.getUserAnswers().getValue();
+        List<Question> questions = quizViewModel.getQuestionsLiveData().getValue();
+
+        if (questions != null && userAnswers != null && questionIndex < questions.size() && questionIndex < userAnswers.size()) {
+            Question question = questions.get(questionIndex);
+            Boolean userAnswer = userAnswers.get(questionIndex);
+            return userAnswer != null && userAnswer.equals(question.isCorrectAnswer());
+        }
+        Log.d("QuizActivity", "Storing answers for questions: " + questions + " with user answers: " + userAnswers + " for question index: " + questionIndex);
+        return false;
     }
 }
 

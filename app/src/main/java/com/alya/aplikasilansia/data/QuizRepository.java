@@ -1,5 +1,7 @@
 package com.alya.aplikasilansia.data;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -63,6 +65,9 @@ public class QuizRepository {
         Map<String, Object> data = new HashMap<>();
         data.put("answers", userAnswers);
         data.put("score", score);
+
+        Log.d("QuizRepository", "Storing answers for quizId: " + quizId + ", userId: " + userId + ", answers: " + userAnswers.toString() + ", score: " + score);
+
 
         answersRef.setValue(data).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {

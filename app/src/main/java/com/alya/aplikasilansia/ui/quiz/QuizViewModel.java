@@ -1,5 +1,7 @@
 package com.alya.aplikasilansia.ui.quiz;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -9,6 +11,7 @@ import com.alya.aplikasilansia.data.Question;
 import com.alya.aplikasilansia.data.QuizRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +22,7 @@ public class QuizViewModel extends ViewModel {
     private final MutableLiveData<Integer> currentQuestionIndex = new MutableLiveData<>(0);
     private final LiveData<Question> currentQuestion;
     private final LiveData<Boolean> isLoading;
-    private int score = 0;
+    private final MutableLiveData<Integer> score = new MutableLiveData<>(0);
     private final MutableLiveData<Boolean> quizCompleted = new MutableLiveData<>();
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
     private final MutableLiveData<List<Boolean>> userAnswers = new MutableLiveData<>(new ArrayList<>());
@@ -37,21 +40,30 @@ public class QuizViewModel extends ViewModel {
                 return new MutableLiveData<>(null);
             }
         });
+        // Initialize user answers list with false values
+        questionsLiveData.observeForever(questions -> {
+            if (questions != null) {
+                List<Boolean> initialAnswers = new ArrayList<>(Collections.nCopies(questions.size(), false));
+                userAnswers.setValue(initialAnswers);
+            }
+        });
     }
-    public void calculateTotalScore() {
-        List<Question> questions = questionsLiveData.getValue();
+    public Integer calculateTotalScore() {
+        int totalScore = 0;
         List<Boolean> answers = userAnswers.getValue();
-        score = 0; // Reset score
-
-        if (questions != null && answers != null && questions.size() == answers.size()) {
+        List<Question> questions = questionsLiveData.getValue();
+        if (answers != null && questions != null) {
             for (int i = 0; i < questions.size(); i++) {
                 Question question = questions.get(i);
-                boolean userAnswer = answers.get(i);
-                if (question.isCorrectAnswer() == userAnswer) {
-                    score += question.getScore();
+                Boolean userAnswer = answers.get(i);
+                if (userAnswer != null && userAnswer.equals(question.isCorrectAnswer())) {
+                    totalScore++;
                 }
             }
         }
+        Log.e("QuizViewModel", "Null values or mismatched sizes in calculateTotalScore");
+
+        return totalScore;
     }
 
     public LiveData<List<Question>> getQuestionsLiveData() {
@@ -84,9 +96,13 @@ public class QuizViewModel extends ViewModel {
     }
 
     public void answerCurrentQuestion(boolean answer) {
-        Question question = currentQuestion.getValue();
-        if (question != null && question.isCorrectAnswer() == answer) {
-            score += question.getScore();
+        Integer index = currentQuestionIndex.getValue();
+        if (index != null) {
+            List<Boolean> currentAnswers = userAnswers.getValue();
+            if (currentAnswers != null) {
+                currentAnswers.set(index, answer);
+                userAnswers.setValue(currentAnswers);
+            }
         }
     }
 
@@ -101,7 +117,7 @@ public class QuizViewModel extends ViewModel {
     }
 
 
-    public int getTotalScore() {
+    public LiveData<Integer> getTotalScore() {
         return score;
     }
 
@@ -116,7 +132,11 @@ public class QuizViewModel extends ViewModel {
     }
 
     public void endQuiz(String userId, String quizId, Map<String, Boolean> userAnswers) {
-        repository.storeAnswers(userId, quizId, userAnswers, score, new QuizRepository.OnStoreAnswersCompleteListener() {
+        int finalScore = calculateTotalScore();
+
+        Log.d("QuizViewModel", "Final score calculated: " + finalScore);
+
+        repository.storeAnswers(userId, quizId, userAnswers, finalScore, new QuizRepository.OnStoreAnswersCompleteListener() {
             @Override
             public void onSuccess() {
                 quizCompleted.setValue(true); // Update quiz completion status
