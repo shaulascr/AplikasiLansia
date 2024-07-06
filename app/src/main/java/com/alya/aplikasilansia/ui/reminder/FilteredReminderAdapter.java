@@ -3,6 +3,7 @@ package com.alya.aplikasilansia.ui.reminder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -105,6 +106,7 @@ public class FilteredReminderAdapter extends RecyclerView.Adapter<RecyclerView.V
         TextView tv_dayTitleReminder;
         TextView tv_descReminder;
         ImageView img_IcReminder;
+        Button btnDelRemind;
 
         public ReminderViewHolder(View itemView) {
             super(itemView);
@@ -112,6 +114,14 @@ public class FilteredReminderAdapter extends RecyclerView.Adapter<RecyclerView.V
             tv_timeReminder = itemView.findViewById(R.id.tv_reminder_time);
             tv_descReminder = itemView.findViewById(R.id.tv_desc_reminder_filter);
             img_IcReminder = itemView.findViewById(R.id.img_reminder_ic);
+
+            btnDelRemind = itemView.findViewById(R.id.btn_del_remind);
+            btnDelRemind.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
 
         public void bind(Reminder reminder) {

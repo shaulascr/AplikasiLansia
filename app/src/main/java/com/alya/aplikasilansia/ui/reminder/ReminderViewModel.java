@@ -18,10 +18,8 @@ public class ReminderViewModel extends ViewModel {
     private ReminderRepository reminderRepository;
     public MutableLiveData<List<Reminder>> reminderLiveData;
     public MutableLiveData<String> updateResultLiveData;
+    public MutableLiveData<String> errorLiveData;
 
-    public MutableLiveData<Reminder> getFirstReminderLiveData() {
-        return firstReminderLiveData;
-    }
 
     public MutableLiveData<Reminder> firstReminderLiveData;
 
@@ -30,13 +28,17 @@ public class ReminderViewModel extends ViewModel {
         updateResultLiveData = new MutableLiveData<>();
         firstReminderLiveData = new MutableLiveData<>();
         reminderRepository = new ReminderRepository();
-//        fetchReminder();
+        errorLiveData = new MutableLiveData<>();
         fetchReminders();
         fetchFirstReminder();
     }
 
     public LiveData<List<Reminder>> getReminderLiveData(){
         return reminderLiveData;
+    }
+
+    public MutableLiveData<Reminder> getFirstReminderLiveData() {
+        return firstReminderLiveData;
     }
     public LiveData<String> getUpdateResultLiveData(){
         return updateResultLiveData;
@@ -50,14 +52,17 @@ public class ReminderViewModel extends ViewModel {
     }
 
     private void fetchFirstReminder() {
-        reminderLiveData.observeForever(reminders -> {
-            if (reminders != null && !reminders.isEmpty()) {
-                Reminder firstReminder = getFirstTodayOrUpcomingReminder(reminders);
-                if (firstReminder != null) {
-                    firstReminderLiveData.setValue(firstReminder);
-                }
-            }
+        reminderRepository.fetchReminder().observeForever(reminders -> {
+//            reminderLiveData.setValue(reminders);
+            updateFirstReminder(reminders);
         });
+    }
+
+    private void updateFirstReminder(List<Reminder> reminders) {
+        if (reminders != null && !reminders.isEmpty()) {
+            Reminder firstReminder = getFirstTodayOrUpcomingReminder(reminders);
+            firstReminderLiveData.setValue(firstReminder);
+        }
     }
 
     private Reminder getFirstTodayOrUpcomingReminder(List<Reminder> reminders) {
@@ -96,4 +101,7 @@ public class ReminderViewModel extends ViewModel {
                 cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
     }
 
+    public void deleteReminderData(String reminderId) {
+        reminderRepository.deleteReminder(reminderId, errorLiveData);
+    }
 }

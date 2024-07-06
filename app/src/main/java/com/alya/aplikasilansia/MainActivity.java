@@ -37,8 +37,27 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
-    }
 
+//        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+//            @Override
+//            public void onComplete(@NonNull Task<String> task) {
+//                if (!task.isSuccessful()) {
+//                    Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+//                    return;
+//                }
+//
+//                String token = task.getResult();
+//                Log.d(TAG, "FCM Token: " + token);
+//                // Save the token to Firebase Database under the user ID
+//                saveTokenToServer(token);
+//            }
+//        });
+    }
+//    private void saveTokenToServer(String token) {
+//        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+//        database.child("userTokens").child(userId).setValue(token);
+//    }
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);

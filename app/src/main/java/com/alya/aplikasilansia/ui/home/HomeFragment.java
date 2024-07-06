@@ -1,7 +1,10 @@
 package com.alya.aplikasilansia.ui.home;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alya.aplikasilansia.R;
+import com.alya.aplikasilansia.data.Reminder;
 import com.alya.aplikasilansia.data.User;
 import com.alya.aplikasilansia.ui.bloodpressure.BloodPressureActivity;
 import com.alya.aplikasilansia.ui.healthcare.HealthCareActivity;
@@ -42,6 +46,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private TextView tvTitleRemind;
     private TextView tvTimeRemind;
     private ImageView imgRemind;
+    private Reminder firstTodayReminder;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -93,17 +98,75 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 }
             }
         });
+//        reminderViewModel.getReminderLiveData().observe(getViewLifecycleOwner(), new Observer<List<Reminder>>() {
+//            @Override
+//            public void onChanged(List<Reminder> reminders) {
+//                if (reminders == null || reminders.isEmpty()) {
+//                    Log.d(TAG, "No reminders available");
+//                    return;
+//                }
+//
+//                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+//
+//                reminders.sort((r1, r2) -> {
+//                    try {
+//                        Date date1 = sdf.parse(r1.getTimestamp());
+//                        Date date2 = sdf.parse(r2.getTimestamp());
+//                        return date1.compareTo(date2);
+//                    } catch (ParseException e) {
+//                        e.printStackTrace();
+//                        return 0;
+//                    }
+//                });
+//
+//                // Initialize date comparisons
+//                Calendar today = Calendar.getInstance();
+//
+//                for (Reminder reminder : reminders) {
+//                    try {
+//                        Date reminderDate = sdf.parse(reminder.getTimestamp());
+//                        Calendar reminderCalendar = Calendar.getInstance();
+//                        reminderCalendar.setTime(reminderDate);
+//
+//                        if (firstTodayReminder == null) {
+//                            if (isSameDay(today, reminderCalendar)) {
+//                                if (reminderCalendar.after(Calendar.getInstance())) {
+//                                    firstTodayReminder = reminder;
+//                                    Log.d(TAG, "First today reminder set: " + firstTodayReminder.getTitle());                        }
+////                                continue;
+//                            }
+//                        }
+//                    } catch (ParseException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//                // Update the UI with the first reminder for today
+//                updateFirstTodayReminderUI();
+//            }
+//        });
+
 
         reminderViewModel.getFirstReminderLiveData().observe(getViewLifecycleOwner(), firstReminder -> {
             if (firstReminder != null) {
-                tvTitleRemind.setText(firstReminder.getTitle());
-                tvTimeRemind.setText(formatDate(firstReminder.getTimestamp()));
-                imgRemind.setImageResource(firstReminder.getIcon());
+                updateFirstTodayReminderUI(firstReminder);
             }
         });
 
 
         return view;
+    }
+
+
+    private void updateFirstTodayReminderUI(Reminder firstTodayReminder) {
+        if (firstTodayReminder != null) {
+            Log.d(TAG, "Updating UI with first today reminder: " + firstTodayReminder.getTitle());
+            tvTitleRemind.setText(firstTodayReminder.getTitle());
+            tvTimeRemind.setText(formatDate(firstTodayReminder.getTimestamp()));
+            imgRemind.setImageResource(firstTodayReminder.getIcon());
+        } else {
+            Log.d(TAG, "No first today reminder to update UI with");
+        }
     }
     private String formatDate(String timestamp) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());

@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alya.aplikasilansia.MainActivity;
 import com.alya.aplikasilansia.R;
 import com.alya.aplikasilansia.data.Reminder;
 import com.alya.aplikasilansia.ui.newreminder.AddReminderActivity;
@@ -64,22 +65,40 @@ public class ReminderActivity extends AppCompatActivity implements View.OnClickL
         tvReminderName = findViewById(R.id.tv_reminder_name);
         tvReminderDate = findViewById(R.id.tv_reminder_date);
         ImgReminder = findViewById(R.id.img_reminder);
+//        filterData(selectedFilter);
+        Log.d(TAG, "SELECTED FILTER: ");
 
+//        reminderViewModel.getReminderLiveData().observe(this, reminders -> {
+//            if (reminders != null) {
+//                List<Object> items = filterReminders(reminders);
+//                adapter.updateList(items);
+//                updateFirstTodayReminderUI();
+//                Toast.makeText(ReminderActivity.this, "Data successfully fetched", Toast.LENGTH_SHORT).show();
+//            } else {
+//                Toast.makeText(ReminderActivity.this, "No data fetched", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+        filterData();
+        reminderViewModel.getFirstReminderLiveData().observe(this, firstReminder -> {
+            if (firstReminder != null) {
+                updateFirstTodayReminderUI(firstReminder);
+            }
+        });
     }
 
-    private void filterData(String selectedFilter) {
+    private void filterData() {
         reminderViewModel.getReminderLiveData().observe(this, reminders -> {
             if (reminders != null) {
-                List<Object> filteredItems = filterReminders(reminders, selectedFilter);
+                List<Object> filteredItems = filterReminders(reminders);
                 adapter.updateList(filteredItems);
-                updateFirstTodayReminderUI();
+//                updateFirstTodayReminderUI();
 
             } else {
                 Toast.makeText(ReminderActivity.this, "No data fetched", Toast.LENGTH_SHORT).show();
             }
         });
     }
-    private List<Object> filterReminders(List<Reminder> reminders, String selectedFilter) {
+    private List<Object> filterReminders(List<Reminder> reminders) {
         List<Object> items = new ArrayList<>();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
 
@@ -103,7 +122,6 @@ public class ReminderActivity extends AppCompatActivity implements View.OnClickL
         boolean addedTomorrowHeader = false;
         boolean addedUpcomingHeader = false;
 
-
         for (Reminder reminder : reminders) {
             try {
                 Date reminderDate = sdf.parse(reminder.getTimestamp());
@@ -115,61 +133,51 @@ public class ReminderActivity extends AppCompatActivity implements View.OnClickL
                         if (reminderCalendar.after(Calendar.getInstance())) {
                             firstTodayReminder = reminder;
                             Log.d(TAG, "First today reminder set: " + firstTodayReminder.getTitle());                        }
+                            continue;
                     }
-                    continue;
                 }
 
-                switch (selectedFilter) {
-                    case "Semua Pengingat":
-                        // Add headers based on date comparison
-                        if (isSameDay(today, reminderCalendar)) {
-                            if (reminderCalendar.after(Calendar.getInstance())) {
-                                if (!addedTodayHeader) {
-                                    items.add("Hari Ini");
-                                    addedTodayHeader = true;
-                                }
-                            }
-                        } else if (isSameDay(tomorrow, reminderCalendar)) {
-                            if (!addedTomorrowHeader) {
-                                items.add("Besok");
-                                addedTomorrowHeader = true;
-                            }
-                        } else if (reminderCalendar.after(tomorrow)) {
-                            if (!addedUpcomingHeader) {
-                                items.add("Yang Akan Datang");
-                                addedUpcomingHeader = true;
-                            }
+                if (selectedFilter == null || selectedFilter.equals("Semua Pengingat")) {
+                    if (isSameDay(today, reminderCalendar)) {
+                        if (!addedTodayHeader) {
+                            items.add("Hari Ini");
+                            addedTodayHeader = true;
                         }
-                        // Add reminder after its header
-                        items.add(reminder);
-                        break;
-                    case "Hari Ini":
-                        if (isSameDay(today, reminderCalendar)) {
+                    } else if (isSameDay(tomorrow, reminderCalendar)) {
+                        if (!addedTomorrowHeader) {
+                            items.add("Besok");
+                            addedTomorrowHeader = true;
+                        }
+                    } else if (reminderCalendar.after(tomorrow)) {
+                        if (!addedUpcomingHeader) {
+                            items.add("Yang Akan Datang");
+                            addedUpcomingHeader = true;
+                        }
+                    }
+                    if (reminderCalendar.after(Calendar.getInstance())) {
+
+                        items.add(reminder);}
+
+                } else if (selectedFilter.equals("Hari Ini") && isSameDay(today, reminderCalendar)) {
+                    if (reminderCalendar.after(Calendar.getInstance())) {
                             if (!addedTodayHeader) {
                                 items.add("Hari Ini");
                                 addedTodayHeader = true;
                             }
-                            items.add(reminder);
                         }
-                        break;
-                    case "Besok":
-                        if (isSameDay(tomorrow, reminderCalendar)) {
-                            if(!addedTomorrowHeader) {
-                                items.add("Besok");
-                                addedTomorrowHeader = true;
-                            }
-                            items.add(reminder);
-                        }
-                        break;
-                    case "Yang Akan Datang":
-                        if (reminderCalendar.after(tomorrow)) {
-                            if (!addedUpcomingHeader) {
-                                items.add("Yang Akan Datang");
-                                addedUpcomingHeader = true;
-                            }
-                            items.add(reminder);
-                        }
-                        break;
+                    items.add(reminder);
+                } else if (selectedFilter.equals("Besok") && isSameDay(tomorrow, reminderCalendar)) {
+                    if (!addedTomorrowHeader) {
+                        items.add("Besok");
+                        addedTomorrowHeader = true;
+                    }
+                    items.add(reminder);
+                } else if (selectedFilter.equals("Yang Akan Datang") && reminderCalendar.after(tomorrow)) {
+                    if (!addedUpcomingHeader) {
+                        items.add("Yang Akan Datang");
+                        addedUpcomingHeader = true;
+                    }
+                    items.add(reminder);
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -178,7 +186,7 @@ public class ReminderActivity extends AppCompatActivity implements View.OnClickL
         return items;
     }
 
-    private void updateFirstTodayReminderUI() {
+    private void updateFirstTodayReminderUI(Reminder firstTodayReminder) {
         if (firstTodayReminder != null) {
             Log.d(TAG, "Updating UI with first today reminder: " + firstTodayReminder.getTitle());
             tvReminderName.setText(firstTodayReminder.getTitle());
@@ -188,17 +196,17 @@ public class ReminderActivity extends AppCompatActivity implements View.OnClickL
             Log.d(TAG, "No first today reminder to update UI with");
         }
     }
-    private String formatDate(String timestamp) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        SimpleDateFormat outputFormat = new SimpleDateFormat("'Hari ini pukul' HH:mm", new Locale("id", "ID"));
-        try {
-            Date date = sdf.parse(timestamp);
-            return outputFormat.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return timestamp;
-        }
-    }
+//    private String formatDate(String timestamp) {
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+//        SimpleDateFormat outputFormat = new SimpleDateFormat("'Hari ini pukul' HH:mm", new Locale("id", "ID"));
+//        try {
+//            Date date = sdf.parse(timestamp);
+//            return outputFormat.format(date);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//            return timestamp;
+//        }
+//    }
 
     private boolean isSameDay(Calendar cal1, Calendar cal2) {
         return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
@@ -215,7 +223,9 @@ public class ReminderActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_back_reminder) {
-            finish();
+//            finish();
+            Intent intent = new Intent(ReminderActivity.this, MainActivity.class);
+            startActivity(intent);
         } else if (v.getId() == R.id.btn_add_reminder) {
             Intent intent = new Intent(ReminderActivity.this, AddReminderActivity.class);
             startActivity(intent);
@@ -238,14 +248,47 @@ public class ReminderActivity extends AppCompatActivity implements View.OnClickL
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // Get the selected item and filter the data
                 selectedFilter = filterReminder[position];
-                filterData(selectedFilter);
+                filterData();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // Handle case when nothing is selected
+//                filterData(selectedFilter);
             }
 
         });
+    }
+    private String formatDate(String timestamp) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat outputFormat = new SimpleDateFormat("'Hari ini pukul' HH:mm", new Locale("id", "ID"));
+        SimpleDateFormat tomorrowFormat = new SimpleDateFormat("'Besok pukul' HH:mm", new Locale("id", "ID"));
+        SimpleDateFormat normalFormat = new SimpleDateFormat("EEEE, d MMMM 'pukul' HH:mm", new Locale("id", "ID"));
+
+        try {
+            Date date = sdf.parse(timestamp);
+            Calendar calendar = Calendar.getInstance();
+            Calendar today = Calendar.getInstance();
+            today.set(Calendar.HOUR_OF_DAY, 0);
+            today.set(Calendar.MINUTE, 0);
+            today.set(Calendar.SECOND, 0);
+            today.set(Calendar.MILLISECOND, 0);
+
+            calendar.setTime(date);
+
+            if (isSameDay(calendar, today)) {
+                return outputFormat.format(date);
+            } else {
+                Calendar tomorrow = (Calendar) today.clone();
+                tomorrow.add(Calendar.DAY_OF_YEAR, 1);
+                if (isSameDay(calendar, tomorrow)) {
+                    return tomorrowFormat.format(date);
+                } else {
+                    return normalFormat.format(date);
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return timestamp;
+        }
     }
 
     private void filteredReminderRecyclerView() {

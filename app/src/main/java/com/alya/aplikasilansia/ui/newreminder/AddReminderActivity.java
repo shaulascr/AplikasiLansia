@@ -2,6 +2,7 @@ package com.alya.aplikasilansia.ui.newreminder;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alya.aplikasilansia.R;
+import com.alya.aplikasilansia.messaging.ReminderScheduler;
 import com.alya.aplikasilansia.ui.reminder.CustomSpinnerAdapter;
 import com.alya.aplikasilansia.ui.reminder.ReminderActivity;
 import com.google.android.material.timepicker.MaterialTimePicker;
@@ -79,6 +81,8 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
                     Log.d(TAG, "createReminder:success");
                     Intent intent = new Intent(AddReminderActivity.this, ReminderActivity.class);
                     startActivity(intent);
+
+
                 }
             }
         });
@@ -104,6 +108,11 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
 
         if (selectedIconResourceId != 0) {
             addReminderViewModel.createReminder(title, selectedDay, selectedTime, desc, timestamp, selectedIconResourceId);
+            Context context = getApplication(); // Inside an Activity or Service
+            Log.d("AddReminderActivity", "Attempting to schedule reminder"); // Add log here to confirm call
+            ReminderScheduler.scheduleReminder(context, title, desc, timestamp);
+            Log.d("AddReminderActivity", "scheduleReminder should have been called"); // Add log here to confirm call
+
         } else {
             // Handle case where no icon is selected
             Toast.makeText(this, "Please select an icon", Toast.LENGTH_SHORT).show();
