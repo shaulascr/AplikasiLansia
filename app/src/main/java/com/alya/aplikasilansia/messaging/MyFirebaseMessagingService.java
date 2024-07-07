@@ -1,9 +1,11 @@
 package com.alya.aplikasilansia.messaging;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -18,7 +20,10 @@ import com.google.firebase.messaging.RemoteMessage;
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFirebaseMessagingServ";
-
+    public void onCreate() {
+        super.onCreate();
+        createNotificationChannel();
+    }
     @Override
     public void onNewToken(@NonNull String token) {
         super.onNewToken(token);
@@ -30,18 +35,18 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        if (remoteMessage.getData().size() > 0) {
+//        if (remoteMessage.getData().size() > 0) {
             // Extract reminder data from the message
             String reminderId = remoteMessage.getData().get("reminderId");
             String title = remoteMessage.getData().get("title");
-            String description = remoteMessage.getData().get("description");
+            String description = remoteMessage.getData().get("desc");
 
             // Example: Check if this reminder is for the current user
             String userId = remoteMessage.getData().get("userId");
             String currentUserUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
             if (currentUserUid.equals(userId)) {
                 sendNotification(title, description);
-            }
+//            }
         }
     }
 
@@ -59,5 +64,26 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, notificationBuilder.build());
+    }
+
+    private void createNotificationChannel() {
+        Log.d(TAG, "createNotificationChannel CALLED");
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            if (notificationManager != null) {
+                NotificationChannel existingChannel = notificationManager.getNotificationChannel("default");
+                if (existingChannel == null) {
+                    NotificationChannel channel = new NotificationChannel(
+                            "default",
+                            "Default Channel",
+                            NotificationManager.IMPORTANCE_DEFAULT);
+                    notificationManager.createNotificationChannel(channel);
+                    Log.d(TAG, "Notification channel 'default' created");
+                } else {
+                    Log.d(TAG, "Notification channel 'default' already exists");
+                }
+            }
+        }
     }
 }

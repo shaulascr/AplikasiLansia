@@ -1,5 +1,7 @@
 package com.alya.aplikasilansia.messaging;
 
+import static com.alya.aplikasilansia.messaging.ReminderReceiver.ACTION_REMINDER;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -16,7 +18,7 @@ import java.util.Locale;
 public class ReminderScheduler {
     private static final String TAG = "ReminderScheduler";
 
-    public static void scheduleReminder(Context context, String title, String description, String timestamp) {
+    public static void scheduleReminder(Context context, String title, String desc, String timestamp) {
         Log.d(TAG, "scheduleReminder called");
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -32,10 +34,12 @@ public class ReminderScheduler {
                 Log.d(TAG, "Reminder time in millis: " + reminderTimeMillis);
 
                 Intent intent = new Intent(context, ReminderReceiver.class);
+                intent.setAction(ACTION_REMINDER); // Set the action here
                 intent.putExtra("title", title);
-                intent.putExtra("description", description);
+                intent.putExtra("desc", desc);
 
-                int requestCode = generateUniqueRequestCode();
+                int requestCode = 0;
+//                int requestCode = generateUniqueRequestCode();
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
                 Log.d(TAG, "PendingIntent created: " + (pendingIntent != null));
 
@@ -62,9 +66,9 @@ public class ReminderScheduler {
         }
     }
 
-    private static int generateUniqueRequestCode() {
-        return (int) System.currentTimeMillis();
-    }
+//    private static int generateUniqueRequestCode() {
+//        return (int) System.currentTimeMillis();
+//    }
 
     private static boolean canScheduleExactAlarms(Context context, AlarmManager alarmManager) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
