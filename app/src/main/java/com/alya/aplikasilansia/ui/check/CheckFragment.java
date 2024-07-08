@@ -9,13 +9,14 @@ import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
+import com.alya.aplikasilansia.LoginActivity;
 import com.alya.aplikasilansia.R;
 import com.alya.aplikasilansia.ui.quiz.QuizActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class CheckFragment extends Fragment {
-
     private Button btnCheck;
-
+    private FirebaseAuth mAuth;
 
     public CheckFragment() {
         // Required empty public constructor
@@ -36,16 +37,24 @@ public class CheckFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_check, container, false);
 
-        btnCheck = view.findViewById(R.id.btn_mulai_tes);
-        btnCheck.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), QuizActivity.class);
-                startActivity(intent);
-            }
-        });
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
+        if (mAuth.getCurrentUser() == null) {
+            // User is not logged in, redirect to LoginActivity
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+            // Optionally, close the current activity
+//            getActivity().finish();
+        } else {
+            // User is logged in, proceed with loading the fragment
+            btnCheck = view.findViewById(R.id.btn_mulai_tes);
+            btnCheck.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), QuizActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
         return view;
     }
-
-
 }

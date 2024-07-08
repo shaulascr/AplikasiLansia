@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -21,6 +22,7 @@ import com.alya.aplikasilansia.data.Reminder;
 import com.alya.aplikasilansia.data.User;
 import com.alya.aplikasilansia.ui.bloodpressure.BloodPressureActivity;
 import com.alya.aplikasilansia.ui.healthcare.HealthCareActivity;
+import com.alya.aplikasilansia.ui.profile.ProfileFragment;
 import com.alya.aplikasilansia.ui.profile.ProfileViewModel;
 import com.alya.aplikasilansia.ui.reminder.ReminderActivity;
 import com.alya.aplikasilansia.ui.reminder.ReminderViewModel;
@@ -37,7 +39,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private Button tensiDarah;
     private ProfileViewModel profileViewModel;
     private ReminderViewModel reminderViewModel;
-
     private TextView userNameHome;
     private ImageView profileImage;
     private Button toHealthCare;
@@ -51,6 +52,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public HomeFragment() {
         // Required empty public constructor
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +97,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         // Handle no profile image case
                         profileImage.setImageResource(R.drawable.img);
                     }
+                }
+            }
+        });
+
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (view.getId() == R.id.profile_image_home) {
+                    Fragment profileFragment = new ProfileFragment();
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.nav_host_fragment_activity_main, profileFragment); // Make sure R.id.fragment_container is the ID of your fragment container
+                    transaction.addToBackStack(null); // Optional: add to back stack
+                    transaction.commit();
                 }
             }
         });
@@ -168,6 +183,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             Log.d(TAG, "No first today reminder to update UI with");
         }
     }
+
     private String formatDate(String timestamp) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         SimpleDateFormat outputFormat = new SimpleDateFormat("'Hari ini pukul' HH:mm", new Locale("id", "ID"));
@@ -207,7 +223,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
     }
 
-    public void getRemindData(){
+    public void getRemindData() {
 
     }
 

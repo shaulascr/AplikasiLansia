@@ -13,12 +13,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.alya.aplikasilansia.LoginActivity;
 import com.alya.aplikasilansia.R;
 import com.alya.aplikasilansia.ui.editprofile.EditProfileActivity;
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
+    private FirebaseAuth mAuth;
     private ProfileViewModel profileViewModel;
     private Button editProfile;
     private TextView personalProfile, healthProfile;
@@ -41,38 +44,46 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
+        if (mAuth.getCurrentUser() == null) {
+            // User is not logged in, redirect to LoginActivity
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+            // Optionally, close the current activity
+//            getActivity().finish();
+        } else {
+            /// Find the button
+            editProfile = view.findViewById(R.id.btn_editProfile); // Replace with your button's actual ID
+            editProfile.setOnClickListener(this);
+            personalProfile = view.findViewById(R.id.btnPersonalData);
+            personalProfile.setOnClickListener(this);
+            healthProfile = view.findViewById(R.id.btnHealthData);
+            healthProfile.setOnClickListener(this);
 
-        // Find the button
-        editProfile = view.findViewById(R.id.btn_editProfile); // Replace with your button's actual ID
-        editProfile.setOnClickListener(this);
-        personalProfile = view.findViewById(R.id.btnPersonalData);
-        personalProfile.setOnClickListener(this);
-        healthProfile = view.findViewById(R.id.btnHealthData);
-        healthProfile.setOnClickListener(this);
+            userNameProfile = view.findViewById(R.id.profile_userName);
+            imageProfile = view.findViewById(R.id.profile_image);
 
-        userNameProfile = view.findViewById(R.id.profile_userName);
-        imageProfile = view.findViewById(R.id.profile_image);
+            personalProfile.setBackgroundResource(R.drawable.text_blue_underlined);
+            healthProfile.setBackgroundResource(R.drawable.text_transparant);
 
-        personalProfile.setBackgroundResource(R.drawable.text_blue_underlined);
-        healthProfile.setBackgroundResource(R.drawable.text_transparant);
-
-        if (savedInstanceState == null) {
-            replaceFragment(new ProfilePersonalFragment());
-        }
-        profileViewModel.getUserLiveData().observe(getViewLifecycleOwner(), user -> {
-            if (user != null) {
-                userNameProfile.setText(user.getUserName());
-                if (user.getProfileImageUrl() != null) {
-                    Glide.with(ProfileFragment.this)
-                            .load(user.getProfileImageUrl())
-                            .into(imageProfile);
-                } else {
-                    // Handle no profile image case
-                    imageProfile.setImageResource(R.drawable.img);
-                }
+            if (savedInstanceState == null) {
+                replaceFragment(new ProfilePersonalFragment());
             }
-        });
+            profileViewModel.getUserLiveData().observe(getViewLifecycleOwner(), user -> {
+                if (user != null) {
+                    userNameProfile.setText(user.getUserName());
+                    if (user.getProfileImageUrl() != null) {
+                        Glide.with(ProfileFragment.this)
+                                .load(user.getProfileImageUrl())
+                                .into(imageProfile);
+                    } else {
+                        // Handle no profile image case
+                        imageProfile.setImageResource(R.drawable.img);
+                    }
+                }
+            });
+        }
 
         return view;
     }

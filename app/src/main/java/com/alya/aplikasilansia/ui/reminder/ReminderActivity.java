@@ -19,10 +19,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alya.aplikasilansia.LoginActivity;
 import com.alya.aplikasilansia.MainActivity;
 import com.alya.aplikasilansia.R;
 import com.alya.aplikasilansia.data.Reminder;
 import com.alya.aplikasilansia.ui.newreminder.AddReminderActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,30 +45,40 @@ public class ReminderActivity extends AppCompatActivity implements View.OnClickL
     private TextView tvReminderDate;
     private ImageView ImgReminder;
     private String selectedFilter;
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminder);
 
-        Button btnFromReminder = findViewById(R.id.btn_back_reminder);
-        btnFromReminder.setOnClickListener(this);
+        mAuth = FirebaseAuth.getInstance();
 
-        Button btnCreateReminder = findViewById(R.id.btn_add_reminder);
-        btnCreateReminder.setOnClickListener(this);
+        if (mAuth.getCurrentUser() == null) {
+            // User is not logged in, redirect to LoginActivity
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish(); // Close RestrictedActivity
+        } else {
+            Button btnFromReminder = findViewById(R.id.btn_back_reminder);
+            btnFromReminder.setOnClickListener(this);
 
-        filterSpinner = findViewById(R.id.dropdown_reminder_filter);
-        setupSpinner(filterSpinner);
+            Button btnCreateReminder = findViewById(R.id.btn_add_reminder);
+            btnCreateReminder.setOnClickListener(this);
 
-        filteredReminderRecyclerView();
+            filterSpinner = findViewById(R.id.dropdown_reminder_filter);
+            setupSpinner(filterSpinner);
 
-        reminderViewModel = new ViewModelProvider(this).get(ReminderViewModel.class);
-        Log.d(TAG, "TRY fetched");
+            filteredReminderRecyclerView();
 
-        tvReminderName = findViewById(R.id.tv_reminder_name);
-        tvReminderDate = findViewById(R.id.tv_reminder_date);
-        ImgReminder = findViewById(R.id.img_reminder);
+            reminderViewModel = new ViewModelProvider(this).get(ReminderViewModel.class);
+            Log.d(TAG, "TRY fetched");
+
+            tvReminderName = findViewById(R.id.tv_reminder_name);
+            tvReminderDate = findViewById(R.id.tv_reminder_date);
+            ImgReminder = findViewById(R.id.img_reminder);
 //        filterData(selectedFilter);
-        Log.d(TAG, "SELECTED FILTER: ");
+            Log.d(TAG, "SELECTED FILTER: ");
 
 //        reminderViewModel.getReminderLiveData().observe(this, reminders -> {
 //            if (reminders != null) {
@@ -78,12 +90,13 @@ public class ReminderActivity extends AppCompatActivity implements View.OnClickL
 //                Toast.makeText(ReminderActivity.this, "No data fetched", Toast.LENGTH_SHORT).show();
 //            }
 //        });
-        filterData();
-        reminderViewModel.getFirstReminderLiveData().observe(this, firstReminder -> {
-            if (firstReminder != null) {
-                updateFirstTodayReminderUI(firstReminder);
-            }
-        });
+            filterData();
+            reminderViewModel.getFirstReminderLiveData().observe(this, firstReminder -> {
+                if (firstReminder != null) {
+                    updateFirstTodayReminderUI(firstReminder);
+                }
+            });
+        }
     }
 
     private void filterData() {

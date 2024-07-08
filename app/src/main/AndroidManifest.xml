@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
     <application
         android:allowBackup="true"
@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AplikasiLansia"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.quizResult.QuizResultActivity"
+            android:exported="false" />
         <activity
             android:name=".RegisterStep3Activity"
             android:exported="false" />
@@ -64,6 +67,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".messaging.MyFirebaseMessagingService"
             android:exported="true">
@@ -71,6 +75,7 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <receiver
             android:name=".messaging.ReminderReceiver"
             android:enabled="true"

@@ -1,5 +1,6 @@
 package com.alya.aplikasilansia.ui.bloodpressure;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -8,10 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alya.aplikasilansia.LoginActivity;
 import com.alya.aplikasilansia.R;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,7 +23,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class BloodPressureActivity extends AppCompatActivity {
-
+    private FirebaseAuth mAuth;
     private MaterialButton btnBackBP;
     private TextView tvDatePickerBP;
 
@@ -29,13 +32,22 @@ public class BloodPressureActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blood_pressure);
 
-        btnBackBP = findViewById(R.id.btn_back_bp);
-        setBtnBackBP(btnBackBP);
+        mAuth = FirebaseAuth.getInstance();
 
-        tvDatePickerBP = findViewById(R.id.tv_date_bp);
-        setTvDatePickerBP(tvDatePickerBP);
+        if (mAuth.getCurrentUser() == null) {
+            // User is not logged in, redirect to LoginActivity
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish(); // Close RestrictedActivity
+        } else {
+            btnBackBP = findViewById(R.id.btn_back_bp);
+            setBtnBackBP(btnBackBP);
 
-        setUpBloodPressureRV();
+            tvDatePickerBP = findViewById(R.id.tv_date_bp);
+            setTvDatePickerBP(tvDatePickerBP);
+
+            setUpBloodPressureRV();
+        }
     }
 
     private void setBtnBackBP (MaterialButton btnBackBP) {

@@ -1,5 +1,6 @@
 package com.alya.aplikasilansia.ui.healthcare;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -10,23 +11,36 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alya.aplikasilansia.LoginActivity;
 import com.alya.aplikasilansia.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HealthCareActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_health_care);
 
-        Button backFromHealtnBtn = findViewById(R.id.btn_back_healthcare);
-        backFromHealtnBtn.setOnClickListener(this);
+        mAuth = FirebaseAuth.getInstance();
 
-        spinnerHealthBar();
-        setupHealthRecyclerView();
+        if (mAuth.getCurrentUser() == null) {
+            // User is not logged in, redirect to LoginActivity
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish(); // Close RestrictedActivity
+        } else {
+            Button backFromHealtnBtn = findViewById(R.id.btn_back_healthcare);
+            backFromHealtnBtn.setOnClickListener(this);
+
+            spinnerHealthBar();
+            setupHealthRecyclerView();
+        }
     }
 
     private void setupHealthRecyclerView() {
