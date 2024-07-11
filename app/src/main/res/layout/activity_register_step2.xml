@@ -11,7 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_gravity="center">
+        android:paddingTop="10dp"
+        android:layout_gravity="center_horizontal">
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -82,21 +84,19 @@
                         android:paddingTop="20dp"
                         android:layout_marginBottom="30dp"
                         android:paddingHorizontal="5dp"
-                        android:text="@string/lengkapi_data_3"
+                        android:text="@string/lengkapi_data_2"
                         android:textAlignment="center"
                         android:textSize="20sp" />
 
                     <LinearLayout
+                        android:id="@+id/view_med_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginTop="6dp">
+                        android:orientation="vertical">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="14dp"
                             android:orientation="vertical">
 
                             <TextView
@@ -107,74 +107,136 @@
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
-                            <EditText
-                                android:id="@+id/et_penyakit"
-                                android:layout_width="200dp"
+                            <TextView
+                                android:id="@+id/tv_penyakit"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/custom_edit_text"
-                                android:hint="Contoh: TBC"
+                                android:text="Contoh: TBC"
                                 android:minHeight="48dp"
+                                android:textSize="18sp"
                                 android:padding="12dp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/tv_med_time"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="10dp"
-                                android:text="@string/lamanya"
+                                android:layout_marginTop="15dp"
+                                android:text="@string/lamaPenyakit"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@id/tv_med_time"
-                                android:orientation="horizontal">
 
-                                <EditText
-                                    android:id="@+id/et_lamanya"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/custom_edit_text"
-                                    android:minHeight="48dp"
-                                    android:padding="12dp"
-                                    tools:ignore="SpeakableTextPresentCheck" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="12dp"
+                            android:orientation="horizontal">
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="48dp"
+                                android:background="@drawable/custom_edit_text"
+                                android:paddingStart="6dp"
+                                android:paddingVertical="6dp"
+                                android:paddingEnd="2dp"
+                                android:layout_weight="1"
+                                android:layout_marginBottom="10dp"
+                                android:layout_gravity="center_horizontal"
+                                android:gravity="center_vertical">
 
                                 <TextView
+                                    android:id="@+id/tv_med_years"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="6dp"
-                                    android:fontFamily="@font/inter_medium"
-                                    android:text="@string/hari"
-                                    android:textSize="18sp" />
-                            </LinearLayout>
+                                    android:background="@color/white"
+                                    android:minHeight="48dp"
+                                    android:gravity="center_vertical"
+                                    android:text="Cth: 1 Tahun"
+                                    android:paddingStart="5dp"
+                                    android:paddingEnd="0dp"
+                                    android:textSize="18sp"
+                                    tools:ignore="SpeakableTextPresentCheck" />
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="48dp"-->
+<!--                                    android:text=" Tahun"-->
+<!--                                    android:gravity="center_vertical"-->
+<!--                                    android:textSize="18sp"-->
+<!--                                    android:fontFamily="@font/inter_medium"-->
+<!--                                    android:paddingStart="0dp"-->
+<!--                                    android:layout_marginEnd="4dp"-->
+<!--                                    android:layout_marginVertical="4dp"-->
+<!--                                    android:layout_alignParentEnd="true"-->
+<!--                                    android:layout_toEndOf="@id/tv_med_years"/>-->
+                            </RelativeLayout>
+
+                            <Space
+                                android:layout_width="12dp"
+                                android:layout_height="wrap_content"/>
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="48dp"
+                                android:background="@drawable/custom_edit_text"
+                                android:paddingStart="6dp"
+                                android:paddingVertical="6dp"
+                                android:paddingEnd="2dp"
+                                android:layout_weight="1"
+                                android:layout_marginBottom="10dp"
+                                android:layout_gravity="center_horizontal"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_med_months"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:background="@color/white"
+                                    android:minHeight="48dp"
+                                    android:gravity="center_vertical"
+                                    android:paddingStart="5dp"
+                                    android:paddingEnd="0dp"
+                                    android:text="Cth: 5 Bulan"
+                                    android:textSize="18sp"
+                                    tools:ignore="SpeakableTextPresentCheck" />
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="48dp"-->
+<!--                                    android:text="@string/bulan"-->
+<!--                                    android:textSize="18sp"-->
+<!--                                    android:fontFamily="@font/inter_medium"-->
+<!--                                    android:paddingStart="0dp"-->
+<!--                                    android:layout_marginEnd="4dp"-->
+<!--                                    android:layout_marginVertical="4dp"-->
+<!--                                    android:layout_alignParentEnd="true"-->
+<!--                                    android:layout_toEndOf="@id/tv_med_months"/>-->
+                            </RelativeLayout>
                         </LinearLayout>
+
                     </LinearLayout>
 
-                    <FrameLayout
-                        android:id="@+id/input_medhistory"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+<!--                    <FrameLayout-->
+<!--                        android:id="@+id/input_medhistory"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"/>-->
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_add_medhistory"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginVertical="10dp"
-                        android:text="@string/tambah_penyakit"
                         android:layout_gravity="center_horizontal"
-                        app:cornerRadius="13dp"
-                        android:textSize="18sp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
                         android:backgroundTint="@color/blue1"
-                        android:fontFamily="@font/inter_bold"/>
+                        android:fontFamily="@font/inter_bold"
+                        android:text="@string/tambah_penyakit"
+                        android:textSize="18sp"
+                        app:cornerRadius="13dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_save_medhistory"

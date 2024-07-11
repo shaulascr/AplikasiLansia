@@ -1,46 +1,45 @@
 package com.alya.aplikasilansia.ui.profile;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.alya.aplikasilansia.R;
-import com.google.android.flexbox.FlexboxLayout;
+import com.alya.aplikasilansia.data.User;
+import com.alya.aplikasilansia.data.inputMedHistory;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProfileHealthFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class ProfileHealthFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private LinearLayout profileMedHistory;
+    private TextView tvCaregiver, tvMaritalStatus;
+    private ProfileViewModel profileViewModel;
+    private List<inputMedHistory> inputDataList = new ArrayList<>();
+
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private FlexboxLayout flexboxLayout;
+
 
     public ProfileHealthFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ProfileHealthFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ProfileHealthFragment newInstance(String param1, String param2) {
         ProfileHealthFragment fragment = new ProfileHealthFragment();
         Bundle args = new Bundle();
@@ -53,10 +52,7 @@ public class ProfileHealthFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
     }
 
     @Override
@@ -64,33 +60,72 @@ public class ProfileHealthFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile_health, container, false);
 
-        // Inflate the layout for this fragment
+        profileMedHistory = view.findViewById(R.id.profile_medhistory);
+        tvCaregiver = view.findViewById(R.id.tv_caregiver);
+        tvMaritalStatus = view.findViewById(R.id.tv_marital_stat);
 
-        flexboxLayout = view.findViewById(R.id.flexbox_disease);
+        profileViewModel.getUserLiveData().observe(getViewLifecycleOwner(), new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                if (user != null) {
+                    Log.d("ProfileHealthFragment", "User data received: " + user.toString());
+                    tvCaregiver.setText(user.getCaregiver());
+                    tvMaritalStatus.setText(user.getMaritalStatus());
+//                    profileMedHistory(user.getMedHistory());
+                    List<inputMedHistory> medHistory = user.getMedHistory();
 
-        // Example data to be displayed in TextViews
-        String[] data = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
+                    // You can then iterate over the list to access individual inputMedHistory objects
+                    for (inputMedHistory history : medHistory) {
+                        // Do something with med, e.g., log its values
+                        Log.d("ProfileHealthFragment", "Med history: " + history.toString());
+                        View itemView = getLayoutInflater().inflate(R.layout.profile_view_medhistory, profileMedHistory, false);
+//                        profileMedHistory.removeAllViews();
 
-        // Create and add TextViews dynamically
-        for (String item : data) {
-            TextView textView = new TextView(getContext());
-            FlexboxLayout.LayoutParams layoutParams = new FlexboxLayout.LayoutParams(
-                    FlexboxLayout.LayoutParams.WRAP_CONTENT,
-                    FlexboxLayout.LayoutParams.WRAP_CONTENT // Wrap content for height
-            );
-            layoutParams.setMargins(6, 6, 6, 6); // Set margins as needed
+                        TextView tvPenyakit = itemView.findViewById(R.id.tv_profile_penyakit);
+                        TextView tvMedYears = itemView.findViewById(R.id.tv_profile_tahun);
+                        TextView tvMedMonths = itemView.findViewById(R.id.tv_profile_bulan);
 
-            textView.setLayoutParams(layoutParams);
-            textView.setText(item);
-            textView.setGravity(android.view.Gravity.CENTER);
-            textView.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, 18); // Set text size as needed
-            textView.setBackground(getResources().getDrawable(R.drawable.item_disease));
-            textView.setPadding(12, 0, 12, 0); // Set horizontal padding as needed
+//                      if (tvPenyakit != null && tvMedYears != null && tvMedMonths != null) {
+                        tvPenyakit.setText(history.getPenyakit());
+                        tvMedYears.setText(history.getLamanya());
+                        tvMedMonths.setText(history.getLamanyaBulan());
 
-            flexboxLayout.addView(textView);
-        }
+
+                        profileMedHistory.addView(itemView);
+                    }
+                } else {
+                    Log.d("ProfileHealthFragment", "User data is null");
+                }
+            }
+        });
 
         return view;
 
+    }
+
+    private void profileMedHistory(List<inputMedHistory> medHistory){
+        if (medHistory == null || medHistory.isEmpty()) {
+            Log.d("ProfileHealthFragment", "Medical history is null or empty");
+            return;
+        }
+
+        profileMedHistory.removeAllViews();
+
+        for (inputMedHistory history : medHistory) {
+            Log.d("ProfileHealthFragment", "Adding medical history: " + history.toString());
+            View itemView = getLayoutInflater().inflate(R.layout.register_view_medhistory, profileMedHistory, false);
+
+            TextView tvPenyakit = itemView.findViewById(R.id.tv_penyakit);
+            TextView tvMedYears = itemView.findViewById(R.id.tv_med_years);
+            TextView tvMedMonths = itemView.findViewById(R.id.tv_med_months);
+
+//            if (tvPenyakit != null && tvMedYears != null && tvMedMonths != null) {
+                tvPenyakit.setText(history.getPenyakit());
+                tvMedYears.setText(history.getLamanya());
+                tvMedMonths.setText(history.getLamanyaBulan());
+
+
+            profileMedHistory.addView(itemView);
+        }
     }
 }

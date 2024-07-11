@@ -138,6 +138,9 @@
     <string name="simpan_riwayat_penyakit">Simpan Riwayat Penyakit</string>
     <string name="tambah_foto">Tambah foto anda</string>
     <string name="lengkapi_data_3">Lengkapi data kesehatan sesuai kebutuhan Anda</string>
+    <string name="bulan">Bulan</string>
+    <string name="tahun">Tahun</string>
+    <string name="age_format">%d Tahun</string>
 
     <string-array name="gender_array">
         <item>Laki-laki</item>

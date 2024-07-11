@@ -190,7 +190,7 @@
                         android:layout_marginStart="3dp"
                         android:layout_centerVertical="true"
                         android:hint="Pilih Tanggal Lahir"
-                        android:textSize="18dp"
+                        android:textSize="18sp"
                         android:padding="10dp"
                         android:textColor="@android:color/black" />
                 </RelativeLayout>

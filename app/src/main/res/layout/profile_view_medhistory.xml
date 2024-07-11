@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:layout_marginBottom="16dp">
+    android:layout_marginBottom="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,17 +19,17 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/et_penyakit"
+        <TextView
+            android:id="@+id/tv_profile_penyakit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/custom_edit_text"
-            android:hint="Contoh: TBC"
+            android:text="Contoh: TBC"
             android:minHeight="48dp"
+            android:textSize="18sp"
             android:padding="12dp" />
 
         <TextView
-            android:id="@+id/tv_med_month"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -37,6 +37,8 @@
             android:text="@string/lamaPenyakit"
             android:textSize="18sp"
             android:textStyle="bold" />
+
+
     </LinearLayout>
 
     <LinearLayout
@@ -48,62 +50,73 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:background="@drawable/custom_edit_text"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="4dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
             android:layout_weight="1"
-            android:orientation="horizontal"
-            android:layout_marginBottom="10dp">
+            android:background="@drawable/custom_edit_text"
+            android:gravity="center_vertical"
+            android:padding="12dp"
+            android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/et_med_years"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
+            <TextView
+                android:id="@+id/tv_profile_tahun"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:background="@color/white"
                 android:minHeight="48dp"
+                android:gravity="center_vertical"
+                android:paddingStart="5dp"
+                android:paddingEnd="0dp"
                 android:textSize="18sp"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:fontFamily="@font/inter_medium"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="6dp"
                 android:text="@string/tahun"
-                android:textSize="18sp"
-                android:textAlignment="textEnd"
-                android:layout_marginEnd="3dp" />
+                android:gravity="center_vertical"
+                android:textSize="18sp" />
         </LinearLayout>
 
         <Space
-            android:layout_width="12dp"
-            android:layout_height="wrap_content"/>
+            android:layout_width="18dp"
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
             android:background="@drawable/custom_edit_text"
             android:orientation="horizontal"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="4dp"
-            android:layout_weight="1"
-            android:layout_marginBottom="10dp">
+            android:padding="12dp">
 
-            <EditText
-                android:id="@+id/et_med_months"
-                android:layout_width="40dp"
+            <TextView
+                android:id="@+id/tv_profile_bulan"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:minHeight="48dp"
-                tools:ignore="SpeakableTextPresentCheck" />
+                android:gravity="center_vertical"
+                android:text="Contoh: 9"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:textSize="18sp" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:text="@string/bulan"
-                android:textSize="18sp"
+                android:layout_marginVertical="4dp"
                 android:fontFamily="@font/inter_medium"
-                android:layout_marginEnd="3dp"
-                android:textAlignment="textEnd"/>
+                android:gravity="center_vertical"
+                android:layout_marginEnd="4dp"
+                android:text="@string/bulan"
+                android:textSize="18sp" />
         </LinearLayout>
     </LinearLayout>
 

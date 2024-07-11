@@ -1,6 +1,8 @@
 package com.alya.aplikasilansia.ui.newreminder;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +61,24 @@ public class IconReminderFragment extends DialogFragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Dialog dialog = getDialog();
+        if (dialog != null) {
+            // Get the screen width
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+            int width = displayMetrics.widthPixels;
+            dialog.getWindow().setBackgroundDrawableResource(R.drawable.custom_corner_rounded);
+
+            // Set the dialog's width to match the screen width
+            dialog.getWindow().setLayout((int) (width * 0.9), ViewGroup.LayoutParams.WRAP_CONTENT);
+
+//            dialog.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
     }
 

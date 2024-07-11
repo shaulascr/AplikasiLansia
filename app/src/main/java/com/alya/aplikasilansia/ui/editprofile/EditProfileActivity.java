@@ -4,49 +4,78 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.widget.EditText;
+import android.util.Log;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alya.aplikasilansia.R;
+import com.alya.aplikasilansia.data.inputMedHistory;
 import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
 
-public class EditProfileActivity extends AppCompatActivity {
+import java.util.List;
+
+public class EditProfileActivity extends AppCompatActivity implements OnSaveEditListener{
 
     private static final int REQUEST_PICK_IMAGE = 1; // Define your request code
 
     private EditProfileViewModel editProfileViewModel;
-    private EditText editTextUserName;
     private ImageView imageViewProfile;
     private Uri selectedImageUri; // Uri for storing selected image URI
     private MutableLiveData<String> updateResultLiveData; // LiveData for update result
-
+    private TextView personalProfile, healthProfile, userNameTextView;
+    private RelativeLayout editProfileImg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-        // Initialize ViewModel
         editProfileViewModel = new ViewModelProvider(this).get(EditProfileViewModel.class);
 
-        // Initialize Views
-        editTextUserName = findViewById(R.id.et_profileName);
-        imageViewProfile = findViewById(R.id.profile_image_edit);
+        String fragmentType = getIntent().getStringExtra("FRAGMENT_TYPE");
 
-        findViewById(R.id.btn_cancelProfile).setOnClickListener(v -> finish());
-        findViewById(R.id.btn_saveProfile).setOnClickListener(v -> saveProfileChanges());
+        personalProfile = findViewById(R.id.btnPersonalData);
+        healthProfile = findViewById(R.id.btnHealthData);
 
-        imageViewProfile.setOnClickListener(v -> openGallery());
+        userNameTextView = findViewById(R.id.profile_userName);
+        editProfileImg = findViewById(R.id.profile_image_edit);
+        imageViewProfile = findViewById(R.id.edit_profile_image);
+
+//        findViewById(R.id.btn_cancelProfile).setOnClickListener(v -> finish());
+//        findViewById(R.id.btn_saveProfile).setOnClickListener(v -> saveProfileChanges());
+
+        if (savedInstanceState == null & fragmentType != null) {
+            if (fragmentType.equals("personal")) {
+                replaceFragment(new EditPersonalFragment());
+                personalProfile.setBackgroundResource(R.drawable.text_blue_underlined);
+                healthProfile.setBackgroundResource(R.drawable.text_transparant);
+            } else if (fragmentType.equals("health")) {
+                Log.e("EditProfileActivity", "Fragment type HEALTH provided");
+
+                replaceFragment(new EditHealthFragment());
+                healthProfile.setBackgroundResource(R.drawable.text_blue_underlined);
+                personalProfile.setBackgroundResource(R.drawable.text_transparant);
+            }
+        } else if (fragmentType == null){
+            Log.e("EditProfileActivity", "Fragment type not provided");
+
+            Toast.makeText(this,"Fragment type not provided: " + fragmentType, Toast.LENGTH_SHORT).show();
+        }
+
+        editProfileImg.setOnClickListener(v -> openGallery());
 
         editProfileViewModel.getUserLiveData().observe(this, user -> {
             if (user != null) {
-                editTextUserName.setText(user.getUserName());
+                userNameTextView.setText(user.getUserName());
                 if (user.getProfileImageUrl() != null) {
                     Glide.with(EditProfileActivity.this)
                             .load(user.getProfileImageUrl())
@@ -71,12 +100,22 @@ public class EditProfileActivity extends AppCompatActivity {
 
         editProfileViewModel.fetchUser();
     }
+    @Override
+    public void onSavePersonalData(String newUsername, String newBirthdate) {
+        editProfileViewModel.updateProfile(newUsername, null, newBirthdate, selectedImageUri);
+//        saveProfileChanges();
+    }
+
+    @Override
+    public void onSaveHealthData(String newCaregiver, String newStatus, List<inputMedHistory> medHistoryList) {
+        editProfileViewModel.updateHealthData2(newCaregiver, newStatus);
+        editProfileViewModel.updateMedRecord(medHistoryList);
+        saveProfileChanges();
+    }
 
     // Method to save profile changes
     private void saveProfileChanges() {
-        String newUserName = editTextUserName.getText().toString().trim();
-
-        editProfileViewModel.updateProfile(newUserName, null, null, selectedImageUri);
+        editProfileViewModel.updateProfile(null, null, null, selectedImageUri);
         finish();
     }
 
@@ -93,6 +132,13 @@ public class EditProfileActivity extends AppCompatActivity {
         if (requestCode == REQUEST_PICK_IMAGE && resultCode == RESULT_OK && data != null) {
             selectedImageUri = data.getData();
             imageViewProfile.setImageURI(selectedImageUri);
+            Log.d("EditProfileActivity", "Selected image URI: " + selectedImageUri.toString());
         }
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.edit_profile_frame, fragment);
+        transaction.commit();
     }
 }

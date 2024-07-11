@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginBottom="16dp">
+    android:padding="20dp"
+    tools:context=".ui.editprofile.AddMedicalRecordFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,11 +21,10 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/et_penyakit"
+            android:id="@+id/et_penyakit_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/custom_edit_text"
-            android:hint="Contoh: TBC"
             android:minHeight="48dp"
             android:padding="12dp" />
 
@@ -49,14 +49,14 @@
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:background="@drawable/custom_edit_text"
+            android:orientation="horizontal"
             android:paddingHorizontal="12dp"
             android:paddingVertical="4dp"
             android:layout_weight="1"
-            android:orientation="horizontal"
             android:layout_marginBottom="10dp">
 
             <EditText
-                android:id="@+id/et_med_years"
+                android:id="@+id/et_med_years_profile"
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
                 android:background="@color/white"
@@ -89,7 +89,7 @@
             android:layout_marginBottom="10dp">
 
             <EditText
-                android:id="@+id/et_med_months"
+                android:id="@+id/et_med_months_profile"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -105,6 +105,36 @@
                 android:layout_marginEnd="3dp"
                 android:textAlignment="textEnd"/>
         </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp"
+        android:gravity="center_horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_cancel_med_profile"
+            style="@style/CustomWhiteRoundButton"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save_med_profile"
+            style="@style/CustomBlueRoundButton"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
     </LinearLayout>
 
 </LinearLayout>

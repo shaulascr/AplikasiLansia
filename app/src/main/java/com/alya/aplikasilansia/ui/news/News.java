@@ -1,10 +1,14 @@
 package com.alya.aplikasilansia.ui.news;
 
+import android.net.Uri;
+
 public class News {
     private String name;
     private String date;
     private String category;
     private String newsContent;
+    private String source;
+    private Uri image;
 
     public News(String name, String date, String category) {
         this.name = name;

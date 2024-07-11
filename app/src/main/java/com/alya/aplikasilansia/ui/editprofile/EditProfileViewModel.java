@@ -8,6 +8,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.alya.aplikasilansia.data.User;
 import com.alya.aplikasilansia.data.UserRepository;
+import com.alya.aplikasilansia.data.inputMedHistory;
+
+import java.util.List;
 
 public class EditProfileViewModel extends ViewModel {
     private MutableLiveData<User> userLiveData;
@@ -37,5 +40,12 @@ public class EditProfileViewModel extends ViewModel {
     // Method to update user profile with new username and profile image
     public void updateProfile(String newUserName, String email, String birthDate, Uri profileImageUri) {
         userRepository.updateProfile(newUserName, email, birthDate, profileImageUri, updateResultLiveData);
+    }
+
+    public void updateMedRecord(List<inputMedHistory> medHistory){
+        userRepository.updateMedHistory(medHistory, updateResultLiveData);
+    }
+    public void updateHealthData2(String caregiver, String maritalStatus) {
+        userRepository.updateMedData(caregiver, maritalStatus, updateResultLiveData);
     }
 }

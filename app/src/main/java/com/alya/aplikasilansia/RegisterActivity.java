@@ -160,7 +160,7 @@ public class RegisterActivity extends AppCompatActivity {
         CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder();
         constraintsBuilder.setOpenAt(calendar.getTimeInMillis());
         MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Select your birthdate")
+                .setTitleText("Pilih Tanggal Lahir Anda")
                 .setCalendarConstraints(constraintsBuilder.build())
                 .build();
         datePicker.addOnPositiveButtonClickListener(selection -> {

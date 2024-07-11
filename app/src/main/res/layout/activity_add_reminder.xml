@@ -205,22 +205,24 @@
                     android:gravity="center_horizontal"
                     android:layout_marginBottom="20dp">
 
+
+                    <com.google.android.material.button.MaterialButton
+                        style="@style/CustomWhiteRoundButton"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:textSize="18sp"
+                        android:text="@string/cancel"/>
+
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_create_reminder"
                         style="@style/CustomBlueRoundButton"
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:textSize="18sp"
-                        android:layout_marginEnd="6dp"
+                        android:layout_marginStart="6dp"
                         android:text="@string/save"/>
 
-                    <com.google.android.material.button.MaterialButton
-                        style="@style/CustomWhiteRoundButton"
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:textSize="18sp"
-                        android:text="@string/cancel"/>
                 </LinearLayout>
 
             </LinearLayout>

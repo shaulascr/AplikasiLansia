@@ -4,9 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.profile.ProfilePersonalFragment"
-    android:background="@color/white"
-    >
+    tools:context=".ui.editprofile.EditPersonalFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,15 +26,17 @@
                 android:textStyle="bold"
                 android:layout_marginBottom="10dp" />
 
-            <TextView
-                android:id="@+id/tv_username_profile"
+            <EditText
+                android:id="@+id/et_username_profile"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:background="@drawable/custom_edit_text" android:textSize="18sp"
-                android:gravity="center_vertical"
-                app:drawableStartCompat="@drawable/custom_ic_person"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/custom_edit_text"
                 android:drawablePadding="8dp"
-                android:layout_marginBottom="20dp"/>
+                android:gravity="center_vertical"
+                android:textSize="18sp"
+                app:drawableStartCompat="@drawable/custom_ic_person"
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -47,10 +47,13 @@
                 android:layout_marginBottom="10dp" />
 
             <TextView
-                android:id="@+id/tv_email"
+                android:id="@+id/tv_email_edit"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:background="@drawable/custom_edit_text" android:textSize="18sp"
+                android:background="@drawable/custom_edit_text"
+                android:text="Nama user"
+                android:textColor="@color/grey"
+                android:textSize="18sp"
                 android:gravity="center_vertical"
                 app:drawableStartCompat="@drawable/custom_ic_email"
                 android:drawablePadding="8dp"
@@ -70,9 +73,41 @@
                 android:layout_height="48dp"
                 android:background="@drawable/custom_edit_text" android:textSize="18sp"
                 android:gravity="center_vertical"
+                android:textColor="@color/grey"
                 app:drawableStartCompat="@drawable/custom_ic_gender"
                 android:drawablePadding="8dp"
                 android:layout_marginBottom="20dp"/>
+
+<!--            <RelativeLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="48dp"-->
+<!--                android:layout_marginBottom="20dp"-->
+<!--                android:background="@drawable/custom_edit_text">-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/spinner_icon"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:src="@drawable/custom_ic_gender"-->
+<!--                    android:layout_alignParentStart="true"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:padding="0dp"/>-->
+
+<!--                <Spinner-->
+<!--                    android:id="@+id/spinner_edit_gender"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_centerVertical="true"-->
+<!--                    android:layout_marginStart="3dp"-->
+<!--                    android:layout_marginEnd="8dp"-->
+<!--                    android:layout_marginBottom="20dp"-->
+<!--                    android:layout_toEndOf="@id/spinner_icon"-->
+<!--                    android:minHeight="48dp"-->
+<!--                    android:spinnerMode="dropdown"-->
+<!--                    tools:ignore="TouchTargetSizeCheck"-->
+<!--                    android:entries="@array/gender_array"/>-->
+<!--            </RelativeLayout>-->
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -94,10 +129,11 @@
                         android:layout_marginBottom="10dp" />
 
                     <TextView
-                        android:id="@+id/tv_date_profile"
+                        android:id="@+id/tv_edit_birthdate"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:background="@drawable/custom_edit_text"
+                        android:text="Nama user"
                         android:textSize="18sp"
                         android:gravity="center_vertical"
                         app:drawableStartCompat="@drawable/custom_ic_date"
@@ -124,7 +160,7 @@
                         android:layout_marginBottom="10dp" />
 
                     <TextView
-                        android:id="@+id/tv_age_profile"
+                        android:id="@+id/tv_edit_age"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:background="@drawable/custom_edit_text"
@@ -139,20 +175,38 @@
 
         </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_keluar"
-            style="@style/CustomBlueButton"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/keluar"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="15dp"
-            app:icon="@drawable/ic_logout"
-            app:iconPadding="9dp"
-            app:iconGravity="textStart"/>
+            android:orientation="horizontal"
+            android:layout_marginTop="40dp"
+            android:gravity="center_horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_cancel_edit"
+                style="@style/CustomWhiteRoundButton"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <Space
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_save_edit"
+                style="@style/CustomBlueRoundButton"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="@string/save"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
 
     </LinearLayout>
+
 
 </ScrollView>

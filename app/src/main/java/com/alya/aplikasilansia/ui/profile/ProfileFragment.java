@@ -9,7 +9,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -27,6 +29,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private TextView personalProfile, healthProfile;
     private TextView userNameProfile;
     private ImageView imageProfile;
+    private static final int EDIT_PROFILE_REQUEST_CODE = 1;
+
+    private static final int FRAGMENT_PERSONAL_DATA = 1;
+    private static final int FRAGMENT_HEALTH_DATA = 2;
+    private String currentFragment;
+//    private int currentFragment;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -68,7 +76,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             healthProfile.setBackgroundResource(R.drawable.text_transparant);
 
             if (savedInstanceState == null) {
-                replaceFragment(new ProfilePersonalFragment());
+                replaceFragment(new ProfilePersonalFragment(), "personal");
             }
             profileViewModel.getUserLiveData().observe(getViewLifecycleOwner(), user -> {
                 if (user != null) {
@@ -92,13 +100,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if (v.getId() == R.id.btn_editProfile) {
             Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+            intent.putExtra("FRAGMENT_TYPE", currentFragment);
             startActivity(intent);
         } else if (v.getId() == R.id.btnPersonalData) {
-            replaceFragment(new ProfilePersonalFragment());
+            replaceFragment(new ProfilePersonalFragment(), "personal");
             personalProfile.setBackgroundResource(R.drawable.text_blue_underlined);
             healthProfile.setBackgroundResource(R.drawable.text_transparant);
         } else if (v.getId() == R.id.btnHealthData) {
-            replaceFragment(new ProfileHealthFragment());
+            replaceFragment(new ProfileHealthFragment(),"health");
             healthProfile.setBackgroundResource(R.drawable.text_blue_underlined);
             personalProfile.setBackgroundResource(R.drawable.text_transparant);
         }
@@ -106,10 +115,31 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private void replaceFragment(Fragment fragment) {
+    private void replaceFragment(Fragment fragment, String fragmentType) {
+        currentFragment = fragmentType;
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.profile_frame, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == EDIT_PROFILE_REQUEST_CODE && resultCode == FragmentActivity.RESULT_CANCELED && data != null) {
+            String fragmentType = data.getStringExtra("FRAGMENT_TYPE");
+            if (fragmentType != null) {
+                Fragment fragmentToShow;
+                if (fragmentType.equals("personal")) {
+                    fragmentToShow = new ProfilePersonalFragment(); // Load PersonalProfileFragment
+                } else if (fragmentType.equals("health")) {
+                    fragmentToShow = new ProfileHealthFragment(); // Load HealthProfileFragment
+                } else {
+                    // Default to PersonalProfileFragment if fragmentType is unknown
+                    fragmentToShow = new ProfilePersonalFragment();
+                }
+                replaceFragment(fragmentToShow, fragmentType);
+            }
+        }
     }
 }
