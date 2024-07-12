@@ -110,7 +110,7 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
             addReminderViewModel.createReminder(title, selectedDay, selectedTime, desc, timestamp, selectedIconResourceId);
             Context context = getApplication(); // Inside an Activity or Service
             Log.d("AddReminderActivity", "Attempting to schedule reminder"); // Add log here to confirm call
-            ReminderScheduler.scheduleReminder(context, title, desc, timestamp);
+            ReminderScheduler.scheduleReminder(this, title, desc, timestamp);
             Log.d("AddReminderActivity", "scheduleReminder should have been called"); // Add log here to confirm call
 
         } else {

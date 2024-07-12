@@ -9,31 +9,19 @@ import android.view.ViewGroup;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alya.aplikasilansia.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link NewsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class NewsFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class NewsFragment extends Fragment implements NewsAdapter.OnItemClickListener {
+    NewsViewModel newsViewModel;
     private CardView headNews;
     private RecyclerView newsRV;
+    NewsAdapter adapter;
 
     public NewsFragment() {
         // Required empty public constructor
@@ -42,20 +30,13 @@ public class NewsFragment extends Fragment {
 
     public static NewsFragment newInstance(String param1, String param2) {
         NewsFragment fragment = new NewsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        newsViewModel = new ViewModelProvider(this).get(NewsViewModel.class);
     }
 
     @SuppressLint("MissingInflatedId")
@@ -63,6 +44,7 @@ public class NewsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news, container, false);
+
         headNews = view.findViewById(R.id.headNews);
         newsRV = view.findViewById(R.id.rv_news_list);
 
@@ -78,27 +60,33 @@ public class NewsFragment extends Fragment {
 
         newsRecyclerViewList();
 
+        newsViewModel.getNewsLiveData().observe(getViewLifecycleOwner(), newsList -> {
+            if (newsList != null) {
+                adapter.updateList(newsList); // Update the adapter when the data changes
+            }
+        });
+
         return view;
     }
 
     private void newsRecyclerViewList() {
-        // Create a list of News objects
-        List<News> newsList = new ArrayList<>();
-        newsList.add(new News("5 Cara Untuk Hidup Lebih Sehat","26-05-2034","Tips Kesehatan"));
-        newsList.add(new News("5 Cara Untuk Hidup Lebih Sehat","26-05-2034","Tips Kesehatan"));
-        newsList.add(new News("5 Cara Untuk Hidup Lebih Sehat","26-05-2034","Tips Kesehatan"));
-
-        // Create an adapter for the RecyclerView and pass the list of News objects
-        NewsAdapter adapter = new NewsAdapter(newsList);
-        newsRV.setAdapter(adapter);
-
         newsRV.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter = new NewsAdapter(new ArrayList<>());
+        adapter.setOnItemClickListener(this); // Set click listener
+        newsRV.setAdapter(adapter);
+    }
 
-        adapter.setOnItemClickListener(new NewsAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                //
-            }
-        });
+    @Override
+    public void onItemClick(News newsItem) {
+        // Handle item click here, navigate to NewsContentActivity with news details
+        Intent intent = new Intent(getActivity(), NewsContentActivity.class);
+        // Pass necessary data to NewsContentActivity using intent extras
+        intent.putExtra("news_name", newsItem.getName());
+        intent.putExtra("news_date", newsItem.getDate());
+        intent.putExtra("news_category", newsItem.getCategory());
+        intent.putExtra("news_source", newsItem.getSource());
+        intent.putExtra("news_image", newsItem.getImage().toString()); // Assuming Uri to String conversion
+        intent.putExtra("news_content", newsItem.getNewsContent()); // Assuming Uri to String conversion
+        startActivity(intent);
     }
 }

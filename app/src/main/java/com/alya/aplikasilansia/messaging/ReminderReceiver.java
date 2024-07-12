@@ -6,6 +6,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 
@@ -34,6 +40,7 @@ public class ReminderReceiver extends BroadcastReceiver {
 
                 NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                 notificationManager.notify(0, builder.build());
+                sendNotificationInApp(context, title, description);
             } else {
                 Log.w("ReminderReceiver", "Null title or description received");
             }
@@ -42,5 +49,26 @@ public class ReminderReceiver extends BroadcastReceiver {
             Log.w("ReminderReceiver", "Unexpected or null intent action: " + (intent != null ? intent.getAction() : "null"));
         }
     }
+
+    private void sendNotificationInApp(Context context, String title, String message) {
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View layout = inflater.inflate(R.layout.custom_toast, null);
+
+        ImageView toastIcon = layout.findViewById(R.id.toast_icon);
+        TextView toastTitle = layout.findViewById(R.id.toast_title);
+        TextView toastText = layout.findViewById(R.id.toast_text);
+
+        toastIcon.setImageResource(R.drawable.ic_notification); // Set your desired icon here
+        toastTitle.setText(title);
+        toastText.setText(message);
+
+        Toast toast = new Toast(context);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 20);
+        toast.show();
+    }
+
+
 }
 

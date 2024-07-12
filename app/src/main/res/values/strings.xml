@@ -141,6 +141,7 @@
     <string name="bulan">Bulan</string>
     <string name="tahun">Tahun</string>
     <string name="age_format">%d Tahun</string>
+    <string name="source">"Sumber : "</string>
 
     <string-array name="gender_array">
         <item>Laki-laki</item>

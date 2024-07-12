@@ -3,31 +3,37 @@ package com.alya.aplikasilansia.ui.news;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alya.aplikasilansia.R;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
-    private List<News> news;
+    private List<News> items;
+    private OnItemClickListener listener;
 
-    public NewsAdapter(List<News> news){
-        this.news = news;
+    public NewsAdapter(List<News> items) {
+        this.items = items;
     }
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+    public void updateList(List<News> newItems) {
+        items.clear(); // Clear the existing items
+        items.addAll(newItems);
+        notifyDataSetChanged();
+    }
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int position);
+        void onItemClick(News newsItem);
     }
-
-    // Declare a member variable for the click listener
-    private OnItemClickListener listener;
 
     @NonNull
     @Override
@@ -39,31 +45,47 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull NewsAdapter.ViewHolder holder, int position) {
-        News news1 = news.get(position);
-        holder.bind(news1);
+        holder.bind(items.get(position));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int clickedPosition = holder.getAdapterPosition();
+                if (clickedPosition != RecyclerView.NO_POSITION && listener != null) {
+                    listener.onItemClick(items.get(clickedPosition));
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return news.size();
+        return items.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView newsNameTV;
         private TextView newsDate;
         private TextView newsCategory;
+        private ImageView newsImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             newsNameTV = itemView.findViewById(R.id.tv_newsTitle);
             newsCategory = itemView.findViewById(R.id.headNewsCat);
             newsDate = itemView.findViewById(R.id.newsDateList);
+            newsImage = itemView.findViewById(R.id.newsImg);
         }
 
         public void bind(News news1) {
             newsNameTV.setText(news1.getName());
             newsCategory.setText(news1.getCategory());
             newsDate.setText(news1.getDate());
+            Glide.with(itemView)
+                    .load(news1.getImage())
+                    .placeholder(R.drawable.img_2) // Placeholder image
+                    .error(R.drawable.img_2) // Error image if loading fails
+                    .centerCrop() // Crop the image to fill the ImageView
+                    .into(newsImage);
         }
     }
 }

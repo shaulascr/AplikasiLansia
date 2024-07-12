@@ -32,7 +32,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="130dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/img_2"/>
+                        android:src="@drawable/img_2"
+                        android:background="@drawable/custom_corner_rounded"/>
 
                     <RelativeLayout
                         android:id="@+id/headNewsBottom"

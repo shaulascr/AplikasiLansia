@@ -7,13 +7,17 @@ public class News {
     private String date;
     private String category;
     private String newsContent;
+
     private String source;
     private Uri image;
 
-    public News(String name, String date, String category) {
+    public News(String name, String date, String category, String source, Uri image, String newsContent) {
         this.name = name;
         this.date = date;
         this.category = category;
+        this.source = source;
+        this.image = image;
+        this.newsContent = newsContent;
     }
 
 //    public News(String name, String date, String category, String newsContent) {
@@ -56,4 +60,13 @@ public class News {
     public void setNewsContent(String newsContent) {
         this.newsContent = newsContent;
     }
+
+    public String getSource() {
+        return source;
+    }
+
+    public Uri getImage() {
+        return image;
+    }
+
 }
