@@ -76,7 +76,7 @@ public class IconReminderFragment extends DialogFragment {
             dialog.getWindow().setBackgroundDrawableResource(R.drawable.custom_corner_rounded);
 
             // Set the dialog's width to match the screen width
-            dialog.getWindow().setLayout((int) (width * 0.9), ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialog.getWindow().setLayout((int) (width * 0.95), ViewGroup.LayoutParams.WRAP_CONTENT);
 
 //            dialog.getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
@@ -99,15 +99,22 @@ public class IconReminderFragment extends DialogFragment {
         recyclerView.setLayoutManager(layoutManager);
 
         iconReminderList = new ArrayList<>();
-        iconReminderList.add(new IconReminder(R.drawable.kiwi));
-        iconReminderList.add(new IconReminder(R.drawable.kiwi));
-        iconReminderList.add(new IconReminder(R.drawable.kiwi));
-        iconReminderList.add(new IconReminder(R.drawable.kiwi));
-        iconReminderList.add(new IconReminder(R.drawable.kiwi));
-        iconReminderList.add(new IconReminder(R.drawable.white_round_pill));
-        iconReminderList.add(new IconReminder(R.drawable.white_round_pill));
-        iconReminderList.add(new IconReminder(R.drawable.white_round_pill));
-        iconReminderList.add(new IconReminder(R.drawable.white_round_pill));
+        iconReminderList.add(new IconReminder(R.drawable.ic_remind_pumpkin));
+        iconReminderList.add(new IconReminder(R.drawable.ic_remind_med));
+        iconReminderList.add(new IconReminder(R.drawable.ic_remind_dinner));
+        iconReminderList.add(new IconReminder(R.drawable.ic_remind_brain));
+        iconReminderList.add(new IconReminder(R.drawable.ic_remind_clean));
+        iconReminderList.add(new IconReminder(R.drawable.ic_remind_business));
+        iconReminderList.add(new IconReminder(R.drawable.ic_remind_cooking));
+        iconReminderList.add(new IconReminder(R.drawable.ic_remind_dance));
+        iconReminderList.add(new IconReminder(R.drawable.ic_remind_dice));
+        iconReminderList.add(new IconReminder(R.drawable.ic_remind_eat));
+        iconReminderList.add(new IconReminder(R.drawable.ic_remind_knit));
+        iconReminderList.add(new IconReminder(R.drawable.ic_remind_meditate));
+        iconReminderList.add(new IconReminder(R.drawable.ic_remind_farmer));
+        iconReminderList.add(new IconReminder(R.drawable.ic_remind_exercise));
+        iconReminderList.add(new IconReminder(R.drawable.ic_remind_sleep));
+        iconReminderList.add(new IconReminder(R.drawable.ic_remind_read));
         // Add more items as needed
 
         adapter = new IconReminderAdapter(getContext(), iconReminderList);

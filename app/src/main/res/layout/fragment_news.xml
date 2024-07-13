@@ -78,6 +78,7 @@
                                 android:layout_toRightOf="@id/headNewsCat"/>
 
                             <TextView
+                                android:id="@+id/headNewsDate"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="1 hari yang lalu"

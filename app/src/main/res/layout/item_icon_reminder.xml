@@ -9,10 +9,9 @@
 
     <ImageView
         android:id="@+id/item_icon_reminder"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
         android:layout_gravity="center"
-        android:src="@drawable/kiwi"
         tools:ignore="ContentDescription" />
 
 </LinearLayout>

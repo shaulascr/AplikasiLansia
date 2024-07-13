@@ -37,15 +37,27 @@
                 android:textSize="26sp"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:layout_marginBottom="6dp"/>
+                android:layout_marginBottom="8dp"/>
 
-            <ImageView
-                android:id="@+id/img_edit_ic_reminder"
-                android:layout_width="130dp"
-                android:layout_height="130dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginVertical="12dp"
-                android:background="@drawable/outline_circle"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                >
+                <ImageView
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:layout_marginVertical="12dp"
+                    android:background="@drawable/outline_circle"/>
+
+                <ImageView
+                    android:id="@+id/img_edit_ic_reminder"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginVertical="12dp"/>
+            </RelativeLayout>
+
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_edit_ic_reminder"
@@ -132,16 +144,6 @@
                                 android:entries="@array/day_array"/>
                         </RelativeLayout>
 
-                        <!--                        <TextView-->
-                        <!--                            android:layout_width="match_parent"-->
-                        <!--                            android:layout_height="48dp"-->
-                        <!--                            android:background="@drawable/custom_edit_text"-->
-                        <!--                            android:hint="Pilih hari"-->
-                        <!--                            android:textSize="18sp"-->
-                        <!--                            android:gravity="center_vertical"-->
-                        <!--                            app:drawableStartCompat="@drawable/custom_ic_calendar"-->
-                        <!--                            android:drawablePadding="8dp"-->
-                        <!--                            android:layout_marginBottom="20dp"/>-->
                     </LinearLayout>
 
                     <Space
@@ -207,10 +209,11 @@
 
 
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_cancel_reminder"
                         style="@style/CustomWhiteRoundButton"
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="6dp"
+                        android:layout_marginEnd="8dp"
                         android:textSize="18sp"
                         android:text="@string/cancel"/>
 
@@ -220,7 +223,7 @@
                         android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:textSize="18sp"
-                        android:layout_marginStart="6dp"
+                        android:layout_marginStart="8dp"
                         android:text="@string/save"/>
 
                 </LinearLayout>

@@ -33,11 +33,9 @@ import java.util.Locale;
 public class AddReminderActivity extends AppCompatActivity implements View.OnClickListener, IconReminderFragment.OnIconSelectedListener {
 
     private TextView tvHourReminder;
-    private Button btnIconReminder;
-    private Button btnCreateReminder;
+    private Button btnIconReminder, btnCreateReminder, btnCancel, btnBackFromAddReminder;
     private ImageView imgIconReminder;
     private int selectedIconResourceId;
-
     private EditText inputTitleReminder;
     private EditText inputDescReminder;
     private Spinner dayReminder;
@@ -55,7 +53,9 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
 
         imgIconReminder = findViewById(R.id.img_edit_ic_reminder); // set the src of this to selected src in the previous fragment
 
-        Button btnBackFromAddReminder = findViewById(R.id.btn_back_addreminder);
+        btnCancel = findViewById(R.id.btn_cancel_reminder);
+        btnCancel.setOnClickListener(v -> {finish();});
+        btnBackFromAddReminder = findViewById(R.id.btn_back_addreminder);
         btnBackFromAddReminder.setOnClickListener(this);
 
         btnCreateReminder = findViewById(R.id.btn_create_reminder);
