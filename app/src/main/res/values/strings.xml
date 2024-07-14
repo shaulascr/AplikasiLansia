@@ -142,6 +142,7 @@
     <string name="tahun">Tahun</string>
     <string name="age_format">%d Tahun</string>
     <string name="source">"Sumber : "</string>
+    <string name="health_care_pilih_kota">Silakan pilih kota Anda untuk menemukan layanan kesehatan terdekat</string>
 
     <string-array name="gender_array">
         <item>Laki-laki</item>
@@ -149,7 +150,7 @@
     </string-array>
 
     <string-array name="health_care">
-        <item>Pilih Kota</item>
+        <item>Pilih Kota Anda</item>
         <item>Jakarta</item>
         <item>Bogor</item>
         <item>Depok</item>

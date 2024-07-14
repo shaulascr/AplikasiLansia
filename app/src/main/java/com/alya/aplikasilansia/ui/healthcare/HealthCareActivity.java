@@ -28,7 +28,7 @@ public class HealthCareActivity extends AppCompatActivity implements View.OnClic
     private FirebaseAuth mAuth;
     HealthCareViewModel healthCareViewModel;
     HealthCareAdapter adapter;
-    private TextView tvName, tvAddress;
+    private TextView tvPilihKota;
     private String selectedFilter;
     private Spinner spinnerHealthCare;
     @Override
@@ -47,7 +47,8 @@ public class HealthCareActivity extends AppCompatActivity implements View.OnClic
             Button backFromHealtnBtn = findViewById(R.id.btn_back_healthcare);
             backFromHealtnBtn.setOnClickListener(this);
             spinnerHealthCare = findViewById(R.id.healthcare_searchbar);
-
+            tvPilihKota = findViewById(R.id.tv_pilih_kota);
+            tvPilihKota.setVisibility(View.GONE);
             spinnerHealthBar();
             setupHealthRecyclerView();
             getData();
@@ -83,8 +84,10 @@ public class HealthCareActivity extends AppCompatActivity implements View.OnClic
                     String city = healthCare.getCity();
                     Log.d("HealthCareActivity", "HealthCare Item: " + healthCare + ", City: " + city);
 //                    Log.d("HealthCareActivity", "HealthCare Item: " + healthCare);
-                    if (selectedFilter == null || selectedFilter.equals("All") || selectedFilter.equals(healthCare.getCity())) {
+                    if (selectedFilter.equals(healthCare.getCity())) {
                         items.add(healthCare);
+                    } else if (selectedFilter.equals("Pilih Kota Anda")) {
+                        tvPilihKota.setVisibility(View.VISIBLE);
                     }
                 } else {
                     Log.e("HealthCareActivity", "HealthCare Item is null");
