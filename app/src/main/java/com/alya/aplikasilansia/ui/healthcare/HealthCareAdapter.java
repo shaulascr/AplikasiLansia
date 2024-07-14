@@ -1,5 +1,8 @@
 package com.alya.aplikasilansia.ui.healthcare;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +16,18 @@ import com.alya.aplikasilansia.R;
 import java.util.List;
 
 public class HealthCareAdapter extends RecyclerView.Adapter<HealthCareAdapter.ViewHolder> {
-    private List<HealthCareService> healthCareServices;
+    private List<HealthCare> items;
 
-    public HealthCareAdapter(List<HealthCareService> healthCareServices){
-        this.healthCareServices = healthCareServices;
+    private Context context;
+
+    public HealthCareAdapter(List<HealthCare> items, Context context) {
+        this.items = items;
+        this.context = context;
+    }    public void updateList(List<HealthCare> newItems) {
+        items.clear(); // Clear the existing items
+        items.addAll(newItems);
+        notifyDataSetChanged();
     }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -28,13 +37,19 @@ public class HealthCareAdapter extends RecyclerView.Adapter<HealthCareAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull HealthCareAdapter.ViewHolder holder, int position) {
-        HealthCareService healthcareService = healthCareServices.get(position);
-        holder.bind(healthcareService); // Call bind() method to bind data to views
+        HealthCare healthcare = items.get(position);
+        holder.bind(healthcare); // Call bind() method to bind data to views
+        holder.itemView.setOnClickListener(v -> {
+            String url = healthcare.getUrl();
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            context.startActivity(intent);
+        });
     }
 
     @Override
     public int getItemCount() {
-        return healthCareServices.size();
+        return items.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -47,9 +62,9 @@ public class HealthCareAdapter extends RecyclerView.Adapter<HealthCareAdapter.Vi
             addressTextView = itemView.findViewById(R.id.tv_healthcare_address);
         }
 
-        public void bind(HealthCareService healthcareService) {
-            nameTextView.setText(healthcareService.getName());
-            addressTextView.setText(healthcareService.getAddress());
+        public void bind(HealthCare healthcare) {
+            nameTextView.setText(healthcare.getName());
+            addressTextView.setText(healthcare.getAddress());
         }
     }
 }

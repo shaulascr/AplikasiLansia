@@ -23,9 +23,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
 
             <TextView
                 android:id="@+id/tv_healthcare_title"
@@ -63,9 +65,10 @@
                 android:layout_marginHorizontal="30dp"
                 android:background="@drawable/custom_edit_text"
                 android:spinnerMode="dropdown"
-                android:layout_below="@id/space_healthcare" />
+                android:layout_below="@id/space_healthcare"
+                android:elevation="1dp"/>
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/healtcare_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -80,10 +83,10 @@
                     android:layout_height="wrap_content"
                     tools:listitem="@layout/item_health_care" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
 
 
-        </RelativeLayout>
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

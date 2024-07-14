@@ -243,8 +243,6 @@ public class ReminderActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-
-
     private void setupSpinner(Spinner spinner) {
         String[] filterReminder = getResources().getStringArray(R.array.filter_reminder);
 

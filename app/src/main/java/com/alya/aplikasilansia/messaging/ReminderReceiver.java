@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -40,7 +41,7 @@ public class ReminderReceiver extends BroadcastReceiver {
 
                 NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                 notificationManager.notify(0, builder.build());
-                sendNotificationInApp(context, title, description);
+                sendNotificationInApp(context, title, description, 10);
             } else {
                 Log.w("ReminderReceiver", "Null title or description received");
             }
@@ -50,7 +51,7 @@ public class ReminderReceiver extends BroadcastReceiver {
         }
     }
 
-    private void sendNotificationInApp(Context context, String title, String message) {
+    private void sendNotificationInApp(Context context, String title, String message, int durationInSeconds) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View layout = inflater.inflate(R.layout.custom_toast, null);
 
@@ -67,6 +68,15 @@ public class ReminderReceiver extends BroadcastReceiver {
         toast.setView(layout);
         toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 20);
         toast.show();
+
+        int durationInMillis = durationInSeconds * 1000;
+        int toastLength = 2000; // LENGTH_SHORT duration in milliseconds
+        int repetitions = durationInMillis / toastLength;
+
+        Handler handler = new Handler();
+        for (int i = 0; i < repetitions; i++) {
+            handler.postDelayed(toast::show, i * toastLength);
+        }
     }
 
 
