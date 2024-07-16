@@ -1,25 +1,27 @@
 package com.alya.aplikasilansia.ui.editprofile;
 
-import static androidx.fragment.app.FragmentManager.TAG;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alya.aplikasilansia.R;
 import com.alya.aplikasilansia.data.inputMedHistory;
+import com.alya.aplikasilansia.ui.reminder.CustomSpinnerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -119,7 +121,10 @@ public class EditHealthFragment extends Fragment implements AddMedicalRecordFrag
 
         if (onSaveEditListener != null) {
             onSaveEditListener.onSaveHealthData(newCaregiver, newStatus, medHistoryList);
-            requireActivity().onBackPressed();
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("FRAGMENT_TYPE", "health");
+            requireActivity().setResult(FragmentActivity.RESULT_OK, resultIntent);
+            requireActivity().finish();
         } else {
             Log.e("EditHealthFragment", "onSaveEditListener is not attached");
         }
@@ -138,7 +143,8 @@ public class EditHealthFragment extends Fragment implements AddMedicalRecordFrag
 
         medHistoryContainer.removeAllViews();
 
-        for (inputMedHistory history : medHistory) {
+        for (int i = 0; i < medHistory.size(); i++) {
+            inputMedHistory history = medHistory.get(i);
             View itemView = getLayoutInflater().inflate(R.layout.register_input_medhistory, medHistoryContainer, false);
 
             EditText penyakitEditText = itemView.findViewById(R.id.et_penyakit);
@@ -149,32 +155,66 @@ public class EditHealthFragment extends Fragment implements AddMedicalRecordFrag
             tahunEditText.setText(history.getLamanya());
             bulanEditText.setText(history.getLamanyaBulan());
 
+            int finalI = i;
+            penyakitEditText.addTextChangedListener(new SimpleTextWatcher() {
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    medHistoryList.get(finalI).setPenyakit(s.toString());
+                }
+            });
+
+            tahunEditText.addTextChangedListener(new SimpleTextWatcher() {
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    medHistoryList.get(finalI).setLamanya(s.toString());
+                }
+            });
+
+            bulanEditText.addTextChangedListener(new SimpleTextWatcher() {
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    medHistoryList.get(finalI).setLamanyaBulan(s.toString());
+                }
+            });
+
             medHistoryContainer.addView(itemView);
         }
     }
 
-    private void setSpinnerCaregiver(String selectedCaregiver) {
-        String[] caregivers = getResources().getStringArray(R.array.care_giver);
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, caregivers);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        caregiverSpinner.setAdapter(spinnerAdapter);
+    public abstract class SimpleTextWatcher implements TextWatcher {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
 
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+    }
+
+    private void setSpinnerCaregiver(String selectedCaregiver) {
+        CustomSpinnerAdapter careGiverAdapter = new CustomSpinnerAdapter(
+                getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.care_giver)
+        );
+        careGiverAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        caregiverSpinner.setAdapter(careGiverAdapter);
         // Set selected item
         if (selectedCaregiver != null) {
-            int position = spinnerAdapter.getPosition(selectedCaregiver);
+            int position = careGiverAdapter.getPosition(selectedCaregiver);
             caregiverSpinner.setSelection(position);
         }
     }
 
     private void setSpinnerMarStat(String selectedMaritalStatus) {
-        String[] maritalStatuses = getResources().getStringArray(R.array.marital_status);
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, maritalStatuses);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        maritalStatSpinner.setAdapter(spinnerAdapter);
+        CustomSpinnerAdapter maritalStatusAdapter = new CustomSpinnerAdapter(
+                getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.marital_status)
+        );
+        maritalStatusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        maritalStatSpinner.setAdapter(maritalStatusAdapter);
 
         // Set selected item
         if (selectedMaritalStatus != null) {
-            int position = spinnerAdapter.getPosition(selectedMaritalStatus);
+            int position = maritalStatusAdapter.getPosition(selectedMaritalStatus);
             maritalStatSpinner.setSelection(position);
         }
     }

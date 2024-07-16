@@ -3,16 +3,16 @@ package com.alya.aplikasilansia.data;
 public class inputMedHistory {
     public String penyakit;
 
-    public String getPenyakit() {
-        return penyakit;
+    public void setPenyakit(String penyakit) {
+        this.penyakit = penyakit;
     }
 
-    public String getLamanya() {
-        return lamanya;
+    public void setLamanya(String lamanya) {
+        this.lamanya = lamanya;
     }
 
-    public String getLamanyaBulan() {
-        return lamanyaBulan;
+    public void setLamanyaBulan(String lamanyaBulan) {
+        this.lamanyaBulan = lamanyaBulan;
     }
 
     public String lamanya;
@@ -26,5 +26,17 @@ public class inputMedHistory {
         this.penyakit = penyakit;
         this.lamanya = lamanya;
         this.lamanyaBulan = lamanyaBulan;
+    }
+
+    public String getPenyakit() {
+        return penyakit;
+    }
+
+    public String getLamanya() {
+        return lamanya;
+    }
+
+    public String getLamanyaBulan() {
+        return lamanyaBulan;
     }
 }

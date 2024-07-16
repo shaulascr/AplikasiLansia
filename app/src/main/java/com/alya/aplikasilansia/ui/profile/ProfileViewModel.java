@@ -31,7 +31,7 @@ public class ProfileViewModel extends ViewModel {
     }
 
     // Fetch user data method
-    private void fetchUser() {
+    public void fetchUser() {
         userLiveData = userRepository.fetchUser();
     }
 

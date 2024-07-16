@@ -34,6 +34,7 @@ public class EditProfileActivity extends AppCompatActivity implements OnSaveEdit
     private MutableLiveData<String> updateResultLiveData; // LiveData for update result
     private TextView personalProfile, healthProfile, userNameTextView;
     private RelativeLayout editProfileImg;
+    String fragmentType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +42,7 @@ public class EditProfileActivity extends AppCompatActivity implements OnSaveEdit
 
         editProfileViewModel = new ViewModelProvider(this).get(EditProfileViewModel.class);
 
-        String fragmentType = getIntent().getStringExtra("FRAGMENT_TYPE");
+        fragmentType = getIntent().getStringExtra("FRAGMENT_TYPE");
 
         personalProfile = findViewById(R.id.btnPersonalData);
         healthProfile = findViewById(R.id.btnHealthData);
@@ -102,12 +103,15 @@ public class EditProfileActivity extends AppCompatActivity implements OnSaveEdit
     }
     @Override
     public void onSavePersonalData(String newUsername, String newBirthdate) {
+        fragmentType = "personal";
+
         editProfileViewModel.updateProfile(newUsername, null, newBirthdate, selectedImageUri);
-//        saveProfileChanges();
     }
 
     @Override
     public void onSaveHealthData(String newCaregiver, String newStatus, List<inputMedHistory> medHistoryList) {
+        fragmentType = "health";
+
         editProfileViewModel.updateHealthData2(newCaregiver, newStatus);
         editProfileViewModel.updateMedRecord(medHistoryList);
         saveProfileChanges();

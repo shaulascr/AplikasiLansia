@@ -167,7 +167,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@drawable/custom_edit_text"
-                android:text="Nama user"
                 android:textSize="18sp"
                 android:gravity="center_vertical"
                 app:drawableStartCompat="@drawable/custom_ic_crgiver"
@@ -187,7 +186,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@drawable/custom_edit_text"
-                android:text="Nama user"
                 android:textSize="18sp"
                 android:gravity="center_vertical"
                 app:drawableStartCompat="@drawable/custom_ic_mstatus"
@@ -199,17 +197,18 @@
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_sign_out_2"
             style="@style/CustomBlueButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="15dp"
             android:text="@string/keluar"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="15dp"
             app:icon="@drawable/ic_logout"
-            app:iconPadding="9dp"
-            app:iconGravity="textStart"/>
+            app:iconGravity="textStart"
+            app:iconPadding="9dp" />
 
     </LinearLayout>
 

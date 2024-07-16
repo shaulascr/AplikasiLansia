@@ -1,6 +1,7 @@
 package com.alya.aplikasilansia.ui.editprofile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alya.aplikasilansia.R;
@@ -77,7 +79,10 @@ public class EditPersonalFragment extends Fragment {
         dateTextView = view.findViewById(R.id.tv_edit_birthdate);
         setupDatePicker(dateTextView);
 
-        view.findViewById(R.id.btn_save_edit).setOnClickListener(v -> {saveProfileChanges();});
+        view.findViewById(R.id.btn_save_edit).setOnClickListener(v -> {
+            saveProfileChanges();
+            requireActivity().onBackPressed();
+        });
         view.findViewById(R.id.btn_cancel_edit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +106,7 @@ public class EditPersonalFragment extends Fragment {
 
         });
 
-        editProfileViewModel.fetchUser();
+//        editProfileViewModel.fetchUser();
 
         return view;
     }
@@ -112,7 +117,10 @@ public class EditPersonalFragment extends Fragment {
 //        editProfileViewModel.updateProfile(newUsername, null, newBirthdate, null);
         if (onSaveEditListener != null) {
             onSaveEditListener.onSavePersonalData(newUsername, newBirthdate);
-            requireActivity().onBackPressed();
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("FRAGMENT_TYPE", "personal");
+            requireActivity().setResult(FragmentActivity.RESULT_OK, resultIntent);
+            requireActivity().finish();
         } else {
             Log.e(TAG, "onSaveEditListener is not attached");
         }

@@ -79,6 +79,12 @@ public class ProfilePersonalFragment extends Fragment {
 
         return view;
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Fetch updated user data whenever the fragment is resumed
+        profileViewModel.fetchUser();
+    }
 
     private void setAge(String birthDate){
         if (birthDate != null && !birthDate.isEmpty()) {
