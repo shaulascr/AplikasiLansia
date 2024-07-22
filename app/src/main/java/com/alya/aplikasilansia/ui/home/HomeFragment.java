@@ -47,7 +47,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private TextView tvTitleRemind;
     private TextView tvTimeRemind;
     private ImageView imgRemind;
-    private Reminder firstTodayReminder;
+    private Reminder firstReminder;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -113,75 +113,47 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 }
             }
         });
-//        reminderViewModel.getReminderLiveData().observe(getViewLifecycleOwner(), new Observer<List<Reminder>>() {
-//            @Override
-//            public void onChanged(List<Reminder> reminders) {
-//                if (reminders == null || reminders.isEmpty()) {
-//                    Log.d(TAG, "No reminders available");
-//                    return;
-//                }
-//
-//                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-//
-//                reminders.sort((r1, r2) -> {
-//                    try {
-//                        Date date1 = sdf.parse(r1.getTimestamp());
-//                        Date date2 = sdf.parse(r2.getTimestamp());
-//                        return date1.compareTo(date2);
-//                    } catch (ParseException e) {
-//                        e.printStackTrace();
-//                        return 0;
-//                    }
-//                });
-//
-//                // Initialize date comparisons
-//                Calendar today = Calendar.getInstance();
-//
-//                for (Reminder reminder : reminders) {
-//                    try {
-//                        Date reminderDate = sdf.parse(reminder.getTimestamp());
-//                        Calendar reminderCalendar = Calendar.getInstance();
-//                        reminderCalendar.setTime(reminderDate);
-//
-//                        if (firstTodayReminder == null) {
-//                            if (isSameDay(today, reminderCalendar)) {
-//                                if (reminderCalendar.after(Calendar.getInstance())) {
-//                                    firstTodayReminder = reminder;
-//                                    Log.d(TAG, "First today reminder set: " + firstTodayReminder.getTitle());                        }
-////                                continue;
-//                            }
-//                        }
-//                    } catch (ParseException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//
-//                // Update the UI with the first reminder for today
-//                updateFirstTodayReminderUI();
-//            }
-//        });
-
-
-        reminderViewModel.getFirstReminderLiveData().observe(getViewLifecycleOwner(), firstReminder -> {
-            if (firstReminder != null) {
-                updateFirstTodayReminderUI(firstReminder);
-            }
-        });
-
+//        updateFirstTodayReminderUI();
 
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        reminderViewModel.fetchFirstReminder();
+        updateFirstTodayReminderUI();
+        reminderViewModel.fetchReminders();
+    }
 
-    private void updateFirstTodayReminderUI(Reminder firstTodayReminder) {
-        if (firstTodayReminder != null) {
-            Log.d(TAG, "Updating UI with first today reminder: " + firstTodayReminder.getTitle());
-            tvTitleRemind.setText(firstTodayReminder.getTitle());
-            tvTimeRemind.setText(formatDate(firstTodayReminder.getTimestamp()));
-            imgRemind.setImageResource(firstTodayReminder.getIcon());
-        } else {
-            Log.d(TAG, "No first today reminder to update UI with");
-        }
+
+    private void updateFirstTodayReminderUI() {
+        reminderViewModel.getFirstReminderLiveData().observe(getViewLifecycleOwner(), firstReminder -> {
+            if (firstReminder != null) {
+                Log.d(TAG, "Updating home with first today reminder: " + firstReminder.getTitle());
+                tvTitleRemind.setText(firstReminder.getTitle());
+                tvTimeRemind.setText(formatDate(firstReminder.getTimestamp()));
+                imgRemind.setImageResource(firstReminder.getIcon());
+            } else {
+//                String textName = "Buat Pengingatmu!";
+//                String textDate = "Belum ada pengingat terjadwal.";
+//                tvTitleRemind.setText(textName);
+//                tvTimeRemind.setText(textDate);
+//                imgRemind.setImageResource(R.drawable.ic_remind_med);
+//                Log.d(TAG, "No first today reminder to update UI with");
+            }
+        });
+        reminderViewModel.getReminderLiveData().observe(getViewLifecycleOwner(), reminders -> {
+            if (reminders.size() == 0) {
+                String textName = "Buat Pengingatmu!";
+                String textDate = "Belum ada pengingat terjadwal.";
+                tvTitleRemind.setText(textName);
+                tvTimeRemind.setText(textDate);
+                imgRemind.setImageResource(R.drawable.ic_remind_med);
+                Log.d(TAG, "No first today reminder to update UI with");
+            }
+        });
+
     }
 
     private String formatDate(String timestamp) {

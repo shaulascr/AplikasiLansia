@@ -28,11 +28,12 @@ public class LoginActivity extends AppCompatActivity {
     private EditText emailInput;
     private ImageView viewPasswordBtn;
     private Button loginBtn;
-    private TextView createAccBtn;
+    private TextView createAccBtn, forgotPassBtn;
     private FirebaseAuth mAuth;
     private static final String TAG = "LoginActivity";
     private LoginViewModel loginViewModel;
-
+    private static final int REQ_ONE_TAP = 2;  // Can be any integer unique to the Activity.
+    private boolean showOneTapUI = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
 //        setSupportActionBar(binding.toolbar);
         setPasswordToggle();
         createAccountFromLogin();
+        forgotPassword();
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -113,6 +115,17 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent1 = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent1);
+            }
+        });
+    }
+
+    private void forgotPassword() {
+        forgotPassBtn = findViewById(R.id.btn_forgot_pass);
+        forgotPassBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, ForgotPassActivity.class);
+                startActivity(intent);
             }
         });
     }

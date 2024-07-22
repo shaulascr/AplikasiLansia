@@ -3,8 +3,9 @@ package com.alya.aplikasilansia;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -12,10 +13,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.alya.aplikasilansia.ui.reminder.CustomSpinnerAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,49 +30,58 @@ import com.google.firebase.auth.FirebaseUser;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Objects;
 
 public class RegisterActivity extends AppCompatActivity {
     private android.text.InputType InputType;
     private EditText passwordInputReg, nameInputReg, emailInputReg, genderInputReg;
     private ImageView viewPasswordBtn;
 
-    private TextView birthdateTextView;
+    private TextView birthdateTextView, emailVerifDialogTv;
     private Button btnRegister;
     private Button btnRegisterGoogle;
     private Spinner spinnerGender;
     private FirebaseAuth mAuth;
     private static final String TAG = "RegisterActivity";
     private RegisterViewModel registerViewModel;
-    private String selectedGender;
+    private String selectedGender, email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        birthdateTextView = findViewById(R.id.tv_birthDateReg);
-        setPasswordToggle();
-        loginFromRegister();
-        setupDatePicker(birthdateTextView);
 
         registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
+        mAuth = FirebaseAuth.getInstance();
 
+        birthdateTextView = findViewById(R.id.tv_birthDateReg);
         nameInputReg = findViewById(R.id.name_input_reg);
         emailInputReg = findViewById(R.id.email_input_reg);
         birthdateTextView = findViewById(R.id.tv_birthDateReg);
         spinnerGender = findViewById(R.id.spinner_gender);
-
-        mAuth = FirebaseAuth.getInstance();
         Button registerBtn = findViewById(R.id.btn_regis);
+
+        setPasswordToggle();
+        loginFromRegister();
+        setupDatePicker(birthdateTextView);
+
+        CustomSpinnerAdapter spinnerAdapter = new CustomSpinnerAdapter(
+                this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.gender_array)
+        );
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerGender.setAdapter(spinnerAdapter);
+
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = emailInputReg.getText().toString().trim();
+                email = emailInputReg.getText().toString().trim();
                 String password = passwordInputReg.getText().toString().trim();
                 String birthDate = birthdateTextView.getText().toString().trim();
                 String userName = nameInputReg.getText().toString().trim();
+                selectedGender = spinnerGender.getSelectedItem().toString();
 
-                if (selectedGender == null || selectedGender.isEmpty()) {
-                    Toast.makeText(RegisterActivity.this, "Please select a gender", Toast.LENGTH_SHORT).show();
+                if (email.isEmpty() || password.isEmpty() || birthDate.isEmpty() || userName.isEmpty() || selectedGender.equals("Jenis Kelamin") || selectedGender.isEmpty()) {
+                    incompleteFormDialog();
                     return; // Exit the method without proceeding
                 }
 
@@ -81,8 +96,10 @@ public class RegisterActivity extends AppCompatActivity {
             public void onChanged(FirebaseUser firebaseUser) {
                 if (firebaseUser != null) {
                     Log.d(TAG, "createUserWithEmail:success");
+//                    sendEmailVerification(firebaseUser);
                     Intent intentReg2 = new Intent(RegisterActivity.this, RegisterStep2Activity.class);
                     startActivity(intentReg2);
+                    finish();
 //                    Intent intent2 = new Intent(RegisterActivity.this, LoginActivity.class);
 //                    startActivity(intent2);
                 }
@@ -100,19 +117,27 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        spinnerGender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedGender = parent.getItemAtPosition(position).toString();
-                // You can now use `selectedGender` as needed
-                Log.d(TAG, "Selected gender: " + selectedGender);
-            }
+    }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // Handle case where nothing is selected (if needed)
-            }
-        });
+    private void sendEmailVerification(FirebaseUser user) {
+        user.sendEmailVerification()
+                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+//                            Toast.makeText(RegisterActivity.this,
+//                                    "Verification email sent to " + user.getEmail(),
+//                                    Toast.LENGTH_SHORT).show();
+                            verificationSentDialog(user.getEmail());
+
+                        } else {
+                            Log.e(TAG, "sendEmailVerification", task.getException());
+                            Toast.makeText(RegisterActivity.this,
+                                    "Failed to send verification email.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     private void setPasswordToggle () {
@@ -170,6 +195,77 @@ public class RegisterActivity extends AppCompatActivity {
             birthdateTextView.setText(formattedDate);
         });
         datePicker.show(getSupportFragmentManager(), "DATE_PICKER");
+    }
+
+    private void incompleteFormDialog(){
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.incomplete_form_dialog, null);
+
+        // Build the dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(dialogView);
+
+        // Create the AlertDialog
+        AlertDialog dialog = builder.create();
+
+        // Show the dialog
+        dialog.show();
+
+        // Set the custom background drawable with rounded corners
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(R.drawable.custom_corner_rounded);
+
+        // Adjust dialog size programmatically after showing it
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        params.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.9); // 80% of screen width
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT; // Adjust height as needed
+        dialog.getWindow().setAttributes(params);
+
+        // Get the buttons from the custom layout and set click listeners
+        Button btnClose = dialogView.findViewById(R.id.btn_close_incomplete);
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+    }
+
+    private void verificationSentDialog(String emailSent){
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.email_verif_dialog, null);
+
+        // Build the dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(dialogView);
+
+        // Create the AlertDialog
+        AlertDialog dialog = builder.create();
+//        dialog.setCancelable(false);
+
+        // Show the dialog
+        dialog.show();
+
+        // Set the custom background drawable with rounded corners
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(R.drawable.custom_corner_rounded);
+
+        // Adjust dialog size programmatically after showing it
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        params.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.9); // 80% of screen width
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT; // Adjust height as needed
+        dialog.getWindow().setAttributes(params);
+
+        // Get the buttons from the custom layout and set click listeners
+        Button btnLogin = dialogView.findViewById(R.id.btn_close_verif);
+        emailVerifDialogTv = dialogView.findViewById(R.id.tv_email_verif);
+        emailVerifDialogTv.setText(emailSent);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 //    @Override

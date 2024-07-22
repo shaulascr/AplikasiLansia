@@ -6,11 +6,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -71,13 +73,58 @@ public class ProfilePersonalFragment extends Fragment {
         });
 
         signOut.setOnClickListener(v -> {
-            profileViewModel.signOut();
-            // Navigate to login screen or other appropriate action after sign out
-            Intent intent = new Intent(getActivity(), LoginActivity.class);
-            startActivity(intent);
+            showLogoutDialog();
         });
 
         return view;
+    }
+
+    public void showLogoutDialog() {
+        // Inflate the custom layout/view
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.confirm_logout_dialog, null);
+
+        // Build the AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setView(dialogView);
+
+        // Create the AlertDialog
+        AlertDialog dialog = builder.create();
+
+        // Show the dialog
+        dialog.show();
+
+        // Set the custom background drawable with rounded corners
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(R.drawable.custom_corner_rounded);
+
+        // Adjust dialog size programmatically after showing it
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        params.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.9); // 80% of screen width
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT; // Adjust height as needed
+        dialog.getWindow().setAttributes(params);
+
+        // Get the buttons from the custom layout and set click listeners
+        Button buttonConfirm = dialogView.findViewById(R.id.btn_logout_confirmed);
+        Button buttonCancel = dialogView.findViewById(R.id.btn_cancel_logout);
+
+        buttonConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle the logout logic here
+                profileViewModel.signOut();
+                // Navigate to login screen or other appropriate action after sign out
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                dialog.dismiss(); // Ensure dialog is dismissed after logout
+            }
+        });
+
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
     @Override
     public void onResume() {

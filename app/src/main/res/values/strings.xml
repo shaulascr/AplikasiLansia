@@ -143,8 +143,19 @@
     <string name="age_format">%d Tahun</string>
     <string name="source">"Sumber : "</string>
     <string name="health_care_pilih_kota">Silakan pilih kota Anda untuk menemukan layanan kesehatan terdekat</string>
+    <string name="confirm_logout">Apakah Anda yakin ingin keluar dari akun Anda?</string>
+    <string name="reset_password">Lupa Kata Sandi</string>
+    <string name="reset_password_2">Pemulihan Kata Sandi</string>
+    <string name="reset_password_3">Silahkan masukkan email anda untuk melakukan membuat kata sandi baru</string>
+    <string name="send">Kirim</string>
+    <string name="yakin">Yakin</string>
+    <string name="tidak">Tidak</string>
+    <string name="close">Tutup</string>
+    <string name="confirm_delete">Apakah anda yakin ingin menghapus pengingat?</string>
+    <string name="edit_reminder">Ubah Pengingat</string>
 
     <string-array name="gender_array">
+        <item>Jenis Kelamin</item>
         <item>Laki-laki</item>
         <item>Perempuan</item>
     </string-array>
@@ -193,7 +204,7 @@
 
 
     <string-array name="marital_status">
-        <item>--Pilih Status Perkawinan--</item>
+        <item>--Pilih Status--</item>
         <item>Belum Kawin</item>
         <item>Kawin</item>
         <item>Cerai Hidup</item>

@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -72,8 +75,14 @@ public class RegisterStep2Activity extends AppCompatActivity {
 //                saveInputData();
 //                registerViewModel.registerHealth1(inputDataList);
                 saveProfileChanges();
-                Intent register3 = new Intent(RegisterStep2Activity.this, RegisterStep3Activity.class);
-                startActivity(register3);
+                if (inputDataList != null && !inputDataList.isEmpty()) {
+                    Intent register3 = new Intent(RegisterStep2Activity.this, RegisterStep3Activity.class);
+                    startActivity(register3);
+                } else {
+//                    incompleteFormDialog();
+                    IncompleteFormDialog dialog = new IncompleteFormDialog();
+                    dialog.show(getSupportFragmentManager(), "IncompleteFormDialog");
+                }
             }
         });
 
@@ -94,7 +103,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
         editProfileViewModel.getUpdateResultLiveData().observe(this, updateResult -> {
 //            Toast.makeText(RegisterStep2Activity.this, updateResult, Toast.LENGTH_SHORT).show();
             if (updateResult.equals("Profile updated successfully")) {
-                finish();
+//                finish();
             } else {
                 Snackbar.make(findViewById(android.R.id.content), "Failed to update profile", Snackbar.LENGTH_LONG)
                         .setAction("Retry", v -> saveProfileChanges())
@@ -106,7 +115,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
     }
     private void saveProfileChanges() {
         editProfileViewModel.updateProfile(null, null, null, selectedImageUri);
-        finish();
+//        finish();
     }
 
     // Method to open gallery for selecting profile image
@@ -142,8 +151,6 @@ public class RegisterStep2Activity extends AppCompatActivity {
                 viewMedRecord.addView(itemView);
             }
         } else {
-            // Handle case where inputDataList is empty
-            // For example, you might show a message or take another action
             Toast.makeText(this, "No medical history data available", Toast.LENGTH_SHORT).show();
         }
     }
@@ -160,5 +167,39 @@ public class RegisterStep2Activity extends AppCompatActivity {
             }
         });
         medicalRecordFragment.show(getSupportFragmentManager(), "MedicalRecordDialog");
+    }
+
+    private void incompleteFormDialog() {
+        // Inflate the custom layout for the dialog
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.incomplete_form_dialog, null);
+
+        // Build the dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(dialogView);
+
+        // Create the AlertDialog
+        AlertDialog dialog = builder.create();
+
+        // Set the custom background drawable with rounded corners before showing the dialog
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.custom_corner_rounded);
+
+        // Adjust dialog size programmatically
+        dialog.setOnShowListener(dialogInterface -> {
+            WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+            params.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.9); // 90% of screen width
+            params.height = WindowManager.LayoutParams.WRAP_CONTENT; // Adjust height as needed
+            dialog.getWindow().setAttributes(params);
+        });
+
+        // Show the dialog
+        dialog.show();
+
+        TextView textTv = dialogView.findViewById(R.id.tv_incomplete_form);
+        String text = "Mohon lengkapi data riwayat penyakit Anda";
+        textTv.setText(text);
+        // Get the close button from the custom layout and set its click listener
+        Button btnClose = dialogView.findViewById(R.id.btn_close_incomplete);
+        btnClose.setOnClickListener(v -> dialog.dismiss());
     }
 }

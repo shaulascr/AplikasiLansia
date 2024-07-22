@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -34,13 +35,6 @@ public class MedicalRecordFragment extends DialogFragment {
     private Button btnSave;
     private Button btnCancel;
     private Button btnAdd;
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-    // Listener interface to communicate with host activity
     private OnDataSavedListener onDataSavedListener;
 
     public interface OnDataSavedListener {
@@ -58,10 +52,6 @@ public class MedicalRecordFragment extends DialogFragment {
     }
     public static MedicalRecordFragment newInstance(String param1, String param2) {
         MedicalRecordFragment fragment = new MedicalRecordFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -103,13 +93,28 @@ public class MedicalRecordFragment extends DialogFragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Collect input data
                 saveInputData();
-                registerViewModel.registerHealth1(inputDataList);
-                // Notify the listener with updated data list
 
-                dismiss();
+                // Check if inputDataList is not empty and all inputs are valid
+                boolean isAllValid = isValidInput(firstInputLayout) && isValidInput(parentLayout);
+
+                if (isAllValid && !inputDataList.isEmpty()) {
+                    // Save data
+                    registerViewModel.registerHealth1(inputDataList);
+                    // Notify the listener
+                    if (onDataSavedListener != null) {
+                        onDataSavedListener.onDataSaved(inputDataList);
+                    }
+                    // Dismiss the fragment
+                    dismiss();
+                } else {
+                    // Show a toast if any field is empty or no data
+                    Toast.makeText(getActivity(), "Harap isi semua kolom", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
 
         btnCancel.setOnClickListener(v -> {dismiss();});
 
@@ -127,6 +132,10 @@ public class MedicalRecordFragment extends DialogFragment {
         // Clear the existing data list
         inputDataList.clear();
 
+        if (!isValidInput(firstInputLayout)) {
+            Toast.makeText(getActivity(), "Harap isi semua kolom", Toast.LENGTH_SHORT).show();
+            return; // Stop execution if validation fails
+        }
         // Save the first input field data
         EditText editTextPenyakit = firstInputLayout.findViewById(R.id.et_penyakit);
         EditText editTextLamanya = firstInputLayout.findViewById(R.id.et_med_years);
@@ -134,6 +143,12 @@ public class MedicalRecordFragment extends DialogFragment {
         String penyakit = editTextPenyakit.getText().toString();
         String lamanya = editTextLamanya.getText().toString();
         String lamanya2 = editTextLamanya2.getText().toString();
+
+        if (penyakit.isEmpty() || lamanya.isEmpty() || lamanya2.isEmpty()) {
+            Toast.makeText(getActivity(), "Harap isi semua kolom", Toast.LENGTH_SHORT).show();
+            return; // Stop execution if validation fails
+        }
+
         inputDataList.add(new inputMedHistory(penyakit, lamanya, lamanya2));
 
         // Iterate through all child views in the parent layout
@@ -148,6 +163,10 @@ public class MedicalRecordFragment extends DialogFragment {
             lamanya = editTextLamanya.getText().toString();
             lamanya2 = editTextLamanya2.getText().toString();
 
+            if (penyakit.isEmpty() || lamanya.isEmpty() || lamanya2.isEmpty()) {
+                Toast.makeText(getActivity(), "Harap isi semua kolom", Toast.LENGTH_SHORT).show();
+                return; // Stop execution if validation fails
+            }
             // Add the input values to the data list
             inputDataList.add(new inputMedHistory(penyakit, lamanya, lamanya2));
 //            Log.d("RegisterStep2Activity", "Input " + (i + 1) + " - Penyakit: " + penyakit + ", Lamanya: " + lamanya);
@@ -164,6 +183,19 @@ public class MedicalRecordFragment extends DialogFragment {
             onDataSavedListener.onDataSaved(inputDataList);
         }
     }
+
+    private boolean isValidInput(View view) {
+        EditText editTextPenyakit = view.findViewById(R.id.et_penyakit);
+        EditText editTextLamanya = view.findViewById(R.id.et_med_years);
+        EditText editTextLamanya2 = view.findViewById(R.id.et_med_months);
+
+        String penyakit = editTextPenyakit.getText().toString().trim();
+        String lamanya = editTextLamanya.getText().toString().trim();
+        String lamanya2 = editTextLamanya2.getText().toString().trim();
+
+        return !penyakit.isEmpty() && !lamanya.isEmpty() && !lamanya2.isEmpty();
+    }
+
     private void addNewInputField() {
         // Inflate the input field layout and add it to the parent layout
         LayoutInflater inflater = getLayoutInflater();

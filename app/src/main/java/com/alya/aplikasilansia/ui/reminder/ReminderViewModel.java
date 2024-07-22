@@ -46,14 +46,20 @@ public class ReminderViewModel extends ViewModel {
 //    private void fetchReminder(){
 //        reminderLiveData = reminderRepository.fetchReminder();
 //    }
-    private void fetchReminders(){
-        reminderLiveData = reminderRepository.fetchReminder();
-//        reminderLiveData.setValue(reminders);
+//    private void fetchReminders(){
+//        reminderLiveData = reminderRepository.fetchReminder();
+////        reminderLiveData.setValue(reminders);
+//    }
+
+    public void fetchReminders() {
+        reminderRepository.fetchReminder().observeForever(reminders -> {
+            reminderLiveData.setValue(reminders);
+            updateFirstReminder(reminders);
+        });
     }
 
-    private void fetchFirstReminder() {
+    public void fetchFirstReminder() {
         reminderRepository.fetchReminder().observeForever(reminders -> {
-//            reminderLiveData.setValue(reminders);
             updateFirstReminder(reminders);
         });
     }
@@ -101,7 +107,24 @@ public class ReminderViewModel extends ViewModel {
                 cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
     }
 
+    public void editReminder(String reminderId, String title, String day, String time, String desc, String timestamp, Integer icon, Runnable onSuccess) {
+        reminderRepository.editReminder(reminderId, title, day, time, desc, timestamp, icon, errorLiveData, () -> {
+            // Update the UI or perform additional actions upon success
+            fetchReminders(); // Reload the reminders after editing
+            if (onSuccess != null) {
+                onSuccess.run(); // Execute the onSuccess Runnable
+            }
+        });
+    }
+//    public void deleteReminderData(String reminderId) {
+//        reminderRepository.deleteReminder(reminderId, errorLiveData);
+//    }
     public void deleteReminderData(String reminderId) {
-        reminderRepository.deleteReminder(reminderId, errorLiveData);
+        reminderRepository.deleteReminder(reminderId, errorLiveData, new ReminderRepository.OnReminderDeletedCallback() {
+            @Override
+            public void onReminderDeleted() {
+                fetchReminders(); // Reload data after deletion
+            }
+        });
     }
 }

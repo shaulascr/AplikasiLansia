@@ -62,14 +62,15 @@
                         android:id="@+id/tvOngoingReminder"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:maxLines="2"
                         android:text="@string/reminder_ongoing"
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        app:layout_constraintWidth_default="wrap"
-                        app:layout_constraintStart_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:layout_constrainedWidth="true"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
                         android:id="@+id/img_reminder"
@@ -83,31 +84,29 @@
 
                     <TextView
                         android:id="@+id/tv_reminder_name"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Nama Pengingat"
                         android:textSize="22sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="6dp"
                         app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintWidth_default="wrap"
+                        app:layout_constrainedWidth="true"
                         app:layout_constraintTop_toBottomOf="@id/tvOngoingReminder"
                         app:layout_constraintStart_toEndOf="@id/img_reminder"
                         app:layout_constraintEnd_toEndOf="parent"/>
 
                     <TextView
                         android:id="@+id/tv_reminder_date"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Hari ini pukul 10.00"
-                        app:layout_constraintWidth_default="wrap"
                         android:textSize="18sp"
                         android:textColor="@color/black"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="5dp"
                         app:layout_constraintHorizontal_bias="0"
+                        app:layout_constrainedWidth="true"
                         app:layout_constraintTop_toBottomOf="@id/tv_reminder_name"
                         app:layout_constraintStart_toEndOf="@id/img_reminder"
                         app:layout_constraintEnd_toEndOf="parent"/>

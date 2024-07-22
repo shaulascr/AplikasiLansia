@@ -7,6 +7,16 @@ public class Reminder {
     private String desc;
     private String userId;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    private String id;
+
 
 
     private int icon;
@@ -16,8 +26,9 @@ public class Reminder {
 
     public Reminder() {}
 
-    public Reminder(String userId, String title, String day, String time, String desc, String timestamp, Integer icon){
+    public Reminder(String userId, String id, String title, String day, String time, String desc, String timestamp, Integer icon){
         this.userId = userId;
+        this.id = id;
         this.title = title;
         this.day = day;
         this.time = time;
