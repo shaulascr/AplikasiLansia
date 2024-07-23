@@ -1,8 +1,10 @@
 package com.alya.aplikasilansia;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -19,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.alya.aplikasilansia.data.UserData;
 import com.alya.aplikasilansia.ui.reminder.CustomSpinnerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -45,6 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
     private static final String TAG = "RegisterActivity";
     private RegisterViewModel registerViewModel;
     private String selectedGender, email;
+    private boolean isDialogClosed = false; // Flag to check if dialog is closed
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,23 +89,52 @@ public class RegisterActivity extends AppCompatActivity {
                     return; // Exit the method without proceeding
                 }
 
-                registerViewModel.register(email, password, birthDate, userName, selectedGender);
+                UserData userData = UserData.getInstance();
+                userData.setEmail(email);
+                userData.setPassword(password);
+                userData.setBirthDate(birthDate);
+                userData.setUserName(userName);
+                userData.setGender(selectedGender);
+
+                // Proceed to RegisterStep2Activity
+                Intent intentReg2 = new Intent(RegisterActivity.this, RegisterStep2Activity.class);
+                startActivity(intentReg2);
+                finish();
+
 //                Intent intentReg2 = new Intent(RegisterActivity.this, RegisterStep2Activity.class);
+//                intentReg2.putExtra("email", email);
+//                intentReg2.putExtra("password", password);
+//                intentReg2.putExtra("birthDate", birthDate);
+//                intentReg2.putExtra("userName", userName);
+//                intentReg2.putExtra("gender", selectedGender);
+//
 //                startActivity(intentReg2);
+//                finish();
+//                registerViewModel.register(email, password, birthDate, userName, selectedGender);
+//
+//                observeData();
             }
         });
 
+
+
+
+    }
+
+    private void observeData() {
         registerViewModel.userLiveData.observe(this, new Observer<FirebaseUser>() {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
                 if (firebaseUser != null) {
                     Log.d(TAG, "createUserWithEmail:success");
 //                    sendEmailVerification(firebaseUser);
-                    Intent intentReg2 = new Intent(RegisterActivity.this, RegisterStep2Activity.class);
-                    startActivity(intentReg2);
-                    finish();
-//                    Intent intent2 = new Intent(RegisterActivity.this, LoginActivity.class);
-//                    startActivity(intent2);
+//                    FirebaseAuth.getInstance().signOut();
+//                    verificationSentDialog(email);
+//                    Intent intentReg2 = new Intent(RegisterActivity.this, RegisterStep2Activity.class);
+//                    startActivity(intentReg2);
+//                    finish();
+
+
                 }
             }
         });
@@ -116,7 +149,6 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void sendEmailVerification(FirebaseUser user) {
@@ -125,10 +157,11 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
+//                            verificationSentDialog(user.getEmail());
+                            showCustomToast(user.getEmail());
 //                            Toast.makeText(RegisterActivity.this,
 //                                    "Verification email sent to " + user.getEmail(),
 //                                    Toast.LENGTH_SHORT).show();
-                            verificationSentDialog(user.getEmail());
 
                         } else {
                             Log.e(TAG, "sendEmailVerification", task.getException());
@@ -235,38 +268,66 @@ public class RegisterActivity extends AppCompatActivity {
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.email_verif_dialog, null);
 
-        // Build the dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(dialogView);
 
-        // Create the AlertDialog
         AlertDialog dialog = builder.create();
-//        dialog.setCancelable(false);
-
-        // Show the dialog
         dialog.show();
 
-        // Set the custom background drawable with rounded corners
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(R.drawable.custom_corner_rounded);
 
-        // Adjust dialog size programmatically after showing it
         WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
         params.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.9); // 80% of screen width
         params.height = WindowManager.LayoutParams.WRAP_CONTENT; // Adjust height as needed
         dialog.getWindow().setAttributes(params);
 
-        // Get the buttons from the custom layout and set click listeners
-        Button btnLogin = dialogView.findViewById(R.id.btn_close_verif);
+//        Button btnLogin = dialogView.findViewById(R.id.btn_close_verif);
         emailVerifDialogTv = dialogView.findViewById(R.id.tv_email_verif);
         emailVerifDialogTv.setText(emailSent);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+
+//        btnLogin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.dismiss();
+//                isDialogClosed = true;
+//                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+//            }
+//        });
+
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(intent);
+            public void onDismiss(DialogInterface dialog) {
+                if (isDialogClosed) {
+                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                }
             }
         });
     }
+
+    private void showCustomToast(String message) {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.email_verif_dialog, null);
+
+        ImageView toastIcon = layout.findViewById(R.id.img_verif_sent);
+        TextView text = layout.findViewById(R.id.text_verif_sent);
+        TextView email = layout.findViewById(R.id.tv_email_verif);
+        TextView text2 = layout.findViewById(R.id.text_verif_sent_2);
+
+        String text_text = "Verifikasi email telah dikirim ke";
+        String text2_text = "Silahkan verifikasi email untuk mengaktifkan akun";
+
+        toastIcon.setImageResource(R.drawable.ic_checkmark);
+        text.setText(text_text);
+        email.setText(message);
+        text2.setText(text2_text);
+
+        Toast toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.setGravity(Gravity.CENTER, 0,0);
+        toast.show();
+    }
+
 
 //    @Override
 //    public void onStart() {

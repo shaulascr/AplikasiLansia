@@ -55,6 +55,18 @@ public class EditReminderActivity extends AppCompatActivity implements IconRemin
         setTimePicker(timePickerTv);
         getReminderData();
 
+        cancelBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(EditReminderActivity.this, ReminderActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
+        backBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(EditReminderActivity.this, ReminderActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
         saveBtn.setOnClickListener(v -> {
             saveEditedData();
             Intent intent = new Intent(EditReminderActivity.this, ReminderActivity.class);

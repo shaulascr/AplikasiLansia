@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -20,10 +21,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.alya.aplikasilansia.data.UserData;
 import com.alya.aplikasilansia.data.inputMedHistory;
 import com.alya.aplikasilansia.ui.editprofile.EditProfileViewModel;
-import com.bumptech.glide.Glide;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,10 +74,23 @@ public class RegisterStep2Activity extends AppCompatActivity {
             public void onClick(View v) {
 //                saveInputData();
 //                registerViewModel.registerHealth1(inputDataList);
-                saveProfileChanges();
+//                saveProfileChanges();
+                Log.d("RegisterStep2Activity", "data saved");
                 if (inputDataList != null && !inputDataList.isEmpty()) {
+//                    Intent register3 = new Intent(RegisterStep2Activity.this, RegisterStep3Activity.class);
+//                    register3.putExtra("profileImageUrl", selectedImageUri.toString()); // Convert Uri to String
+//                    register3.putExtra("medHistory", new ArrayList<>(inputDataList)); // Convert list to ArrayList
+//                    startActivity(register3);
+                    UserData userData = UserData.getInstance();
+
+                    userData.setMedHistory(inputDataList); // Save medHistory to UserData
+                    // Convert profileImageUri to String and save it
+                    userData.setProfileImageUrl(selectedImageUri);
+
                     Intent register3 = new Intent(RegisterStep2Activity.this, RegisterStep3Activity.class);
                     startActivity(register3);
+                    finish();
+
                 } else {
 //                    incompleteFormDialog();
                     IncompleteFormDialog dialog = new IncompleteFormDialog();
@@ -87,29 +100,29 @@ public class RegisterStep2Activity extends AppCompatActivity {
         });
 
 
-        editProfileViewModel.getUserLiveData().observe(this, user -> {
-            if (user != null) {
-                if (user.getProfileImageUrl() != null) {
-                    Glide.with(RegisterStep2Activity.this)
-                            .load(user.getProfileImageUrl())
-                            .into(profileImage);
-                } else {
-                    // Handle no profile image case
-                    profileImage.setImageResource(R.drawable.img);
-                }
-            }
-        });
-
-        editProfileViewModel.getUpdateResultLiveData().observe(this, updateResult -> {
-//            Toast.makeText(RegisterStep2Activity.this, updateResult, Toast.LENGTH_SHORT).show();
-            if (updateResult.equals("Profile updated successfully")) {
-//                finish();
-            } else {
-                Snackbar.make(findViewById(android.R.id.content), "Failed to update profile", Snackbar.LENGTH_LONG)
-                        .setAction("Retry", v -> saveProfileChanges())
-                        .show();
-            }
-        });
+//        editProfileViewModel.getUserLiveData().observe(this, user -> {
+//            if (user != null) {
+//                if (user.getProfileImageUrl() != null) {
+//                    Glide.with(RegisterStep2Activity.this)
+//                            .load(user.getProfileImageUrl())
+//                            .into(profileImage);
+//                } else {
+//                    // Handle no profile image case
+//                    profileImage.setImageResource(R.drawable.img);
+//                }
+//            }
+//        });
+//
+//        editProfileViewModel.getUpdateResultLiveData().observe(this, updateResult -> {
+////            Toast.makeText(RegisterStep2Activity.this, updateResult, Toast.LENGTH_SHORT).show();
+//            if (updateResult.equals("Profile updated successfully")) {
+////                finish();
+//            } else {
+//                Snackbar.make(findViewById(android.R.id.content), "Failed to update profile", Snackbar.LENGTH_LONG)
+//                        .setAction("Retry", v -> saveProfileChanges())
+//                        .show();
+//            }
+//        });
 
         editProfileViewModel.fetchUser();
     }
@@ -161,12 +174,38 @@ public class RegisterStep2Activity extends AppCompatActivity {
             @Override
             public void onDataSaved(List<inputMedHistory> updatedList) {
                 // Handle the data saved event here
-                inputDataList.clear();
+//                inputDataList.clear();
                 inputDataList.addAll(updatedList);
+                Log.d("RegisterStep2Activity", "Updated inputDataList: " + inputDataList.toString());
+
                 viewMedicalRecord(); // Update UI after data is saved
+//                updateMedRecordView();
             }
         });
         medicalRecordFragment.show(getSupportFragmentManager(), "MedicalRecordDialog");
+    }
+
+    private void updateMedRecordView() {
+        viewMedRecord.removeAllViews();
+        for (inputMedHistory record : inputDataList) {
+            viewMedRecord.addView(createRecordView(record));
+        }
+    }
+
+    private View createRecordView(inputMedHistory history) {
+        // Inflate and configure a view to display the record
+        // Return the view
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View itemView = inflater.inflate(R.layout.register_view_medhistory, null);
+
+        TextView tvPenyakit = itemView.findViewById(R.id.tv_penyakit);
+        TextView tvMedYears = itemView.findViewById(R.id.tv_med_years);
+        TextView tvMedMonths = itemView.findViewById(R.id.tv_med_months);
+
+        tvPenyakit.setText(history.getPenyakit());
+        tvMedYears.setText(history.getLamanya());
+        tvMedMonths.setText(history.getLamanyaBulan());
+        return itemView;
     }
 
     private void incompleteFormDialog() {

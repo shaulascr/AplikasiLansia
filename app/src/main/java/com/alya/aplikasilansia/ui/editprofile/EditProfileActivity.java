@@ -5,6 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -89,8 +92,9 @@ public class EditProfileActivity extends AppCompatActivity implements OnSaveEdit
         });
 
         editProfileViewModel.getUpdateResultLiveData().observe(this, updateResult -> {
-            Toast.makeText(EditProfileActivity.this, updateResult, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(EditProfileActivity.this, updateResult, Toast.LENGTH_SHORT).show();
             if (updateResult.equals("Profile updated successfully")) {
+                dataSavedDialog();
                 finish();
             } else {
                 Snackbar.make(findViewById(android.R.id.content), "Failed to update profile", Snackbar.LENGTH_LONG)
@@ -101,11 +105,30 @@ public class EditProfileActivity extends AppCompatActivity implements OnSaveEdit
 
         editProfileViewModel.fetchUser();
     }
+
+    private void dataSavedDialog() {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.data_saved_dialog, null);
+
+        ImageView toastIcon = layout.findViewById(R.id.img_verif_sent);
+        TextView toastText = layout.findViewById(R.id.text_verif_sent);
+
+        String text = "Data Berhasil Disimpan";
+        toastIcon.setImageResource(R.drawable.ic_checkmark); // Set your desired icon here
+        toastText.setText(text);
+
+        Toast toast = new Toast(this);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+    }
+
     @Override
     public void onSavePersonalData(String newUsername, String newBirthdate) {
         fragmentType = "personal";
-
         editProfileViewModel.updateProfile(newUsername, null, newBirthdate, selectedImageUri);
+//        dataSavedDialog();
     }
 
     @Override
@@ -115,6 +138,7 @@ public class EditProfileActivity extends AppCompatActivity implements OnSaveEdit
         editProfileViewModel.updateHealthData2(newCaregiver, newStatus);
         editProfileViewModel.updateMedRecord(medHistoryList);
         saveProfileChanges();
+//        dataSavedDialog();
     }
 
     // Method to save profile changes

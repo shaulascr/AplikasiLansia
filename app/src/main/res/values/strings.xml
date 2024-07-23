@@ -153,6 +153,7 @@
     <string name="close">Tutup</string>
     <string name="confirm_delete">Apakah anda yakin ingin menghapus pengingat?</string>
     <string name="edit_reminder">Ubah Pengingat</string>
+    <string name="contoh_tbc">Contoh: TBC</string>
 
     <string-array name="gender_array">
         <item>Jenis Kelamin</item>

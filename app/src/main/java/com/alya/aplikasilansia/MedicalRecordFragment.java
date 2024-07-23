@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.alya.aplikasilansia.data.inputMedHistory;
 
@@ -30,11 +29,8 @@ import java.util.List;
 public class MedicalRecordFragment extends DialogFragment {
     public List<inputMedHistory> inputDataList = new ArrayList<>();
 //    private FrameLayout parentLayout;
-    private RegisterViewModel registerViewModel;
+//    private RegisterViewModel registerViewModel;
     private LinearLayout firstInputLayout, parentLayout;
-    private Button btnSave;
-    private Button btnCancel;
-    private Button btnAdd;
     private OnDataSavedListener onDataSavedListener;
 
     public interface OnDataSavedListener {
@@ -58,7 +54,7 @@ public class MedicalRecordFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
+//        registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
 
     }
 
@@ -84,34 +80,43 @@ public class MedicalRecordFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_medical_record, container, false);
 
-        btnSave = view.findViewById(R.id.btn_add_med_save);
-        btnCancel = view.findViewById(R.id.btn_add_med_cancel);
-        btnAdd = view.findViewById(R.id.btn_add_medhistory_dialog);
+        Button btnSave = view.findViewById(R.id.btn_add_med_save);
+        Button btnCancel = view.findViewById(R.id.btn_add_med_cancel);
+        Button btnAdd = view.findViewById(R.id.btn_add_medhistory_dialog);
         parentLayout = view.findViewById(R.id.input_medhistory);
         firstInputLayout = view.findViewById(R.id.first_med_input);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Collect input data
                 saveInputData();
+                boolean isFirstInputValid = isValidInput(firstInputLayout);
+                boolean isParentInputValid;
 
-                // Check if inputDataList is not empty and all inputs are valid
-                boolean isAllValid = isValidInput(firstInputLayout) && isValidInput(parentLayout);
-
-                if (isAllValid && !inputDataList.isEmpty()) {
-                    // Save data
-                    registerViewModel.registerHealth1(inputDataList);
-                    // Notify the listener
-                    if (onDataSavedListener != null) {
-                        onDataSavedListener.onDataSaved(inputDataList);
+                if (parentLayout.getChildCount() > 0) {
+                    isParentInputValid = isValidInput(parentLayout);
+                    if (isFirstInputValid && isParentInputValid && !inputDataList.isEmpty()) {
+                        if (onDataSavedListener != null) {
+                            onDataSavedListener.onDataSaved(new ArrayList<>(inputDataList));
+                        }
+                        dismiss();
+                    } else {
+                        // Show a toast if any field is empty or no data
+                        Toast.makeText(getActivity(), "Harap isi semua kolomW", Toast.LENGTH_SHORT).show();
                     }
-                    // Dismiss the fragment
-                    dismiss();
                 } else {
-                    // Show a toast if any field is empty or no data
-                    Toast.makeText(getActivity(), "Harap isi semua kolom", Toast.LENGTH_SHORT).show();
+                    if (isFirstInputValid && !inputDataList.isEmpty()) {
+                        if (onDataSavedListener != null) {
+                            onDataSavedListener.onDataSaved(new ArrayList<>(inputDataList));
+                        }
+                        dismiss();
+                    } else {
+                        // Show a toast if any field is empty or no data
+                        Toast.makeText(getActivity(), "Harap isi semua kolomW", Toast.LENGTH_SHORT).show();
+                    }
                 }
+
+
             }
         });
 
@@ -129,23 +134,29 @@ public class MedicalRecordFragment extends DialogFragment {
     }
 
     private void saveInputData() {
-        // Clear the existing data list
         inputDataList.clear();
 
+        // Clear the existing data list
         if (!isValidInput(firstInputLayout)) {
-            Toast.makeText(getActivity(), "Harap isi semua kolom", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Harap isi semua kolom 1", Toast.LENGTH_SHORT).show();
             return; // Stop execution if validation fails
         }
         // Save the first input field data
         EditText editTextPenyakit = firstInputLayout.findViewById(R.id.et_penyakit);
         EditText editTextLamanya = firstInputLayout.findViewById(R.id.et_med_years);
         EditText editTextLamanya2 = firstInputLayout.findViewById(R.id.et_med_months);
+
+        if (editTextPenyakit == null || editTextLamanya == null || editTextLamanya2 == null) {
+            Toast.makeText(getActivity(), "Form tidak valid", Toast.LENGTH_SHORT).show();
+            return; // Stop execution if views are not found
+        }
+
         String penyakit = editTextPenyakit.getText().toString();
         String lamanya = editTextLamanya.getText().toString();
         String lamanya2 = editTextLamanya2.getText().toString();
 
         if (penyakit.isEmpty() || lamanya.isEmpty() || lamanya2.isEmpty()) {
-            Toast.makeText(getActivity(), "Harap isi semua kolom", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Harap isi semua kolom 2", Toast.LENGTH_SHORT).show();
             return; // Stop execution if validation fails
         }
 
@@ -157,15 +168,17 @@ public class MedicalRecordFragment extends DialogFragment {
             editTextPenyakit = childView.findViewById(R.id.et_penyakit);
             editTextLamanya = childView.findViewById(R.id.et_med_years);
             editTextLamanya2 = childView.findViewById(R.id.et_med_months);
-
+            if (editTextPenyakit == null || editTextLamanya == null || editTextLamanya2 == null) {
+                continue; // Skip this view if any EditText is null
+            }
             // Retrieve the input values
             penyakit = editTextPenyakit.getText().toString();
             lamanya = editTextLamanya.getText().toString();
             lamanya2 = editTextLamanya2.getText().toString();
 
             if (penyakit.isEmpty() || lamanya.isEmpty() || lamanya2.isEmpty()) {
-                Toast.makeText(getActivity(), "Harap isi semua kolom", Toast.LENGTH_SHORT).show();
-                return; // Stop execution if validation fails
+                Toast.makeText(getActivity(), "Harap isi semua kolom 4", Toast.LENGTH_SHORT).show();
+//                return; // Stop execution if validation fails
             }
             // Add the input values to the data list
             inputDataList.add(new inputMedHistory(penyakit, lamanya, lamanya2));
@@ -179,15 +192,16 @@ public class MedicalRecordFragment extends DialogFragment {
             Log.d("RegisterStep2Activity", "Input " + (i + 1) + " - Penyakit: " + input.penyakit + ", Lamanya: " + input.lamanya);
         }
 
-        if (onDataSavedListener != null) {
-            onDataSavedListener.onDataSaved(inputDataList);
-        }
     }
 
     private boolean isValidInput(View view) {
         EditText editTextPenyakit = view.findViewById(R.id.et_penyakit);
         EditText editTextLamanya = view.findViewById(R.id.et_med_years);
         EditText editTextLamanya2 = view.findViewById(R.id.et_med_months);
+
+        if (editTextPenyakit == null || editTextLamanya == null || editTextLamanya2 == null) {
+            return false; // Return false if any EditText is not found
+        }
 
         String penyakit = editTextPenyakit.getText().toString().trim();
         String lamanya = editTextLamanya.getText().toString().trim();

@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -56,11 +57,7 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
         imgIconReminder = findViewById(R.id.img_edit_ic_reminder); // set the src of this to selected src in the previous fragment
 
         btnCancel = findViewById(R.id.btn_cancel_reminder);
-        btnCancel.setOnClickListener(v -> {
-            Intent intent = new Intent(AddReminderActivity.this, ReminderActivity.class);
-            startActivity(intent);
-            finish();
-        });
+
         btnBackFromAddReminder = findViewById(R.id.btn_back_addreminder);
         btnBackFromAddReminder.setOnClickListener(this);
 
@@ -80,10 +77,16 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
         dayReminderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dayReminder.setAdapter(dayReminderAdapter);
 
+        btnCancel.setOnClickListener(v -> {
+            Intent intent = new Intent(AddReminderActivity.this, ReminderActivity.class);
+            startActivity(intent);
+            finish();
+        });
         addReminderViewModel.reminderLiveData.observe(this, new Observer<FirebaseUser>() {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
                 if (firebaseUser != null) {
+                    dataSavedDialog();
                     Log.d(TAG, "createReminder:success");
                     Intent intent = new Intent(AddReminderActivity.this, ReminderActivity.class);
                     startActivity(intent);
@@ -134,6 +137,24 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
 
         }
 
+    }
+
+    private void dataSavedDialog() {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.data_saved_dialog, null);
+
+        ImageView toastIcon = layout.findViewById(R.id.img_verif_sent);
+        TextView toastText = layout.findViewById(R.id.text_verif_sent);
+
+        String text = "Pengingat Berhasil Ditambahkan";
+        toastIcon.setImageResource(R.drawable.ic_checkmark); // Set your desired icon here
+        toastText.setText(text);
+
+        Toast toast = new Toast(this);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     private void incompleteFormDialog() {

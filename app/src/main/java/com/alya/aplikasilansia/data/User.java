@@ -18,7 +18,6 @@ public class User {
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
-
 //    public User(String email, String birthDate, String userName, Uri profileImageUrl) {
 //        this.email = email;
 //        this.birthDate = birthDate;
