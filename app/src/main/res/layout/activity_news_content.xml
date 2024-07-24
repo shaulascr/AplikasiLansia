@@ -36,10 +36,10 @@
         android:layout_alignParentEnd="true"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="14dp"
-        android:layout_marginBottom="22dp"
-        android:text="@string/dengarkan"
+        android:layout_marginEnd="13dp"
+        android:layout_marginBottom="24dp"
         android:fontFamily="@font/inter_semibold"
+        android:text="@string/dengarkan"
         android:textSize="16sp"
         app:icon="@drawable/ic_audio"
         app:iconPadding="5dp"
@@ -105,24 +105,30 @@
                     android:text="Kamis, 25 April 2024 07:00 WIB"
                     android:textSize="14sp"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/tv_ctn_source"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="10dp"
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/source"
-                        android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    android:text="Sumber"
+                    android:fontFamily="@font/inter_medium"
+                    android:textColor="@color/blue2"
+                    android:layout_marginTop="10dp"/>
 
-                    <TextView
-                        android:id="@+id/tv_ctn_source"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"/>
-                </LinearLayout>
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    >-->
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="@string/source"-->
+<!--                        android:textSize="14sp"/>-->
+
+
+<!--                </LinearLayout>-->
 
                 <TextView
                     android:id="@+id/tvNewsContent"

@@ -1,10 +1,9 @@
 package com.alya.aplikasilansia.ui.news;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -31,6 +30,8 @@ public class NewsContentActivity extends AppCompatActivity {
         tvDate = findViewById(R.id.tvCtnNewsDate);
         tvCategory = findViewById(R.id.tvCtnNewsCate);
         tvSource = findViewById(R.id.tv_ctn_source);
+        tvSource.setPaintFlags(tvSource.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
         tvContent = findViewById(R.id.tvNewsContent);
         btnBackNews.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +57,7 @@ public class NewsContentActivity extends AppCompatActivity {
             tvTitle.setText(newsName);
             tvDate.setText(newsDate);
             tvCategory.setText(newsCategory);
-            tvSource.setText(newsSource);
+//            tvSource.setText(newsSource);
             tvContent.setText(newsContent);
 
             if (newsImageUri != null && !newsImageUri.isEmpty()) {
@@ -72,9 +73,24 @@ public class NewsContentActivity extends AppCompatActivity {
                         .into(newsImage);
             }
             if (newsSource != null && !newsSource.isEmpty()) {
-                String sourceText = "<a href='" + newsSource + "'>" + newsSource + "</a>";
-                tvSource.setText(Html.fromHtml(sourceText));
-                tvSource.setMovementMethod(LinkMovementMethod.getInstance());
+                tvSource.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intentNews = new Intent(Intent.ACTION_VIEW);
+                        intentNews.setData(Uri.parse(newsSource));
+                        startActivity(intentNews);
+                    }
+                });
+//                tvSource.setText(Html.fromHtml("<a href=\"" + newsSource + "\">" + newsSource + "</a>"));
+//                tvSource.setMovementMethod(LinkMovementMethod.getInstance());
+//
+//                tvSource.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(newsSource));
+//                        startActivity(browserIntent);
+//                    }
+//                });
             } else {
                 tvSource.setText("Source not available");
             }

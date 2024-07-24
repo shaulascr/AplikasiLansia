@@ -82,9 +82,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             newsDate.setText(news1.getDate());
             Glide.with(itemView)
                     .load(news1.getImage())
-                    .placeholder(R.drawable.img_2) // Placeholder image
-                    .error(R.drawable.img_2) // Error image if loading fails
+                    .placeholder(R.drawable.img_news) // Placeholder image
+                    .error(R.drawable.img_news) // Error image if loading fails
                     .centerCrop() // Crop the image to fill the ImageView
+
                     .into(newsImage);
         }
     }
