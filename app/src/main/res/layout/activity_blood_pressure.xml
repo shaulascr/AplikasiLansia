@@ -168,6 +168,7 @@
             android:layout_gravity="center_horizontal"/>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save_bp"
             style="@style/CustomBlueRoundButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

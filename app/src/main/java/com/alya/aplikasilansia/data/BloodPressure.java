@@ -1,4 +1,4 @@
-package com.alya.aplikasilansia.ui.bloodpressure;
+package com.alya.aplikasilansia.data;
 
 public class BloodPressure {
     private String bloodPressure;

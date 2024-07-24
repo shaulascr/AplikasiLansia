@@ -150,10 +150,23 @@
     <string name="send">Kirim</string>
     <string name="yakin">Yakin</string>
     <string name="tidak">Tidak</string>
+    <string name="kembali">Kembali</string>
     <string name="close">Tutup</string>
     <string name="confirm_delete">Apakah anda yakin ingin menghapus pengingat?</string>
     <string name="edit_reminder">Ubah Pengingat</string>
     <string name="contoh_tbc">Contoh: TBC</string>
+    <string name="confirm_quiz">Anda yakin ingin
+        <br>mengakhiri tes?</br></string>
+    <string name="instruksi_tes">Instruksi Tes</string>
+    <string name="desc_satu">Tes ini bertujuan untuk mengukur tingkat depresi yang mungkin Anda alami berdasarkan pernyataan-pernyataan yang diberikan. Terdapat 15 pertanyaan dalam tes ini yang harus dijawab dengan \"Ya\" atau \"Tidak\".</string>
+<!--    <string name="desc_tiga">\u2022 Semua pertanyaan wajib dijawab sesuai dengan perasaan dan pengalaman Anda. \n\n \u2022 Tidak ada jawaban yang benar atau salah dalam tes ini. \n\n \u2022 Jawaban Anda hanya akan digunakan untuk memahami kondisi emosional Anda. \n\n \u2022 Anda bisa mengulang pengerjaan tes kapan saja jika diperlukan.</string>-->
+    <string name="desc_tiga">
+         <li>Semua pertanyaan wajib dijawab sesuai dengan perasaan dan pengalaman Anda</li>
+        \n\n <li>Tidak ada jawaban yang benar atau salah dalam tes ini</li>
+        \n\n <li>Jawaban Anda hanya akan digunakan untuk memahami kondisi emosional Anda.</li>
+        \n\n <li>Anda bisa mengulang pengerjaan tes kapan saja jika diperlukan.</li>
+    </string>
+    <string name="desc_empat">\nSelamat Mengerjakan!</string>
 
     <string-array name="gender_array">
         <item>Jenis Kelamin</item>

@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alya.aplikasilansia.R;
+import com.alya.aplikasilansia.data.BloodPressure;
 
 import java.util.List;
 
@@ -36,6 +37,11 @@ public class BloodPressureAdapter extends RecyclerView.Adapter<BloodPressureAdap
     @Override
     public int getItemCount() {
         return bloodPressureList.size();
+    }
+
+    public void setBloodPressureList(List<BloodPressure> bloodPressureList) {
+        this.bloodPressureList = bloodPressureList;
+        notifyDataSetChanged();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
