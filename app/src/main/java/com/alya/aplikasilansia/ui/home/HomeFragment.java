@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.alya.aplikasilansia.R;
 import com.alya.aplikasilansia.data.Reminder;
 import com.alya.aplikasilansia.data.User;
+import com.alya.aplikasilansia.ui.bloodpressure.BloodPresViewModel;
 import com.alya.aplikasilansia.ui.bloodpressure.BloodPressureActivity;
 import com.alya.aplikasilansia.ui.healthcare.HealthCareActivity;
 import com.alya.aplikasilansia.ui.profile.ProfileFragment;
@@ -39,13 +40,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private Button tensiDarah;
     private ProfileViewModel profileViewModel;
     private ReminderViewModel reminderViewModel;
+    private BloodPresViewModel bloodPresViewModel;
     private TextView userNameHome;
     private ImageView profileImage;
     private Button toHealthCare;
     private Button toReminder;
     private Button toBP;
-    private TextView tvTitleRemind;
-    private TextView tvTimeRemind;
+    private TextView tvTitleRemind, tvTimeRemind;
+    private TextView tvPressure, tvPulse;
     private ImageView imgRemind;
     private Reminder firstReminder;
 
@@ -58,6 +60,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         reminderViewModel = new ViewModelProvider(this).get(ReminderViewModel.class);
+        bloodPresViewModel = new ViewModelProvider(this).get(BloodPresViewModel.class);
+
     }
 
 
@@ -77,6 +81,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         toHealthCare = view.findViewById(R.id.btn_to_healthcare);
         toHealthCare.setOnClickListener(this);
+
+        // Initialize TextViews
+        tvPressure = view.findViewById(R.id.tv_pressure);
+        tvPulse = view.findViewById(R.id.tv_pulse);
 
         toReminder = view.findViewById(R.id.btn_to_reminder);
         toReminder.setOnClickListener(this);
@@ -100,7 +108,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 }
             }
         });
-
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,11 +120,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 }
             }
         });
-//        updateFirstTodayReminderUI();
-
+        // Observe the latest blood pressure data
+        bloodPresViewModel.getLatestBloodPressureData().observe(getViewLifecycleOwner(), latestBloodPressure -> {
+            if (latestBloodPressure != null) {
+                // Update the TextViews with the latest data
+                tvPressure.setText(latestBloodPressure.getBloodPressure());
+                tvPulse.setText(latestBloodPressure.getPulse());
+            } else {
+                // Handle case where there is no data
+                tvPressure.setText("-");
+                tvPulse.setText("-");
+            }
+        });
         return view;
     }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -125,8 +141,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         updateFirstTodayReminderUI();
         reminderViewModel.fetchReminders();
     }
-
-
     private void updateFirstTodayReminderUI() {
         reminderViewModel.getFirstReminderLiveData().observe(getViewLifecycleOwner(), firstReminder -> {
             if (firstReminder != null) {
@@ -155,7 +169,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         });
 
     }
-
     private String formatDate(String timestamp) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         SimpleDateFormat outputFormat = new SimpleDateFormat("'Hari ini pukul' HH:mm", new Locale("id", "ID"));

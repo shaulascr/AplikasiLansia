@@ -32,7 +32,6 @@ public class QuizResultActivity extends AppCompatActivity {
         int totalScore = getIntent().getIntExtra("total_score", 0);
         int maxScore = 15;
         String classifiedScore = getIntent().getStringExtra("classified_score");
-        String quizId = getIntent().getStringExtra("quizId");
 
         // Set score to ProgressBar and TextViews
         updateDoughnutChart(totalScore, maxScore);

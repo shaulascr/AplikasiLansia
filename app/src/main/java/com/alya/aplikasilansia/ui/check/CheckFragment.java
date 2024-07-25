@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alya.aplikasilansia.LoginActivity;
 import com.alya.aplikasilansia.R;
 import com.alya.aplikasilansia.data.QuizHistoryItem;
-import com.alya.aplikasilansia.ui.quiz.QuizActivity;
+import com.alya.aplikasilansia.ui.quiz.QuizInstructionActivity;
 import com.alya.aplikasilansia.ui.quiz.QuizResultAdapter;
 import com.alya.aplikasilansia.ui.quiz.QuizViewModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -71,7 +71,7 @@ public class CheckFragment extends Fragment {
             btnCheck.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), QuizActivity.class);
+                    Intent intent = new Intent(getActivity(), QuizInstructionActivity.class);
                     startActivity(intent);
                 }
             });

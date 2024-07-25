@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alya.aplikasilansia.R;
 import com.alya.aplikasilansia.data.Question;
 import com.alya.aplikasilansia.ui.quizResult.QuizResultActivity;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;
@@ -33,11 +32,7 @@ public class QuizActivity extends AppCompatActivity {
 
     private QuizViewModel quizViewModel;
     private TextView questionText;
-    private Button buttonYes;
-    private Button buttonNo;
-    private Button buttonNext;
-    private Button buttonPrevious;
-    private Button buttonEndQuiz;
+    private Button buttonYes, buttonNo, buttonNext, buttonPrevious, buttonEndQuiz, buttonBackQuiz;
     private RecyclerView recyclerView;
     private QuestionAdapter questionAdapter;
 
@@ -53,6 +48,7 @@ public class QuizActivity extends AppCompatActivity {
         buttonPrevious = findViewById(R.id.buttonPrevious);
         buttonEndQuiz = findViewById(R.id.buttonEndQuiz);
         recyclerView = findViewById(R.id.recyclerView_quiz);
+        buttonBackQuiz = findViewById(R.id.btn_back_quiz);
 
         // Set layout manager for the RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -74,12 +70,13 @@ public class QuizActivity extends AppCompatActivity {
 
         quizViewModel.getIsLoading().observe(this, isLoading -> {
             if (isLoading != null && !isLoading) {
-                Snackbar.make(findViewById(R.id.activity_quiz), "Failed to load questions from Firebase", Snackbar.LENGTH_LONG).show();
+//                Snackbar.make(findViewById(R.id.activity_quiz), "Failed to load questions from Firebase", Snackbar.LENGTH_LONG).show();
             }
         });
         quizViewModel.getQuizCompleted().observe(this, quizCompleted -> {
             if (quizCompleted != null && quizCompleted) {
-                Toast.makeText(this, "Quiz completed successfully!", Toast.LENGTH_SHORT).show();
+//                Snackbar.make(findViewById(R.id.activity_quiz), "Berhasil menyelesaikan quiz!", Snackbar.LENGTH_LONG).show();
+                Toast.makeText(this, "Berhasil menyelesaikan quiz!", Toast.LENGTH_SHORT).show();
                 finish(); // Close the activity or navigate to another screen
             }
         });
@@ -106,11 +103,47 @@ public class QuizActivity extends AppCompatActivity {
 
         buttonEndQuiz.setOnClickListener(v -> {
             if (!quizViewModel.areAllQuestionsAnswered()) {
-                Snackbar.make(findViewById(R.id.activity_quiz), "Please answer all questions before ending the quiz.", Snackbar.LENGTH_LONG).show();
+//                Snackbar.make(findViewById(R.id.activity_quiz), "Please answer all questions before ending the quiz.", Snackbar.LENGTH_LONG).show();
+                incompleteFormDialog();
                 return;
             } else {
                 showLogoutDialog();
 //                collectAndEndQuiz();
+            }
+        });
+
+        buttonBackQuiz.setOnClickListener(v -> finish());
+    }
+    private void incompleteFormDialog(){
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.incomplete_form_dialog, null);
+
+        // Build the dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(dialogView);
+
+        // Create the AlertDialog
+        AlertDialog dialog = builder.create();
+
+        // Show the dialog
+        dialog.show();
+
+        // Set the custom background drawable with rounded corners
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(R.drawable.custom_corner_rounded);
+
+        // Adjust dialog size programmatically after showing it
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        params.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.9); // 80% of screen width
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT; // Adjust height as needed
+        dialog.getWindow().setAttributes(params);
+
+        // Get the buttons from the custom layout and set click listeners
+        Button btnClose = dialogView.findViewById(R.id.btn_close_incomplete);
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
             }
         });
     }

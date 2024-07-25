@@ -11,6 +11,11 @@
         <item name="android:stateListAnimator">@null</item> <!-- Disable elevation -->
     </style>
 
+    <style name="BottomNavigationStyle">
+        <item name="android:gravity">center</item>
+        <item name="android:lines">2</item>
+    </style>
+
     <style name="CustomBlueButton" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@color/white</item>
         <item name="cornerRadius">@dimen/custom_btn_corner</item>

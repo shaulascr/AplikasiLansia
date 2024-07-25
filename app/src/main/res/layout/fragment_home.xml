@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/white"
+    android:id="@+id/fragment_home"
     tools:context=".ui.home.HomeFragment">
 
     <ScrollView
@@ -231,6 +232,7 @@
                         android:layout_gravity="center_horizontal"
                         android:padding="16dp">
                         <TextView
+                            android:id="@+id/tv_pressure"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:text="@string/angka_tensi"
@@ -271,6 +273,7 @@
                         android:layout_gravity="center_horizontal"
                         android:padding="16dp">
                         <TextView
+                            android:id="@+id/tv_pulse"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:text="@string/menit_tensi"

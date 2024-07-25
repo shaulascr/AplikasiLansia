@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,12 +30,14 @@ import java.util.Map;
 public class BloodPresRepository {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+    private final MutableLiveData<List<BloodPressure>> pressureLiveData;
+
     public BloodPresRepository() {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        pressureLiveData = new MutableLiveData<>();
     }
     public MutableLiveData<List<BloodPressure>> fetchingBloodPres() {
-        MutableLiveData<List<BloodPressure>> pressureLiveData = new MutableLiveData<>();
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
 
         if (firebaseUser != null) {
@@ -84,8 +87,6 @@ public class BloodPresRepository {
                             return false;
                         }
                     });
-
-
                     pressureLiveData.setValue(bPressure); // Set LiveData value here
                 }
 
@@ -95,10 +96,85 @@ public class BloodPresRepository {
                     pressureLiveData.setValue(null);
                 }
             });
+        } else {
+            pressureLiveData.setValue(null);
         }
+
         return pressureLiveData;
     }
+    // Method to get the latest BloodPressure data
+    public LiveData<BloodPressure> getLatestBloodPressure() {
+        MutableLiveData<BloodPressure> latestBloodPressureLiveData = new MutableLiveData<>();
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        if (firebaseUser == null) {
+            latestBloodPressureLiveData.setValue(null); // User not authenticated
+            return latestBloodPressureLiveData;
+        } else {
 
+            String userId = firebaseUser.getUid();
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(userId).child("bloodPressure");
+
+            databaseReference.orderByChild("date") // Replace "timestamp" with your date field
+                    .addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            List<BloodPressure> bloodPressureList = new ArrayList<>();
+                            for (DataSnapshot ds : snapshot.getChildren()) {
+                                String pres = ds.child("pressure").getValue(String.class);
+                                String pulse = ds.child("pulse").getValue(String.class);
+                                String date = ds.child("date").getValue(String.class);
+
+                                if (pres != null && pulse != null && date != null && !date.isEmpty()) {
+                                    BloodPressure pressure = new BloodPressure(pres, pulse, date);
+                                    bloodPressureList.add(pressure);
+                                }
+                            }
+                            // Sort the list by date in descending order
+                            bloodPressureList.sort((bp1, bp2) -> {
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+
+                                String date1Str = bp1.getBpDate();
+                                String date2Str = bp2.getBpDate();
+
+                                if (date1Str == null || date2Str == null) {
+                                    Log.e("BloodPresRepository", "One or both dates are null. Date1: " + date1Str + ", Date2: " + date2Str);
+                                    return 0; // No comparison if dates are null
+                                } else {
+                                    Log.e("BloodPresRepository", "One or both dates are null. Date1: " + date1Str + ", Date2: " + date2Str);
+                                    try {
+                                        Date date1 = dateFormat.parse(date1Str);
+                                        Date date2 = dateFormat.parse(date2Str);
+
+                                        if (date1 != null && date2 != null) {
+                                            return date2.compareTo(date1); // Latest first
+                                        }
+                                    } catch (ParseException e) {
+                                        Log.e("BloodPresRepository", "Date parse error", e);
+                                    }
+                                    return 0;
+                                }
+                            });
+                            // Set the most recent BloodPressure as the value
+                            if (!bloodPressureList.isEmpty()) {
+                                latestBloodPressureLiveData.setValue(bloodPressureList.get(0));
+                            } else {
+                                latestBloodPressureLiveData.setValue(null); // No data available
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Log.e("BloodPresRepository", "Database error", error.toException());
+                        }
+                    });
+        }
+
+        return latestBloodPressureLiveData;
+    }
+
+    public LiveData<List<BloodPressure>> getBloodPressureLiveData() {
+        return pressureLiveData;
+    }
     public void addPressure(String bloodPressure, String pulse, String timestamp, MutableLiveData<FirebaseUser> pressureLiveData, MutableLiveData<String> errorLiveData) {
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
         if (firebaseUser != null) {
@@ -113,12 +189,12 @@ public class BloodPresRepository {
             pressureRef.setValue(data)
                     .addOnSuccessListener(aVoid -> {
                         // Handle success
-                        Log.d(TAG, "Blood Pressure added successfully");
+                        Log.d("BloodPresRepository", "Blood Pressure added successfully");
                         pressureLiveData.postValue(firebaseUser); // Update the live data with the user
                     })
                     .addOnFailureListener(e -> {
                         // Handle failure
-                        Log.e(TAG, "Failed to add Blood Pressure: " + e.getMessage());
+                        Log.e("BloodPresRepository", "Failed to add Blood Pressure: " + e.getMessage());
                         errorLiveData.postValue("Failed to add Blood Pressure: " + e.getMessage());
                     });
         } else {

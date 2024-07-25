@@ -13,5 +13,14 @@
 
     <style name="Theme.AplikasiLansia" parent="Base.Theme.AplikasiLansia">
         <item name="android:fontFamily">@font/inter_regular</item>
+        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>
+    </style>
+    <style name="Widget.App.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomNavigationView" parent="">
+        <item name="colorSurface">@color/shrine_theme_light_surface</item>
+        <item name="colorOnSurfaceVariant">@color/shrine_theme_light_onSurfaceVariant</item>
     </style>
 </resources>

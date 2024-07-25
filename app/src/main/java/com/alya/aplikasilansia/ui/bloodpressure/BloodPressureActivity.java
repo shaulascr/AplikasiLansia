@@ -2,11 +2,15 @@ package com.alya.aplikasilansia.ui.bloodpressure;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -26,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class BloodPressureActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -59,6 +64,7 @@ public class BloodPressureActivity extends AppCompatActivity {
             etBP = findViewById(R.id.etBloodPressure);
             etPulse = findViewById(R.id.etPulse);
 
+
             // Initialize the ViewModel
             bloodPresViewModel = new ViewModelProvider(this).get(BloodPresViewModel.class);
 
@@ -74,6 +80,7 @@ public class BloodPressureActivity extends AppCompatActivity {
                     // Update the adapter's data
                     adapter.setBloodPressureList(bloodPressures);
                 }
+
             });
 
             // Observe the add blood pressure result
@@ -94,22 +101,59 @@ public class BloodPressureActivity extends AppCompatActivity {
                 String timestamp = tvDatePickerBP.getText().toString().trim();
 
                 if (!bloodPressure.isEmpty() && !pulse.isEmpty() && !timestamp.isEmpty()) {
+
                     try {
-                        int bpInt = Integer.parseInt(bloodPressure);
                         int pulseInt = Integer.parseInt(pulse);
 
                         // Inputs are valid integers, proceed with ViewModel method
-                        bloodPresViewModel.addBloodPressure(String.valueOf(bpInt), String.valueOf(pulseInt), timestamp);
+                        bloodPresViewModel.addBloodPressure(bloodPressure, String.valueOf(pulseInt), timestamp);
+
                     } catch (NumberFormatException e) {
                         // Handle case where inputs are not valid integers
-                        Toast.makeText(BloodPressureActivity.this, "Please enter valid numbers for blood pressure and pulse", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(BloodPressureActivity.this, "Please enter valid numbers for blood pressure and pulse", Toast.LENGTH_SHORT).show();
+                        incompleteFormDialog();
                     }
+
                 } else {
                     // Handle case where inputs are missing
-                    Toast.makeText(BloodPressureActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(BloodPressureActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                    incompleteFormDialog();
                 }
             });
         }
+    }
+    private void incompleteFormDialog(){
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.incomplete_form_dialog, null);
+
+        // Build the dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(dialogView);
+
+        // Create the AlertDialog
+        AlertDialog dialog = builder.create();
+
+        // Show the dialog
+        dialog.show();
+
+        // Set the custom background drawable with rounded corners
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(R.drawable.custom_corner_rounded);
+
+        // Adjust dialog size programmatically after showing it
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        params.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.9); // 80% of screen width
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT; // Adjust height as needed
+        dialog.getWindow().setAttributes(params);
+
+        // Get the buttons from the custom layout and set click listeners
+        Button btnClose = dialogView.findViewById(R.id.btn_close_incomplete);
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 
     private void setBtnBackBP (MaterialButton btnBackBP) {

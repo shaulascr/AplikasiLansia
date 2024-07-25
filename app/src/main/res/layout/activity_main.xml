@@ -35,11 +35,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:backgroundTint="@color/white"
         app:itemBackground="@color/white"
         app:itemTextColor="@color/color_bottom_nav"
         app:itemIconTint="@color/color_bottom_nav"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
+        app:menu="@menu/bottom_nav_menu"
+        style="@style/Widget.App.BottomNavigationView"
+        app:itemActiveIndicatorStyle="@style/Widget.App.BottomNavigationView"
+        app:labelVisibilityMode="labeled"
+        app:itemTextAppearanceActive="@dimen/design_bottom_navigation_active_text_size"
+        app:itemTextAppearanceInactive="@dimen/design_bottom_navigation_text_size"
+        android:theme="@style/BottomNavigationStyle"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,21 +12,24 @@ import java.util.List;
 
 public class BloodPresViewModel extends ViewModel {
     private BloodPresRepository repository;
-    private MutableLiveData<List<BloodPressure>> bloodPressureData;
+    private LiveData<List<BloodPressure>> bloodPressureData;
     private MutableLiveData<FirebaseUser> pressureLiveData;
     private MutableLiveData<String> errorLiveData;
+    private LiveData<BloodPressure> latestBloodPressureData;
+
 
     public BloodPresViewModel() {
         repository = new BloodPresRepository();
-        bloodPressureData = repository.fetchingBloodPres();
+        bloodPressureData = repository.getBloodPressureLiveData();
         pressureLiveData = new MutableLiveData<>();
         errorLiveData = new MutableLiveData<>();
-    }
+        latestBloodPressureData = repository.getLatestBloodPressure();
 
+    }
+    public LiveData<BloodPressure> getLatestBloodPressureData() {
+        return latestBloodPressureData;
+    }
     public LiveData<List<BloodPressure>> getBloodPressureData() {
-        if (bloodPressureData.getValue() == null) {
-            bloodPressureData = repository.fetchingBloodPres();
-        }
         return bloodPressureData;
     }
     public LiveData<FirebaseUser> getPressureLiveData() {
@@ -38,9 +41,8 @@ public class BloodPresViewModel extends ViewModel {
     }
 
     public void fetchBloodPressureData() {
-        bloodPressureData = repository.fetchingBloodPres();
+        repository.fetchingBloodPres();
     }
-
     public void addBloodPressure(String bloodPressure, String pulse, String timestamp) {
         repository.addPressure(bloodPressure, pulse, timestamp, pressureLiveData, errorLiveData);
     }
