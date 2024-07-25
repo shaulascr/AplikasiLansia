@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,6 +87,18 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if (email.isEmpty() || password.isEmpty() || birthDate.isEmpty() || userName.isEmpty() || selectedGender.equals("Jenis Kelamin") || selectedGender.isEmpty()) {
                     incompleteFormDialog();
+                    return; // Exit the method without proceeding
+                }
+
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    String text = "Email tidak valid. Silahkan masukkan email yang valid.";
+                    errorMessageToast(text);
+                    return;
+                }
+
+                if (password.length() < 6) {
+                    String text = "Kata sandi harus memiliki setidaknya 6 karakter.";
+                    errorMessageToast(text);
                     return; // Exit the method without proceeding
                 }
 
@@ -229,7 +242,22 @@ public class RegisterActivity extends AppCompatActivity {
         });
         datePicker.show(getSupportFragmentManager(), "DATE_PICKER");
     }
+    private void errorMessageToast (String message){
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.error_custom_toast, null);
 
+        ImageView toastIcon = layout.findViewById(R.id.img_error_ic);
+        TextView toastText = layout.findViewById(R.id.tv_error_message);
+
+        toastIcon.setImageResource(R.drawable.ic_warning); // Set your desired icon here
+        toastText.setText(message);
+
+        Toast toast = new Toast(this);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+    }
     private void incompleteFormDialog(){
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.incomplete_form_dialog, null);

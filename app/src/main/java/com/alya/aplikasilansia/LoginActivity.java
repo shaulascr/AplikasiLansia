@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -82,6 +83,9 @@ public class LoginActivity extends AppCompatActivity {
                         Intent intent2 = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(intent2);
                         finish();
+                    } else {
+                        String text = "Email belum diverifikasi. Silahkan verifikasi.";
+
                     }
                 }
             }
@@ -92,8 +96,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onChanged(String error) {
                 if (error != null) {
                     Log.w(TAG, "signInWithEmail:failure: " + error);
-                    Toast.makeText(LoginActivity.this, "Authentication failed: " + error,
-                            Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(LoginActivity.this, "Authentication failed: " + error,
+//                            Toast.LENGTH_SHORT).show();
+                    errorMessageToast(error);
                 }
             }
         });
@@ -176,6 +181,24 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void errorMessageToast (String message){
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.error_custom_toast, null);
+
+        ImageView toastIcon = layout.findViewById(R.id.img_error_ic);
+        TextView toastText = layout.findViewById(R.id.tv_error_message);
+
+        toastIcon.setImageResource(R.drawable.ic_warning); // Set your desired icon here
+        toastText.setText(message);
+
+        Toast toast = new Toast(this);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+    }
+
 
     @Override
     public void onStart() {

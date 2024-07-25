@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -99,10 +101,23 @@ public class UserRepository {
                         FirebaseUser user = mAuth.getCurrentUser();
                         userLiveData.postValue(user);
                     } else {
-                        errorLiveData.postValue(task.getException().getMessage());
+//                        errorLiveData.postValue(task.getException().getMessage());
+                        errorLiveData.postValue(getFirebaseAuthErrorMessage(task.getException()));
+
                     }
                 });
     }
+
+    private String getFirebaseAuthErrorMessage(Exception exception) {
+        if (exception instanceof FirebaseAuthInvalidUserException) {
+            return "Pengguna tidak ditemukan. Silakan periksa email Anda atau daftar terlebih dahulu.";
+        } else if (exception instanceof FirebaseAuthInvalidCredentialsException) {
+            return "Data tidak valid. Silahkan periksa email dan kata sandi Anda.";
+        } else {
+            return "Gagal masuk. Silakan coba lagi.";
+        }
+    }
+
 
     public void signOut() {
         mAuth.signOut();

@@ -167,6 +167,7 @@
         \n\n <li>Anda bisa mengulang pengerjaan tes kapan saja jika diperlukan.</li>
     </string>
     <string name="desc_empat">\nSelamat Mengerjakan!</string>
+    <string name="password_require">Minimal terdiri dari 6 karakter</string>
 
     <string-array name="gender_array">
         <item>Jenis Kelamin</item>
