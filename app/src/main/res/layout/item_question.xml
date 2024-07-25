@@ -9,6 +9,7 @@
         android:id="@+id/questionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="32dp"
         android:text="Question text"
         android:textSize="16sp"/>
 </LinearLayout>

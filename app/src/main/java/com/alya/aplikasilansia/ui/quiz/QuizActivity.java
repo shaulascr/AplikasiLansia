@@ -13,7 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alya.aplikasilansia.R;
@@ -51,7 +51,8 @@ public class QuizActivity extends AppCompatActivity {
         buttonBackQuiz = findViewById(R.id.btn_back_quiz);
 
         // Set layout manager for the RecyclerView
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 5);
+        recyclerView.setLayoutManager(gridLayoutManager);
         quizViewModel = new ViewModelProvider(this).get(QuizViewModel.class);
         questionAdapter = new QuestionAdapter(position -> quizViewModel.selectQuestion(position));
         recyclerView.setAdapter(questionAdapter);

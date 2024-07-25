@@ -84,8 +84,9 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent2);
                         finish();
                     } else {
-                        String text = "Email belum diverifikasi. Silahkan verifikasi.";
-
+//                        String text = "Email belum diverifikasi. Silahkan verifikasi.";
+                        notVerifiedDialog();
+                        mAuth.signOut();
                     }
                 }
             }
@@ -197,6 +198,40 @@ public class LoginActivity extends AppCompatActivity {
         toast.setView(layout);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
+    }
+
+    private void notVerifiedDialog(){
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.not_verified_dialog, null);
+
+        // Build the dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(dialogView);
+
+        // Create the AlertDialog
+        AlertDialog dialog = builder.create();
+
+        // Show the dialog
+        dialog.show();
+
+        // Set the custom background drawable with rounded corners
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(R.drawable.custom_corner_rounded);
+
+        // Adjust dialog size programmatically after showing it
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        params.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.9); // 80% of screen width
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT; // Adjust height as needed
+        dialog.getWindow().setAttributes(params);
+
+        // Get the buttons from the custom layout and set click listeners
+        Button btnClose = dialogView.findViewById(R.id.btn_close_incomplete);
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 
 

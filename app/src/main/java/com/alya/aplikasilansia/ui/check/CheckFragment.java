@@ -63,8 +63,6 @@ public class CheckFragment extends Fragment {
             // User is not logged in, redirect to LoginActivity
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
-            // Optionally, close the current activity
-//            getActivity().finish();
         } else {
             // User is logged in, proceed with loading the fragment
             btnCheck = view.findViewById(R.id.btn_mulai_tes);
@@ -87,9 +85,7 @@ public class CheckFragment extends Fragment {
                 public void onChanged(List<QuizHistoryItem> quizHistoryItems) {
                     adapter.setQuizHistoryItems(quizHistoryItems);
                 }
-
             });
-
             if (userId != null) {
                 quizViewModel.fetchQuizHistory(userId);
             }
