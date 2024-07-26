@@ -82,7 +82,7 @@ public class MedicalRecordFragment extends DialogFragment {
 
         Button btnSave = view.findViewById(R.id.btn_add_med_save);
         Button btnCancel = view.findViewById(R.id.btn_add_med_cancel);
-        Button btnAdd = view.findViewById(R.id.btn_add_medhistory_dialog);
+//        Button btnAdd = view.findViewById(R.id.btn_add_medhistory_dialog);
         parentLayout = view.findViewById(R.id.input_medhistory);
         firstInputLayout = view.findViewById(R.id.first_med_input);
 
@@ -112,7 +112,7 @@ public class MedicalRecordFragment extends DialogFragment {
                         dismiss();
                     } else {
                         // Show a toast if any field is empty or no data
-                        Toast.makeText(getActivity(), "Harap isi semua kolomW", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Harap isi semua kolom", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -123,12 +123,12 @@ public class MedicalRecordFragment extends DialogFragment {
 
         btnCancel.setOnClickListener(v -> {dismiss();});
 
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addNewInputField();
-            }
-        });
+//        btnAdd.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                addNewInputField();
+//            }
+//        });
 
         return view;
     }
@@ -138,7 +138,7 @@ public class MedicalRecordFragment extends DialogFragment {
 
         // Clear the existing data list
         if (!isValidInput(firstInputLayout)) {
-            Toast.makeText(getActivity(), "Harap isi semua kolom 1", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Harap isi semua kolom", Toast.LENGTH_SHORT).show();
             return; // Stop execution if validation fails
         }
         // Save the first input field data
@@ -156,7 +156,7 @@ public class MedicalRecordFragment extends DialogFragment {
         String lamanya2 = editTextLamanya2.getText().toString();
 
         if (penyakit.isEmpty() || lamanya.isEmpty() || lamanya2.isEmpty()) {
-            Toast.makeText(getActivity(), "Harap isi semua kolom 2", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Harap isi semua kolom", Toast.LENGTH_SHORT).show();
             return; // Stop execution if validation fails
         }
 
@@ -177,7 +177,7 @@ public class MedicalRecordFragment extends DialogFragment {
             lamanya2 = editTextLamanya2.getText().toString();
 
             if (penyakit.isEmpty() || lamanya.isEmpty() || lamanya2.isEmpty()) {
-                Toast.makeText(getActivity(), "Harap isi semua kolom 4", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Harap isi semua kolom", Toast.LENGTH_SHORT).show();
 //                return; // Stop execution if validation fails
             }
             // Add the input values to the data list
