@@ -33,8 +33,9 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_quiz_cancel"
             style="@style/CustomWhiteRoundButton"
-            android:layout_width="120dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="130dp"
             android:text="@string/kembali"
             android:textSize="18sp"
             android:textStyle="bold"/>
@@ -47,8 +48,9 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_quiz_confirmed"
             style="@style/CustomBlueRoundButton"
-            android:layout_width="120dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:minWidth="130dp"
             android:text="@string/yakin"
             android:textSize="18sp"
             android:textStyle="bold"/>

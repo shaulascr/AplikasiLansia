@@ -14,18 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import com.alya.aplikasilansia.data.inputMedHistory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MedicalRecordFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MedicalRecordFragment extends DialogFragment {
     public List<inputMedHistory> inputDataList = new ArrayList<>();
 //    private FrameLayout parentLayout;

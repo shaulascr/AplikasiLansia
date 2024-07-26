@@ -31,7 +31,7 @@ import java.util.List;
 public class RegisterStep2Activity extends AppCompatActivity {
     private static final int REQUEST_PICK_IMAGE = 1;
     private FrameLayout parentLayout;
-    private Button buttonAddInput, buttonSave;
+    private Button buttonAddInput, buttonSave, buttonNext;
     private LinearLayout viewMedRecord;
     private RelativeLayout setProfileImg;
     private ImageView profileImage;
@@ -48,7 +48,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
 //        parentLayout = findViewById(R.id.input_medhistory);
         buttonAddInput = findViewById(R.id.btn_add_medhistory);
         buttonSave = findViewById(R.id.btn_save_medhistory);
-
+        buttonNext = findViewById(R.id.btn_next_medhistory);
         viewMedRecord = findViewById(R.id.view_med_layout);
 
         setProfileImg = findViewById(R.id.uploadImgReg);
@@ -69,6 +69,14 @@ public class RegisterStep2Activity extends AppCompatActivity {
             }
         });
 
+        buttonNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent register3 = new Intent(RegisterStep2Activity.this, RegisterStep3Activity.class);
+                startActivity(register3);
+                finish();
+            }
+        });
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,6 +94,7 @@ public class RegisterStep2Activity extends AppCompatActivity {
                     userData.setMedHistory(inputDataList); // Save medHistory to UserData
                     // Convert profileImageUri to String and save it
                     userData.setProfileImageUrl(selectedImageUri);
+                    Log.d("RegisterStep2Activity", "profile image to send: " +selectedImageUri);
 
                     Intent register3 = new Intent(RegisterStep2Activity.this, RegisterStep3Activity.class);
                     startActivity(register3);
@@ -143,6 +152,8 @@ public class RegisterStep2Activity extends AppCompatActivity {
         if (requestCode == REQUEST_PICK_IMAGE && resultCode == RESULT_OK && data != null) {
             selectedImageUri = data.getData();
             profileImage.setImageURI(selectedImageUri);
+            Log.d("RegisterStep2Activity", "profile image: " +selectedImageUri);
+
         }
     }
 

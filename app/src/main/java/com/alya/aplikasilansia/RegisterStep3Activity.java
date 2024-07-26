@@ -73,6 +73,8 @@ public class RegisterStep3Activity extends AppCompatActivity {
         String gender = userData.getGender();
         profileImageUrl = userData.getProfileImageUrl();
         medHistory = userData.getMedHistory();
+        Log.d("RegisterStep3Activity", "profile image to save: " +profileImageUrl);
+
 
         btnSaveMedData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,13 +93,8 @@ public class RegisterStep3Activity extends AppCompatActivity {
                     return; // Exit if any required data is missing
                 }
 
-                // Perform registration and profile update
-                if (profileImageUrl == null) {
-                    registerViewModel.register(email, password, birthDate, userName, gender);
-                } else {
-                    registerViewModel.register(email, password, birthDate, userName, gender);
-                    editProfileViewModel.updateProfile(null, null, null, profileImageUrl);
-                }
+                registerViewModel.register(email, password, birthDate, userName, gender);
+
                 observeData();
                 // Register health data and navigate to the main activity
 
@@ -132,6 +129,8 @@ public class RegisterStep3Activity extends AppCompatActivity {
                 if (firebaseUser != null) {
                     Log.d("RegisterStep3Activity", "createUserWithEmail:success");
                     sendEmailVerification(firebaseUser);
+//                    if (profileImageUrl != null) {
+//                    }
                     registerHealthData();
 //                    FirebaseAuth.getInstance().signOut();
 //                    verificationSentDialog(email);
@@ -157,11 +156,18 @@ public class RegisterStep3Activity extends AppCompatActivity {
     private void registerHealthData(){
         registerViewModel.registerHealth1(medHistory);
         registerViewModel.registerHealth2(careGiver, maritalStat);
+//        Log.d("RegisterStep3Activity", "profile image to save2: " +profileImageUrl);
+////        editProfileViewModel.updateProfile(null, null, null, profileImageUrl);
+//        if (profileImageUrl != null) {
+//            editProfileViewModel.updateProfile(null, null, null, profileImageUrl);
+//        } else {
+//            Log.d("RegisterStep3Activity", "No profile image to update.");
+//        }
     }
     private void sendEmailVerification(FirebaseUser user) {
         user.sendEmailVerification()
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                    @Override
+                @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
 //                            verificationSentDialog(user.getEmail());
