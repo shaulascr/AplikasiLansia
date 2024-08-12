@@ -99,6 +99,7 @@ public class FilteredReminderAdapter extends RecyclerView.Adapter<RecyclerView.V
                 intent.putExtra("REMINDER_TIMESTAMP", reminder.getTimestamp());
                 intent.putExtra("REMINDER_ICON", reminder.getIcon());
                 activity.startActivity(intent);
+                activity.finish();
             });
         }
     }

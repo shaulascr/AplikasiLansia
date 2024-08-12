@@ -61,11 +61,13 @@ public class LoginActivity extends AppCompatActivity {
                 String email = emailInput.getText().toString().trim();
                 String password = passwordInput.getText().toString().trim();
 
-                if (email.isEmpty() || password.isEmpty()) {
+                if (!email.isEmpty() && !password.isEmpty()) {
+                    loginViewModel.login(email, password);
+                } else {
                     incompleteFormDialog();
+
                 }
 
-                loginViewModel.login(email, password);
             }
         });
 

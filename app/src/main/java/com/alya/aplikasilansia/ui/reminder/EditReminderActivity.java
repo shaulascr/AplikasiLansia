@@ -3,6 +3,8 @@ package com.alya.aplikasilansia.ui.reminder;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -104,13 +106,33 @@ public class EditReminderActivity extends AppCompatActivity implements IconRemin
         if (reminderId != null){
             reminderViewModel.editReminder(reminderId, newTitle, newDay, newTime, desc, timestamp, selectedIcon, () -> {
                 // This code runs after the reminder is successfully edited
-                Toast.makeText(this, "Reminder updated successfully!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Reminder updated successfully!", Toast.LENGTH_SHORT).show();
                 // Optionally, navigate back or refresh UI
+                dataSavedDialog();
                 finish(); // Close the activity if you are in an edit activity
                 // Or refresh the list in your RecyclerView, etc.
             });
 
         }
+    }
+
+    private void dataSavedDialog() {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.data_saved_dialog, null);
+
+        ImageView toastIcon = layout.findViewById(R.id.img_verif_sent);
+        TextView toastText = layout.findViewById(R.id.text_verif_sent);
+
+        String text = "Pengingat Berhasil Diperbarui";
+
+        toastIcon.setImageResource(R.drawable.ic_checkmark);
+        toastText.setText(text);
+
+        Toast toast = new Toast(this);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     public void dialogIconReminder(Button editIconBtn) {
