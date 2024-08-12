@@ -51,10 +51,10 @@ public class RegisterStep2Activity extends AppCompatActivity {
         buttonNext = findViewById(R.id.btn_next_medhistory);
         viewMedRecord = findViewById(R.id.view_med_layout);
 
-        setProfileImg = findViewById(R.id.uploadImgReg);
-        setProfileImg.setOnClickListener(v-> openGallery());
-
-        profileImage = findViewById(R.id.profile_image_reg);
+//        setProfileImg = findViewById(R.id.uploadImgReg);
+//        setProfileImg.setOnClickListener(v-> openGallery());
+//
+//        profileImage = findViewById(R.id.profile_image_reg);
 
         registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
         editProfileViewModel = new ViewModelProvider(this).get(EditProfileViewModel.class);

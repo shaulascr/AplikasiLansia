@@ -159,7 +159,7 @@
         <br>mengakhiri tes?</br></string>
     <string name="instruksi_tes">Instruksi Tes</string>
     <string name="desc_satu">Tes ini bertujuan untuk mengukur tingkat depresi yang mungkin Anda alami berdasarkan pernyataan-pernyataan yang diberikan. Terdapat 15 pertanyaan dalam tes ini yang harus dijawab dengan \"Ya\" atau \"Tidak\".</string>
-<!--    <string name="desc_tiga">\u2022 Semua pertanyaan wajib dijawab sesuai dengan perasaan dan pengalaman Anda. \n\n \u2022 Tidak ada jawaban yang benar atau salah dalam tes ini. \n\n \u2022 Jawaban Anda hanya akan digunakan untuk memahami kondisi emosional Anda. \n\n \u2022 Anda bisa mengulang pengerjaan tes kapan saja jika diperlukan.</string>-->
+    <!--    <string name="desc_tiga">\u2022 Semua pertanyaan wajib dijawab sesuai dengan perasaan dan pengalaman Anda. \n\n \u2022 Tidak ada jawaban yang benar atau salah dalam tes ini. \n\n \u2022 Jawaban Anda hanya akan digunakan untuk memahami kondisi emosional Anda. \n\n \u2022 Anda bisa mengulang pengerjaan tes kapan saja jika diperlukan.</string>-->
     <string name="desc_tiga">
          <li>Semua pertanyaan wajib dijawab sesuai dengan perasaan dan pengalaman Anda</li>
         \n\n <li>Tidak ada jawaban yang benar atau salah dalam tes ini</li>
@@ -168,6 +168,10 @@
     </string>
     <string name="desc_empat">\nSelamat Mengerjakan!</string>
     <string name="password_require">Minimal terdiri dari 6 karakter</string>
+    <string name="nula">NULA</string>
+    <string name="nula_tag_line">Bahagia </string>
+    <string name="nula_tag_line_2"> Sepanjang Masa</string>
+    <string name="developed_by">Developed by\nUPN Veteran Jakarta</string>
 
     <string-array name="gender_array">
         <item>Jenis Kelamin</item>
