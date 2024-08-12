@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_quiz"
     tools:context=".ui.quiz.QuizActivity">
-    
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_back_quiz"
         android:layout_width="wrap_content"
@@ -120,7 +123,8 @@
             android:layout_centerHorizontal="true"
             style="@style/CustomBlueRoundButton"/>
     </LinearLayout>
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
 
 
 
