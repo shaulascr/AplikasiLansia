@@ -120,9 +120,6 @@
             android:layout_centerHorizontal="true"
             style="@style/CustomBlueRoundButton"/>
     </LinearLayout>
-
-
-
 </RelativeLayout>
 
 

@@ -57,7 +57,6 @@ public class QuizRepository {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 isLoading.setValue(false);
-                // Log the error or handle it as needed
             }
         });
     }
@@ -68,7 +67,6 @@ public class QuizRepository {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<QuizHistoryItem> quizHistoryItems = new ArrayList<>();
                 for (DataSnapshot quizSnapshot : snapshot.getChildren()) {
-                    String quizId = quizSnapshot.getKey();
                     String classifiedScore = quizSnapshot.child("classification").getValue(String.class);
                     String date = quizSnapshot.child("dateQuiz").getValue(String.class); // Date as String
                     int totalScore = quizSnapshot.child("score").getValue(Integer.class);
@@ -95,7 +93,7 @@ public class QuizRepository {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Handle the error if needed
+                Log.e("QuizRepository", "Database error: ", error.toException());
             }
         });
     }
@@ -122,7 +120,6 @@ public class QuizRepository {
 
         Log.d("QuizRepository", "Storing answers for quizId: " + quizId + ", userId: " + userId + ", answers: " + userAnswers.toString() + ", score: " + score);
 
-
         answersRef.setValue(data).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 listener.onSuccess();
@@ -137,5 +134,3 @@ public class QuizRepository {
         void onFailure(String error);
     }
 }
-
-

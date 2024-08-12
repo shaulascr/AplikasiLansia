@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:showIn="@layout/activity_onboarding">
 
-
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
@@ -22,20 +21,12 @@
         android:orientation="horizontal">
     </LinearLayout>
 
-<!--    <View-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="1dp"-->
-<!--        android:alpha=".5"-->
-<!--        android:layout_above="@id/layoutDots"-->
-<!--        android:background="@android:color/white" />-->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="50dp"
         android:gravity="center">
-
         <com.google.android.material.button.MaterialButton
             style="@style/CustomWhiteRoundButton"
             android:id="@+id/btn_skip"

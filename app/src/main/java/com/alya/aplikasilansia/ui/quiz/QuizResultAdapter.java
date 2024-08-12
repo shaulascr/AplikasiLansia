@@ -77,7 +77,6 @@ public class QuizResultAdapter extends RecyclerView.Adapter<QuizResultAdapter.Qu
             dateTestTextView = itemView.findViewById(R.id.tv_dateTest);
             detailTestButton = itemView.findViewById(R.id.btn_detailTest);
             statsProgressBar = itemView.findViewById(R.id.stats_progressbar_kecil);
-
         }
     }
 }

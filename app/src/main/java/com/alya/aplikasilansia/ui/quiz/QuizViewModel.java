@@ -20,7 +20,6 @@ import java.util.Locale;
 import java.util.Map;
 
 public class QuizViewModel extends ViewModel {
-
     private final QuizRepository repository;
     private final LiveData<List<Question>> questionsLiveData;
     private final MutableLiveData<Integer> currentQuestionIndex = new MutableLiveData<>(0);

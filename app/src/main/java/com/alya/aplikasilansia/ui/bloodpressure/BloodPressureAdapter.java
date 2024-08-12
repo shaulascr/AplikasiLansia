@@ -62,5 +62,4 @@ public class BloodPressureAdapter extends RecyclerView.Adapter<BloodPressureAdap
             dateTV.setText(bloodPressure.getBpDate());
         }
     }
-
 }

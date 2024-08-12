@@ -7,7 +7,6 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,12 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder> {
-
-//    private List<Question> questions;
     private List<ItemQuestionModel> questions;
-
-    private LiveData<List<Boolean>> userAnswersLiveData;
-    private LiveData<List<Boolean>> questionAnsweredStatusLiveData;
 
     private final OnQuestionClickListener onQuestionClickListener;
 
@@ -30,24 +24,14 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
         void onQuestionClick(int position);
     }
 
-//    public QuestionAdapter(List<Question> questions, LiveData<List<Boolean>> userAnswersLiveData, OnQuestionClickListener onQuestionClickListener) {
-//        this.questions = questions;
-//        this.onQuestionClickListener = onQuestionClickListener;
-//    }
-
     public QuestionAdapter(OnQuestionClickListener onQuestionClickListener) {
         this.questions = new ArrayList<>();
         this.onQuestionClickListener = onQuestionClickListener;
     }
-//    public void setQuestionAnsweredStatusLiveData(LiveData<List<Boolean>> questionAnsweredStatusLiveData) {
-//        this.questionAnsweredStatusLiveData = questionAnsweredStatusLiveData;
-//        notifyDataSetChanged();
-//    }
 
     @NonNull
     @Override
     public QuestionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_question, parent, false);
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.number_item, parent, false);
         return new QuestionViewHolder(view, onQuestionClickListener);
     }
@@ -95,7 +79,6 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
 
     // Class for comparing is there something new in item recycler view or not
     public class QuestionDiffCallback extends DiffUtil.Callback {
-
         private final List<ItemQuestionModel> mOldQuestionList;
         private final List<ItemQuestionModel> mNewQuestionList;
 

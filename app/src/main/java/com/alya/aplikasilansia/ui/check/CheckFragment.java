@@ -8,21 +8,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alya.aplikasilansia.LoginActivity;
 import com.alya.aplikasilansia.R;
-import com.alya.aplikasilansia.data.QuizHistoryItem;
 import com.alya.aplikasilansia.ui.quiz.QuizInstructionActivity;
 import com.alya.aplikasilansia.ui.quiz.QuizResultAdapter;
 import com.alya.aplikasilansia.ui.quiz.QuizViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CheckFragment extends Fragment {
     private Button btnCheck;
@@ -35,7 +32,7 @@ public class CheckFragment extends Fragment {
     public CheckFragment() {
         // Required empty public constructor
     }
-    public static CheckFragment newInstance(String param1, String param2) {
+    public static CheckFragment newInstance() {
         CheckFragment fragment = new CheckFragment();
         return fragment;
     }
@@ -66,12 +63,9 @@ public class CheckFragment extends Fragment {
         } else {
             // User is logged in, proceed with loading the fragment
             btnCheck = view.findViewById(R.id.btn_mulai_tes);
-            btnCheck.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), QuizInstructionActivity.class);
-                    startActivity(intent);
-                }
+            btnCheck.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), QuizInstructionActivity.class);
+                startActivity(intent);
             });
 
             recyclerView = view.findViewById(R.id.rv_check);
@@ -80,12 +74,7 @@ public class CheckFragment extends Fragment {
             adapter = new QuizResultAdapter(getContext(), new ArrayList<>());
             recyclerView.setAdapter(adapter);
 
-            quizViewModel.getQuizHistoryLiveData().observe(getViewLifecycleOwner(), new Observer<List<QuizHistoryItem>>() {
-                @Override
-                public void onChanged(List<QuizHistoryItem> quizHistoryItems) {
-                    adapter.setQuizHistoryItems(quizHistoryItems);
-                }
-            });
+            quizViewModel.getQuizHistoryLiveData().observe(getViewLifecycleOwner(), quizHistoryItems -> adapter.setQuizHistoryItems(quizHistoryItems));
             if (userId != null) {
                 quizViewModel.fetchQuizHistory(userId);
             }
@@ -100,5 +89,4 @@ public class CheckFragment extends Fragment {
             quizViewModel.fetchQuizHistory(userId);
         }
     }
-
 }

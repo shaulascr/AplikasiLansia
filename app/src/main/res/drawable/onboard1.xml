@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/onboard_bg"
-        android:height="516dp"
-        android:width="465dp"/>
-</layer-list>

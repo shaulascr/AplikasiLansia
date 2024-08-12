@@ -13,8 +13,7 @@ import com.alya.aplikasilansia.R;
 public class QuizResultActivity extends AppCompatActivity {
 
     private ProgressBar statsProgressBar;
-    private TextView numberScoreTextView;
-    private TextView resultScoreTextView;
+    private TextView numberScoreTextView,resultScoreTextView;
     private Button backButton;
 
     @Override
@@ -32,12 +31,9 @@ public class QuizResultActivity extends AppCompatActivity {
         int totalScore = getIntent().getIntExtra("total_score", 0);
         int maxScore = 15;
         String classifiedScore = getIntent().getStringExtra("classified_score");
-
         // Set score to ProgressBar and TextViews
         updateDoughnutChart(totalScore, maxScore);
-//        numberScoreTextView.setText("Score: " + totalScore);
         resultScoreTextView.setText("Tingkat depresi Anda: \n " + classifiedScore);
-
         // Set back button listener
         backButton.setOnClickListener(v -> finish());
     }
@@ -45,10 +41,8 @@ public class QuizResultActivity extends AppCompatActivity {
     private void updateDoughnutChart(int totalScore, int maxScore) {
         // Calculate percentage
         int percentage = (int) ((totalScore / (float) maxScore) * 100);
-
         // Update ProgressBar
         statsProgressBar.setProgress(percentage);
-
         // Update score display
         numberScoreTextView.setText(percentage + "%");
     }

@@ -13,7 +13,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,6 @@ import java.util.List;
 public class HealthCareRepository {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
-    private StorageReference mStorage;
 
     public HealthCareRepository() {
         mAuth = FirebaseAuth.getInstance();

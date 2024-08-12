@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.alya.aplikasilansia" />
-                  <option name="mobileSdkAppId" value="1:256979860495:android:455c39a1c89b9bd32d377a" />
-                  <option name="projectId" value="manula-97629" />
-                  <option name="projectNumber" value="256979860495" />
+                  <option name="appId" value="PLACEHOLDER" />
+                  <option name="mobileSdkAppId" value="" />
+                  <option name="projectId" value="" />
+                  <option name="projectNumber" value="" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

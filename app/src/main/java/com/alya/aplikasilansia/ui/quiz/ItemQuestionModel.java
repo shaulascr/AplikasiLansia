@@ -17,16 +17,8 @@ public class ItemQuestionModel {
         return isQuestionAnswered;
     }
 
-    public void setQuestionAnswered(boolean questionAnswered) {
-        isQuestionAnswered = questionAnswered;
-    }
-
     public Question getQuestionData() {
         return questionData;
-    }
-
-    public void setQuestionData(Question questionData) {
-        this.questionData = questionData;
     }
 
     public int getId() {
@@ -36,6 +28,4 @@ public class ItemQuestionModel {
     public void setId(int id) {
         this.id = id;
     }
-    // Getter for answered status
-
 }

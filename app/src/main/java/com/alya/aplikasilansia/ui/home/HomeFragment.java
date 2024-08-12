@@ -19,7 +19,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.alya.aplikasilansia.LoginActivity;
 import com.alya.aplikasilansia.R;
-import com.alya.aplikasilansia.data.Reminder;
 import com.alya.aplikasilansia.data.User;
 import com.alya.aplikasilansia.ui.bloodpressure.BloodPresViewModel;
 import com.alya.aplikasilansia.ui.bloodpressure.BloodPressureActivity;
@@ -38,8 +37,6 @@ import java.util.Date;
 import java.util.Locale;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
-
-    private Button tensiDarah;
     private ProfileViewModel profileViewModel;
     private ReminderViewModel reminderViewModel;
     private BloodPresViewModel bloodPresViewModel;
@@ -52,7 +49,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private TextView tvTitleRemind, tvTimeRemind;
     private TextView tvPressure, tvPulse;
     private ImageView imgRemind;
-    private Reminder firstReminder;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -66,7 +62,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         bloodPresViewModel = new ViewModelProvider(this).get(BloodPresViewModel.class);
 
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -196,12 +191,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 tvTimeRemind.setText(formatDate(firstReminder.getTimestamp()));
                 imgRemind.setImageResource(firstReminder.getIcon());
             } else {
-//                String textName = "Buat Pengingatmu!";
-//                String textDate = "Belum ada pengingat terjadwal.";
-//                tvTitleRemind.setText(textName);
-//                tvTimeRemind.setText(textDate);
-//                imgRemind.setImageResource(R.drawable.ic_remind_med);
-//                Log.d(TAG, "No first today reminder to update UI with");
             }
         });
         reminderViewModel.getReminderLiveData().observe(getViewLifecycleOwner(), reminders -> {
@@ -253,10 +242,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private boolean isSameDay(Calendar cal1, Calendar cal2) {
         return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
                 cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
-    }
-
-    public void getRemindData() {
-
     }
 
     @Override

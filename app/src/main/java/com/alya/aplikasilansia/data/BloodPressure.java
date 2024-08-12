@@ -4,7 +4,6 @@ public class BloodPressure {
     private String bloodPressure;
     private String pulse;
     private String bpDate;
-    // No-argument constructor required for Firebase deserialization
     public BloodPressure () {
         // Default constructor
     }

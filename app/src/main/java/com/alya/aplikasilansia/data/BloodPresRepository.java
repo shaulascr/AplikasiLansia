@@ -89,7 +89,6 @@ public class BloodPresRepository {
                     });
                     pressureLiveData.setValue(bPressure); // Set LiveData value here
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     Log.e("ReminderRepository", "Database error: ", error.toException());
@@ -99,7 +98,6 @@ public class BloodPresRepository {
         } else {
             pressureLiveData.setValue(null);
         }
-
         return pressureLiveData;
     }
     // Method to get the latest BloodPressure data
@@ -161,14 +159,12 @@ public class BloodPresRepository {
                                 latestBloodPressureLiveData.setValue(null); // No data available
                             }
                         }
-
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
                             Log.e("BloodPresRepository", "Database error", error.toException());
                         }
                     });
         }
-
         return latestBloodPressureLiveData;
     }
 

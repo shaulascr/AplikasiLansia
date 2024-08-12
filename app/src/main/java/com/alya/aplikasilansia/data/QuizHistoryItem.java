@@ -16,7 +16,6 @@ public class QuizHistoryItem {
     public String getDate() {
         return date;
     }
-
     public int getTotalScore() {
         return totalScore;
     }

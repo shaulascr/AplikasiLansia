@@ -71,12 +71,11 @@ public class QuizActivity extends AppCompatActivity {
 
         quizViewModel.getIsLoading().observe(this, isLoading -> {
             if (isLoading != null && !isLoading) {
-//                Snackbar.make(findViewById(R.id.activity_quiz), "Failed to load questions from Firebase", Snackbar.LENGTH_LONG).show();
+                Log.d("QuizActivity", "Quiz loading completed.");
             }
         });
         quizViewModel.getQuizCompleted().observe(this, quizCompleted -> {
             if (quizCompleted != null && quizCompleted) {
-//                Snackbar.make(findViewById(R.id.activity_quiz), "Berhasil menyelesaikan quiz!", Snackbar.LENGTH_LONG).show();
                 Toast.makeText(this, "Berhasil menyelesaikan quiz!", Toast.LENGTH_SHORT).show();
                 finish(); // Close the activity or navigate to another screen
             }
@@ -104,12 +103,10 @@ public class QuizActivity extends AppCompatActivity {
 
         buttonEndQuiz.setOnClickListener(v -> {
             if (!quizViewModel.areAllQuestionsAnswered()) {
-//                Snackbar.make(findViewById(R.id.activity_quiz), "Please answer all questions before ending the quiz.", Snackbar.LENGTH_LONG).show();
                 incompleteFormDialog();
                 return;
             } else {
                 showLogoutDialog();
-//                collectAndEndQuiz();
             }
         });
 
@@ -249,13 +246,14 @@ public class QuizActivity extends AppCompatActivity {
                         userAnswers.put("question_" + i, userAnswer);
                     }
 
-                    if (userAnswers.size() == answeredQuestions.size()) {  // Check if all questions are answered
+                    if (userAnswers.size() == answeredQuestions.size()) {
+                        // Check if all questions are answered
                         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         String quizId = generateQuizId();
                         quizViewModel.endQuiz(userId, quizId, userAnswers);
 
                         int totalScore = quizViewModel.calculateTotalScore();
-                        int maxScore = 15; // Example max score, you can adjust this
+                        int maxScore = 15;
                         String classifiedScore = quizViewModel.classifyScore(totalScore);
 
                         Intent intent = new Intent(this, QuizResultActivity.class);
@@ -270,13 +268,3 @@ public class QuizActivity extends AppCompatActivity {
                 }
     }
 }
-
-
-
-//    private void displayTotalScore() {
-//        int totalScore = quizViewModel.calculateTotalScore();
-//        Toast.makeText(this, "Total Score: " + totalScore, Toast.LENGTH_LONG).show();
-//    }
-//}
-
-

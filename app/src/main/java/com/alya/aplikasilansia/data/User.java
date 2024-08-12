@@ -18,12 +18,6 @@ public class User {
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
-//    public User(String email, String birthDate, String userName, Uri profileImageUrl) {
-//        this.email = email;
-//        this.birthDate = birthDate;
-//        this.userName = userName;
-//        this.profileImageUrl = profileImageUrl;
-//    }
     public User(String email, String birthDate, String userName, String gender, Uri profileImageUrl, String caregiver, String maritalStatus, List<inputMedHistory> medHistory) {
         this.email = email;
         this.birthDate = birthDate;

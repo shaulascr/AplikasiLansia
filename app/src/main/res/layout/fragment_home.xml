@@ -16,7 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,7 +43,6 @@
                     app:layout_constraintTop_toBottomOf="@id/txt_welocme"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
-
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -53,21 +51,18 @@
                     android:layout_marginTop="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
-
                     <View
                         android:id="@+id/stroke_view"
                         android:layout_width="73dp"
                         android:layout_height="73dp"
                         android:background="@drawable/outline_circle"
                         android:layout_centerInParent="true" />
-
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/profile_image_home"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:layout_centerInParent="true"
                         android:src="@drawable/img" />
-
                 </RelativeLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -137,16 +132,6 @@
                             app:layout_constraintHorizontal_bias="0"
                             app:layout_constrainedWidth="true"
                             app:layout_constraintEnd_toEndOf="parent"/>
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/txt_time"-->
-<!--                            android:paddingStart="4dp"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            app:layout_constraintStart_toEndOf="@id/txt_remind2"-->
-<!--                            app:layout_constraintTop_toBottomOf="@id/txt_remind1"-->
-<!--                            android:textSize="18sp"-->
-<!--                            android:text="10.00"/>-->
                     </androidx.constraintlayout.widget.ConstraintLayout>
                     <com.google.android.material.button.MaterialButton
                         style="@style/CustomBlueRoundButton"
@@ -157,7 +142,6 @@
                         android:backgroundTint="@color/blue2"
                         android:textSize="18sp"
                         android:text="Atur Pengingat"/>
-
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -186,7 +170,6 @@
                     android:textSize="26sp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toEndOf="@id/img_tensi"/>
-
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_to_bloodpresure"
                     android:layout_width="wrap_content"
@@ -302,12 +285,10 @@
                 app:cardCornerRadius="24dp"
                 app:cardElevation="16dp"
                 android:elevation="32dp">
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="16dp">
-
                     <TextView
                         android:id="@+id/txt_layanan"
                         android:layout_width="0dp"
@@ -321,7 +302,6 @@
                         android:text="@string/cari_pelayanan"
                         android:maxLines="3"
                         android:ellipsize="end" />
-
                     <ImageView
                         android:id="@+id/img_layanan"
                         android:layout_width="0dp"
@@ -347,7 +327,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/img_layanan"
                         app:layout_constraintEnd_toEndOf="parent"/>
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
@@ -361,8 +340,8 @@
                 app:cardCornerRadius="24dp"
                 app:cardElevation="16dp"
                 android:elevation="32dp"
-                android:outlineSpotShadowColor="@color/blue2"
-                >
+                android:visibility="gone"
+                android:outlineSpotShadowColor="@color/blue2">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -398,10 +377,7 @@
                         android:text="Teka-teki Silang" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
-
         </LinearLayout>
-
-
     </ScrollView>
 
 </LinearLayout>
