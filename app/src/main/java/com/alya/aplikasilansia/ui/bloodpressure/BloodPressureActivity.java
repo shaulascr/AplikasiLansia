@@ -33,13 +33,12 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class BloodPressureActivity extends AppCompatActivity {
+    private BloodPresViewModel bloodPresViewModel;
     private FirebaseAuth mAuth;
     private MaterialButton btnBackBP, btnSaveBP;
     private TextView tvDatePickerBP;
     private EditText etBP, etPulse;
     private BloodPressureAdapter adapter;
-    private BloodPresViewModel bloodPresViewModel;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,51 +46,40 @@ public class BloodPressureActivity extends AppCompatActivity {
         setContentView(R.layout.activity_blood_pressure);
 
         mAuth = FirebaseAuth.getInstance();
+        bloodPresViewModel = new ViewModelProvider(this).get(BloodPresViewModel.class);
 
         if (mAuth.getCurrentUser() == null) {
-            // User is not logged in, redirect to LoginActivity
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
-            finish(); // Close RestrictedActivity
-
+            finish();
         } else {
             btnBackBP = findViewById(R.id.btn_back_bp);
             setBtnBackBP(btnBackBP);
 
             tvDatePickerBP = findViewById(R.id.tv_date_bp);
             setTvDatePickerBP(tvDatePickerBP);
+
             btnSaveBP = findViewById(R.id.btn_save_bp);
             etBP = findViewById(R.id.etBloodPressure);
             etPulse = findViewById(R.id.etPulse);
 
-
-            // Initialize the ViewModel
-            bloodPresViewModel = new ViewModelProvider(this).get(BloodPresViewModel.class);
-
-            // Set up the RecyclerView
             setUpBloodPressureRV();
-            // Fetch blood pressure data
+
             bloodPresViewModel.fetchBloodPressureData();
 
-            // Observe the blood pressure data
             bloodPresViewModel.getBloodPressureData().observe(this, new Observer<List<BloodPressure>>() {
                 @Override
                 public void onChanged(List<BloodPressure> bloodPressures) {
-                    // Update the adapter's data
                     adapter.setBloodPressureList(bloodPressures);
                 }
 
             });
 
-            // Observe the add blood pressure result
             bloodPresViewModel.getPressureLiveData().observe(this, firebaseUser -> {
-                // Successfully added blood pressure, you can handle the success here
                 Toast.makeText(BloodPressureActivity.this, "Blood pressure added successfully", Toast.LENGTH_SHORT).show();
             });
 
-            // Observe any errors
             bloodPresViewModel.getErrorLiveData().observe(this, error -> {
-                // Handle the error here
                 Toast.makeText(BloodPressureActivity.this, "error", Toast.LENGTH_SHORT).show();
             });
 
@@ -101,60 +89,21 @@ public class BloodPressureActivity extends AppCompatActivity {
                 String timestamp = tvDatePickerBP.getText().toString().trim();
 
                 if (!bloodPressure.isEmpty() && !pulse.isEmpty() && !timestamp.isEmpty()) {
-
                     try {
                         int pulseInt = Integer.parseInt(pulse);
-
-                        // Inputs are valid integers, proceed with ViewModel method
                         bloodPresViewModel.addBloodPressure(bloodPressure, String.valueOf(pulseInt), timestamp);
 
                     } catch (NumberFormatException e) {
-                        // Handle case where inputs are not valid integers
-//                        Toast.makeText(BloodPressureActivity.this, "Please enter valid numbers for blood pressure and pulse", Toast.LENGTH_SHORT).show();
                         incompleteFormDialog();
                     }
 
                 } else {
-                    // Handle case where inputs are missing
-//                    Toast.makeText(BloodPressureActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
                     incompleteFormDialog();
                 }
             });
         }
     }
-    private void incompleteFormDialog(){
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.incomplete_form_dialog, null);
 
-        // Build the dialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(dialogView);
-
-        // Create the AlertDialog
-        AlertDialog dialog = builder.create();
-
-        // Show the dialog
-        dialog.show();
-
-        // Set the custom background drawable with rounded corners
-        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(R.drawable.custom_corner_rounded);
-
-        // Adjust dialog size programmatically after showing it
-        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
-        params.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.9); // 80% of screen width
-        params.height = WindowManager.LayoutParams.WRAP_CONTENT; // Adjust height as needed
-        dialog.getWindow().setAttributes(params);
-
-        // Get the buttons from the custom layout and set click listeners
-        Button btnClose = dialogView.findViewById(R.id.btn_close_incomplete);
-
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-    }
 
     private void setBtnBackBP (MaterialButton btnBackBP) {
         btnBackBP.setOnClickListener(new View.OnClickListener() {
@@ -179,7 +128,7 @@ public class BloodPressureActivity extends AppCompatActivity {
 
         CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder();
         constraintsBuilder.setOpenAt(calendar.getTimeInMillis());
-        constraintsBuilder.setEnd(calendar.getTimeInMillis()); // Set the end constraint to today
+        constraintsBuilder.setEnd(calendar.getTimeInMillis());
 
         MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Tanggal Tensi")
@@ -201,10 +150,38 @@ public class BloodPressureActivity extends AppCompatActivity {
         adapter = new BloodPressureAdapter(bloodPressureList);
         recyclerView.setAdapter(adapter);
     }
+
+    private void incompleteFormDialog(){
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.incomplete_form_dialog, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(dialogView);
+
+        AlertDialog dialog = builder.create();
+
+        dialog.show();
+
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(R.drawable.custom_corner_rounded);
+
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        params.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.9);
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes(params);
+
+        Button btnClose = dialogView.findViewById(R.id.btn_close_incomplete);
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
-        // Refresh the quiz history data if userId is not null
         bloodPresViewModel.fetchBloodPressureData();
     }
 }

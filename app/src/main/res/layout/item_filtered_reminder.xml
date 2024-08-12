@@ -45,19 +45,6 @@
                 android:layout_below="@id/tv_reminder_name_filter"
                 android:layout_toEndOf="@id/img_reminder_ic">
 
-<!--                <TextView-->
-<!--                    android:id="@+id/tv_reminder_day"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Hari ini"-->
-<!--                    android:textSize="18sp" />-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text=" pukul "-->
-<!--                    android:textSize="18sp" />-->
-
                 <TextView
                     android:id="@+id/tv_reminder_time"
                     android:layout_width="wrap_content"
@@ -65,7 +52,6 @@
                     android:text="12.00"
                     android:textSize="18sp"/>
             </LinearLayout>
-
 
             <TextView
                 android:id="@+id/tv_desc_reminder_filter"

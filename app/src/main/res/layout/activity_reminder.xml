@@ -22,7 +22,6 @@
             android:layout_marginStart="14dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="3dp"/>
-
     </LinearLayout>
 
     <ScrollView
@@ -111,7 +110,6 @@
                         app:layout_constraintStart_toEndOf="@id/img_reminder"
                         app:layout_constraintEnd_toEndOf="parent"/>
 
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
                 
             </androidx.cardview.widget.CardView>
@@ -147,6 +145,7 @@
                 android:translationY="-25dp"
                 android:background="#E0E5E9"
                 android:paddingTop="35dp">
+
                 <TextView
                     android:id="@+id/tv_no_data"
                     android:layout_width="match_parent"
@@ -167,7 +166,6 @@
             </RelativeLayout>
 
         </LinearLayout>
-
 
     </ScrollView>
 

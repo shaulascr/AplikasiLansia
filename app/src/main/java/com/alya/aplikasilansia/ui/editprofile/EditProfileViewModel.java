@@ -32,12 +32,10 @@ public class EditProfileViewModel extends ViewModel {
         return updateResultLiveData;
     }
 
-    // Fetch user data method
     public void fetchUser() {
         userLiveData = userRepository.fetchUser();
     }
 
-    // Method to update user profile with new username and profile image
     public void updateProfile(String newUserName, String email, String birthDate, Uri profileImageUri) {
         userRepository.updateProfile(newUserName, email, birthDate, profileImageUri, updateResultLiveData);
     }

@@ -19,7 +19,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void run() {
                 Intent intent = new Intent(SplashScreenActivity.this, OnboardingActivity.class);
                 startActivity(intent);
-                finish(); // Finish SplashScreenActivity so the user cannot return to it
+                finish();
             }
         }, 3000);
     }

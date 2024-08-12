@@ -30,7 +30,6 @@ import java.util.Objects;
 
 public class ProfilePersonalFragment extends Fragment {
     private static final String TAG = "ProfilePersonalFragment";
-
     private FirebaseAuth mAuth;
     private Button signOut;
     private ProfileViewModel profileViewModel;
@@ -43,7 +42,6 @@ public class ProfilePersonalFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
     }
 
@@ -51,6 +49,7 @@ public class ProfilePersonalFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile_personal, container, false);
+
         emailTextView = view.findViewById(R.id.tv_email);
         birthDateTextView = view.findViewById(R.id.tv_date_profile);
         ageTextView = view.findViewById(R.id.tv_age_profile);
@@ -58,7 +57,6 @@ public class ProfilePersonalFragment extends Fragment {
         userNameTextView = view.findViewById(R.id.tv_username_profile);
         signOut = view.findViewById(R.id.btn_keluar);
 
-        // Observe userLiveData from ViewModel
         profileViewModel.getUserLiveData().observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
             public void onChanged(User user) {
@@ -80,42 +78,33 @@ public class ProfilePersonalFragment extends Fragment {
     }
 
     public void showLogoutDialog() {
-        // Inflate the custom layout/view
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.confirm_logout_dialog, null);
 
-        // Build the AlertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setView(dialogView);
 
-        // Create the AlertDialog
         AlertDialog dialog = builder.create();
 
-        // Show the dialog
         dialog.show();
 
-        // Set the custom background drawable with rounded corners
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(R.drawable.custom_corner_rounded);
 
-        // Adjust dialog size programmatically after showing it
         WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
-        params.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.9); // 80% of screen width
-        params.height = WindowManager.LayoutParams.WRAP_CONTENT; // Adjust height as needed
+        params.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.9);
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         dialog.getWindow().setAttributes(params);
 
-        // Get the buttons from the custom layout and set click listeners
         Button buttonConfirm = dialogView.findViewById(R.id.btn_logout_confirmed);
         Button buttonCancel = dialogView.findViewById(R.id.btn_cancel_logout);
 
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle the logout logic here
                 profileViewModel.signOut();
-                // Navigate to login screen or other appropriate action after sign out
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
-                dialog.dismiss(); // Ensure dialog is dismissed after logout
+                dialog.dismiss();
             }
         });
 
@@ -126,12 +115,7 @@ public class ProfilePersonalFragment extends Fragment {
             }
         });
     }
-    @Override
-    public void onResume() {
-        super.onResume();
-        // Fetch updated user data whenever the fragment is resumed
-        profileViewModel.fetchUser();
-    }
+
 
     private void setAge(String birthDate){
         if (birthDate != null && !birthDate.isEmpty()) {
@@ -147,7 +131,6 @@ public class ProfilePersonalFragment extends Fragment {
                 String ageText = getString(R.string.age_format, age);
                 ageTextView.setText(ageText);
 
-                // Log age text
                 Log.d(TAG, "Age: " + ageText);
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -157,6 +140,12 @@ public class ProfilePersonalFragment extends Fragment {
             ageTextView.setText("N/A");
             Log.e(TAG, "Birthdate is empty or null");
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        profileViewModel.fetchUser();
     }
 
 }

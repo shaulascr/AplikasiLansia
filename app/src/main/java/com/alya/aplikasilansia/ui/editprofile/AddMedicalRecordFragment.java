@@ -12,16 +12,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import com.alya.aplikasilansia.R;
 import com.alya.aplikasilansia.data.inputMedHistory;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AddMedicalRecordFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AddMedicalRecordFragment extends DialogFragment {
     private Button btnsSave, btnCancel;
     private EditText  etPenyakit, etTahun, etBulan;
@@ -47,13 +41,11 @@ public class AddMedicalRecordFragment extends DialogFragment {
         super.onStart();
         Dialog dialog = getDialog();
         if (dialog != null) {
-            // Get the screen width
             DisplayMetrics displayMetrics = new DisplayMetrics();
             getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             int width = displayMetrics.widthPixels;
             dialog.getWindow().setBackgroundDrawableResource(R.drawable.custom_corner_rounded);
 
-            // Set the dialog's width to match the screen width
             dialog.getWindow().setLayout((int) (width * 0.85), ViewGroup.LayoutParams.WRAP_CONTENT);
         }
     }

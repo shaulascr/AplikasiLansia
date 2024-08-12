@@ -17,7 +17,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alya.aplikasilansia.R;
@@ -29,15 +28,14 @@ import java.util.List;
 
 public class EditProfileActivity extends AppCompatActivity implements OnSaveEditListener{
 
-    private static final int REQUEST_PICK_IMAGE = 1; // Define your request code
-
+    private static final int REQUEST_PICK_IMAGE = 1;
     private EditProfileViewModel editProfileViewModel;
     private ImageView imageViewProfile;
-    private Uri selectedImageUri; // Uri for storing selected image URI
-    private MutableLiveData<String> updateResultLiveData; // LiveData for update result
+    private Uri selectedImageUri;
     private TextView personalProfile, healthProfile, userNameTextView;
     private RelativeLayout editProfileImg;
     String fragmentType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,13 +47,9 @@ public class EditProfileActivity extends AppCompatActivity implements OnSaveEdit
 
         personalProfile = findViewById(R.id.btnPersonalData);
         healthProfile = findViewById(R.id.btnHealthData);
-
         userNameTextView = findViewById(R.id.profile_userName);
         editProfileImg = findViewById(R.id.profile_image_edit);
         imageViewProfile = findViewById(R.id.edit_profile_image);
-
-//        findViewById(R.id.btn_cancelProfile).setOnClickListener(v -> finish());
-//        findViewById(R.id.btn_saveProfile).setOnClickListener(v -> saveProfileChanges());
 
         if (savedInstanceState == null & fragmentType != null) {
             if (fragmentType.equals("personal")) {
@@ -71,7 +65,6 @@ public class EditProfileActivity extends AppCompatActivity implements OnSaveEdit
             }
         } else if (fragmentType == null){
             Log.e("EditProfileActivity", "Fragment type not provided");
-
             Toast.makeText(this,"Fragment type not provided: " + fragmentType, Toast.LENGTH_SHORT).show();
         }
 
@@ -85,14 +78,12 @@ public class EditProfileActivity extends AppCompatActivity implements OnSaveEdit
                             .load(user.getProfileImageUrl())
                             .into(imageViewProfile);
                 } else {
-                    // Handle no profile image case
                     imageViewProfile.setImageResource(R.drawable.img);
                 }
             }
         });
 
         editProfileViewModel.getUpdateResultLiveData().observe(this, updateResult -> {
-//            Toast.makeText(EditProfileActivity.this, updateResult, Toast.LENGTH_SHORT).show();
             if (updateResult.equals("Profile updated successfully")) {
                 dataSavedDialog();
                 finish();
@@ -114,7 +105,7 @@ public class EditProfileActivity extends AppCompatActivity implements OnSaveEdit
         TextView toastText = layout.findViewById(R.id.text_verif_sent);
 
         String text = "Data Berhasil Disimpan";
-        toastIcon.setImageResource(R.drawable.ic_checkmark); // Set your desired icon here
+        toastIcon.setImageResource(R.drawable.ic_checkmark);
         toastText.setText(text);
 
         Toast toast = new Toast(this);
@@ -128,7 +119,6 @@ public class EditProfileActivity extends AppCompatActivity implements OnSaveEdit
     public void onSavePersonalData(String newUsername, String newBirthdate) {
         fragmentType = "personal";
         editProfileViewModel.updateProfile(newUsername, null, newBirthdate, selectedImageUri);
-//        dataSavedDialog();
     }
 
     @Override
@@ -138,22 +128,18 @@ public class EditProfileActivity extends AppCompatActivity implements OnSaveEdit
         editProfileViewModel.updateHealthData2(newCaregiver, newStatus);
         editProfileViewModel.updateMedRecord(medHistoryList);
         saveProfileChanges();
-//        dataSavedDialog();
     }
 
-    // Method to save profile changes
     private void saveProfileChanges() {
         editProfileViewModel.updateProfile(null, null, null, selectedImageUri);
         finish();
     }
 
-    // Method to open gallery for selecting profile image
     private void openGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, REQUEST_PICK_IMAGE);
     }
 
-    // Handle result from gallery selection for profile image
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

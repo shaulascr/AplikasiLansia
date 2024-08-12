@@ -25,17 +25,4 @@
         android:fontFamily="@font/inter_semibold"
         android:paddingHorizontal="15dp"/>
 
-
-
-<!--    <com.google.android.material.button.MaterialButton-->
-<!--        android:id="@+id/btn_close_verif"-->
-<!--        style="@style/BlueRoundButtonNoOutline"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="@string/masuk"-->
-<!--        android:textSize="18sp"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:paddingVertical="8dp"-->
-<!--        android:paddingHorizontal="20dp"/>-->
-
 </LinearLayout>

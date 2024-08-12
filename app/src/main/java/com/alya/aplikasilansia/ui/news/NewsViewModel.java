@@ -10,7 +10,6 @@ import java.util.List;
 public class NewsViewModel extends ViewModel {
     private NewsRepository newsRepository;
     private MutableLiveData<List<News>> newsLiveData;
-
     public MutableLiveData<String> errorLiveData;
 
     public NewsViewModel() {

@@ -14,7 +14,6 @@ import com.alya.aplikasilansia.R;
 import java.util.List;
 
 public class IconReminderAdapter extends RecyclerView.Adapter<IconReminderAdapter.ImageViewHolder> {
-
     private Context mContext;
     private List<IconReminder> mList;
     private OnItemClickListener mListener;
@@ -53,6 +52,7 @@ public class IconReminderAdapter extends RecyclerView.Adapter<IconReminderAdapte
 
         public ImageViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
+
             mImageView = itemView.findViewById(R.id.item_icon_reminder);
 
             itemView.setOnClickListener(new View.OnClickListener() {

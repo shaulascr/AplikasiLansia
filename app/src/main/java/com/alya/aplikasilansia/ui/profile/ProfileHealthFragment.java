@@ -1,6 +1,5 @@
 package com.alya.aplikasilansia.ui.profile;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,28 +21,18 @@ import com.alya.aplikasilansia.R;
 import com.alya.aplikasilansia.data.User;
 import com.alya.aplikasilansia.data.inputMedHistory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 
 public class ProfileHealthFragment extends Fragment {
-
     private LinearLayout profileMedHistory;
     private TextView tvCaregiver, tvMaritalStatus;
     private ProfileViewModel profileViewModel;
-    private List<inputMedHistory> inputDataList = new ArrayList<>();
     private Button signOut;
-    Dialog dialog;
 
     public ProfileHealthFragment() {
         // Required empty public constructor
-    }
-
-    public static ProfileHealthFragment newInstance(String param1, String param2) {
-        ProfileHealthFragment fragment = new ProfileHealthFragment();
-        Bundle args = new Bundle();
-        return fragment;
     }
 
     @Override
@@ -72,42 +61,33 @@ public class ProfileHealthFragment extends Fragment {
     }
 
     public void showLogoutDialog() {
-        // Inflate the custom layout/view
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.confirm_logout_dialog, null);
 
-        // Build the AlertDialog
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setView(dialogView);
 
-        // Create the AlertDialog
         AlertDialog dialog = builder.create();
 
-        // Show the dialog
         dialog.show();
 
-        // Set the custom background drawable with rounded corners
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawableResource(R.drawable.custom_corner_rounded);
 
-        // Adjust dialog size programmatically after showing it
         WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
-        params.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.9); // 80% of screen width
-        params.height = WindowManager.LayoutParams.WRAP_CONTENT; // Adjust height as needed
+        params.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.9);
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         dialog.getWindow().setAttributes(params);
 
-        // Get the buttons from the custom layout and set click listeners
         Button buttonConfirm = dialogView.findViewById(R.id.btn_logout_confirmed);
         Button buttonCancel = dialogView.findViewById(R.id.btn_cancel_logout);
 
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle the logout logic here
                 profileViewModel.signOut();
-                // Navigate to login screen or other appropriate action after sign out
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
-                dialog.dismiss(); // Ensure dialog is dismissed after logout
+                dialog.dismiss();
             }
         });
 
@@ -119,9 +99,6 @@ public class ProfileHealthFragment extends Fragment {
         });
     }
 
-
-
-
     public void getData(){
         profileViewModel.getUserLiveData().observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
@@ -131,7 +108,6 @@ public class ProfileHealthFragment extends Fragment {
                     tvCaregiver.setText(user.getCaregiver());
                     tvMaritalStatus.setText(user.getMaritalStatus());
                     profileMedHistory(user.getMedHistory());
-                    // You can then iterate over the list to access individual inputMedHistory objects
                 } else {
                     Log.d("ProfileHealthFragment", "User data is null");
                 }
@@ -149,6 +125,7 @@ public class ProfileHealthFragment extends Fragment {
             });
         }
     }
+
     private void profileMedHistory(List<inputMedHistory> medHistory){
         if (medHistory == null || medHistory.isEmpty()) {
             Log.d("ProfileHealthFragment", "Medical history is null or empty");
@@ -158,21 +135,18 @@ public class ProfileHealthFragment extends Fragment {
         profileMedHistory.removeAllViews();
 
         for (inputMedHistory history : medHistory) {
-            // Do something with med, e.g., log its values
             Log.d("ProfileHealthFragment", "Med history: " + history.toString());
             View itemView = getLayoutInflater().inflate(R.layout.profile_view_medhistory, profileMedHistory, false);
-//                        profileMedHistory.removeAllViews();
 
             TextView tvPenyakit = itemView.findViewById(R.id.tv_profile_penyakit);
             TextView tvMedYears = itemView.findViewById(R.id.tv_profile_tahun);
             TextView tvMedMonths = itemView.findViewById(R.id.tv_profile_bulan);
 
-//                      if (tvPenyakit != null && tvMedYears != null && tvMedMonths != null) {
             tvPenyakit.setText(history.getPenyakit());
             tvMedYears.setText(history.getLamanya());
             tvMedMonths.setText(history.getLamanyaBulan());
 
-
-            profileMedHistory.addView(itemView);        }
+            profileMedHistory.addView(itemView);
+        }
     }
 }

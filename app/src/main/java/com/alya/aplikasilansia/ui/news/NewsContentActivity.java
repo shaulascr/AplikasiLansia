@@ -30,9 +30,10 @@ public class NewsContentActivity extends AppCompatActivity {
         tvDate = findViewById(R.id.tvCtnNewsDate);
         tvCategory = findViewById(R.id.tvCtnNewsCate);
         tvSource = findViewById(R.id.tv_ctn_source);
+        tvContent = findViewById(R.id.tvNewsContent);
+
         tvSource.setPaintFlags(tvSource.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-        tvContent = findViewById(R.id.tvNewsContent);
         btnBackNews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,11 +54,9 @@ public class NewsContentActivity extends AppCompatActivity {
             String newsImageUri = intent.getStringExtra("news_image");
             String newsContent = intent.getStringExtra("news_content");
 
-            // Populate views
             tvTitle.setText(newsName);
             tvDate.setText(newsDate);
             tvCategory.setText(newsCategory);
-//            tvSource.setText(newsSource);
             tvContent.setText(newsContent);
 
             if (newsImageUri != null && !newsImageUri.isEmpty()) {
@@ -67,9 +66,8 @@ public class NewsContentActivity extends AppCompatActivity {
                         .error(R.drawable.img_2)
                         .into(newsImage);
             } else {
-                // Handle case where newsImageUri is null or empty
                 Glide.with(this)
-                        .load(R.drawable.img_2) // Load placeholder or default image
+                        .load(R.drawable.img_2)
                         .into(newsImage);
             }
             if (newsSource != null && !newsSource.isEmpty()) {
@@ -81,16 +79,6 @@ public class NewsContentActivity extends AppCompatActivity {
                         startActivity(intentNews);
                     }
                 });
-//                tvSource.setText(Html.fromHtml("<a href=\"" + newsSource + "\">" + newsSource + "</a>"));
-//                tvSource.setMovementMethod(LinkMovementMethod.getInstance());
-//
-//                tvSource.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(newsSource));
-//                        startActivity(browserIntent);
-//                    }
-//                });
             } else {
                 tvSource.setText("Source not available");
             }

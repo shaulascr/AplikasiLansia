@@ -33,8 +33,8 @@ public class IncompleteFormDialog extends DialogFragment {
         super.onStart();
         if (getDialog() != null) {
             WindowManager.LayoutParams params = getDialog().getWindow().getAttributes();
-            params.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.9); // 90% of screen width
-            params.height = WindowManager.LayoutParams.WRAP_CONTENT; // Adjust height as needed
+            params.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.9);
+            params.height = WindowManager.LayoutParams.WRAP_CONTENT;
             getDialog().getWindow().setAttributes(params);
             getDialog().getWindow().setBackgroundDrawableResource(R.drawable.custom_corner_rounded);
         }

@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +31,6 @@ public class EditPersonalFragment extends Fragment {
     private EditProfileViewModel editProfileViewModel;
     private EditText editTextUserName;
     private TextView genderTextView, emailTextView, dateTextView, ageTextView;
-    private Button btnSave, btnCancel;
     private OnSaveEditListener onSaveEditListener;
 
     @Override
@@ -52,12 +50,6 @@ public class EditPersonalFragment extends Fragment {
     }
     public EditPersonalFragment() {
         // Required empty public constructor
-    }
-    public static EditPersonalFragment newInstance(String param1, String param2) {
-        EditPersonalFragment fragment = new EditPersonalFragment();
-        Bundle args = new Bundle();
-
-        return fragment;
     }
 
     @Override
@@ -106,15 +98,13 @@ public class EditPersonalFragment extends Fragment {
 
         });
 
-//        editProfileViewModel.fetchUser();
-
         return view;
     }
 
     private void saveProfileChanges() {
         String newUsername = editTextUserName.getText().toString().trim();
         String newBirthdate = dateTextView.getText().toString().trim();
-//        editProfileViewModel.updateProfile(newUsername, null, newBirthdate, null);
+
         if (onSaveEditListener != null) {
             onSaveEditListener.onSavePersonalData(newUsername, newBirthdate);
             Intent resultIntent = new Intent();
@@ -125,7 +115,6 @@ public class EditPersonalFragment extends Fragment {
             Log.e(TAG, "onSaveEditListener is not attached");
         }
     }
-
 
     private void setAge(String birthDate){
         if (birthDate != null && !birthDate.isEmpty()) {
@@ -163,7 +152,6 @@ public class EditPersonalFragment extends Fragment {
     }
     private void showDatePickerDialog() {
         Calendar calendar = Calendar.getInstance();
-        // Create a date picker with constraints
         CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder();
         constraintsBuilder.setOpenAt(calendar.getTimeInMillis());
         MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
@@ -171,7 +159,6 @@ public class EditPersonalFragment extends Fragment {
                 .setCalendarConstraints(constraintsBuilder.build())
                 .build();
         datePicker.addOnPositiveButtonClickListener(selection -> {
-            // Format the selected date and set it to the TextView
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             String formattedDate = format.format(selection);
             dateTextView.setText(formattedDate);

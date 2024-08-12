@@ -22,11 +22,12 @@ import java.util.ArrayList;
 
 public class NewsFragment extends Fragment implements NewsAdapter.OnItemClickListener {
     NewsViewModel newsViewModel;
+    NewsAdapter adapter;
+
     private CardView headNews;
     private RecyclerView newsRV;
     private ImageView newsImage;
     private TextView tvNewsTitle, tvCategory, tvDate;
-    NewsAdapter adapter;
 
     public NewsFragment() {
         // Required empty public constructor

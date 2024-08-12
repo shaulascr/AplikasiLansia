@@ -6,7 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.profile.ProfileHealthFragment">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,126 +31,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="vertical">-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginBottom="10dp"-->
-<!--                        android:text="@string/penyakit"-->
-<!--                        android:textSize="18sp"-->
-<!--                        android:textStyle="bold" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/tv_penyakit"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:background="@drawable/custom_edit_text"-->
-<!--                        android:text="Contoh: TBC"-->
-<!--                        android:minHeight="48dp"-->
-<!--                        android:textSize="18sp"-->
-<!--                        android:padding="12dp" />-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginBottom="10dp"-->
-<!--                        android:layout_marginTop="15dp"-->
-<!--                        android:text="@string/lamaPenyakit"-->
-<!--                        android:textSize="18sp"-->
-<!--                        android:textStyle="bold" />-->
-
-<!--                </LinearLayout>-->
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginBottom="12dp"-->
-<!--                    android:orientation="horizontal">-->
-
-<!--                    <RelativeLayout-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="48dp"-->
-<!--                        android:background="@drawable/custom_edit_text"-->
-<!--                        android:padding="6dp"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:layout_marginBottom="10dp"-->
-<!--                        android:layout_gravity="center_horizontal"-->
-<!--                        android:gravity="center_vertical">-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/tv_med_years"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:background="@color/white"-->
-<!--                            android:minHeight="48dp"-->
-<!--                            android:gravity="center_vertical"-->
-<!--                            android:text="Contoh: 9"-->
-<!--                            android:paddingStart="5dp"-->
-<!--                            android:paddingEnd="0dp"-->
-<!--                            android:textSize="18sp"-->
-<!--                            tools:ignore="SpeakableTextPresentCheck" />-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="48dp"-->
-<!--                            android:text=" Tahun"-->
-<!--                            android:gravity="center_vertical"-->
-<!--                            android:textSize="18sp"-->
-<!--                            android:fontFamily="@font/inter_medium"-->
-<!--                            android:paddingStart="0dp"-->
-<!--                            android:layout_marginEnd="4dp"-->
-<!--                            android:layout_marginVertical="4dp"-->
-<!--                            android:layout_alignParentEnd="true"-->
-<!--                            android:layout_toEndOf="@id/tv_med_years"/>-->
-<!--                    </RelativeLayout>-->
-
-<!--                    <Space-->
-<!--                        android:layout_width="12dp"-->
-<!--                        android:layout_height="wrap_content"/>-->
-
-<!--                    <RelativeLayout-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="48dp"-->
-<!--                        android:background="@drawable/custom_edit_text"-->
-<!--                        android:padding="6dp"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:layout_marginBottom="10dp"-->
-<!--                        android:layout_gravity="center_horizontal"-->
-<!--                        android:gravity="center_vertical">-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/tv_med_months"-->
-<!--                            android:layout_width="98dp"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_horizontal"-->
-<!--                            android:background="@color/white"-->
-<!--                            android:minHeight="48dp"-->
-<!--                            android:gravity="center_vertical"-->
-<!--                            android:paddingStart="5dp"-->
-<!--                            android:paddingEnd="0dp"-->
-<!--                            android:text="Contoh: 9"-->
-<!--                            android:textSize="18sp"-->
-<!--                            tools:ignore="SpeakableTextPresentCheck" />-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="48dp"-->
-<!--                            android:text="@string/bulan"-->
-<!--                            android:textSize="18sp"-->
-<!--                            android:fontFamily="@font/inter_medium"-->
-<!--                            android:paddingStart="0dp"-->
-<!--                            android:layout_marginEnd="4dp"-->
-<!--                            android:layout_marginVertical="4dp"-->
-<!--                            android:layout_alignParentEnd="true"-->
-<!--                            android:layout_toEndOf="@id/tv_med_months"/>-->
-<!--                    </RelativeLayout>-->
-<!--                </LinearLayout>-->
-
             </LinearLayout>
 
             <TextView
@@ -191,9 +70,6 @@
                 app:drawableStartCompat="@drawable/custom_ic_mstatus"
                 android:drawablePadding="8dp"
                 android:layout_marginBottom="20dp"/>
-
-
-
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
@@ -211,6 +87,5 @@
             app:iconPadding="9dp" />
 
     </LinearLayout>
-
 
 </ScrollView>

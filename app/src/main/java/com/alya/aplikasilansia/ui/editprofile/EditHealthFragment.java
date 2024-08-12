@@ -30,7 +30,7 @@ public class EditHealthFragment extends Fragment implements AddMedicalRecordFrag
     private Spinner caregiverSpinner, maritalStatSpinner;
     private LinearLayout medHistoryContainer;
     private EditProfileViewModel editProfileViewModel;
-    private Button dialogAddMedButton, saveButton, cancelButton;
+    private Button dialogAddMedButton;
     private List<inputMedHistory> medHistoryList = new ArrayList<>();
     private OnSaveEditListener onSaveEditListener;
 
@@ -89,7 +89,7 @@ public class EditHealthFragment extends Fragment implements AddMedicalRecordFrag
 
         editProfileViewModel.getUserLiveData().observe(getViewLifecycleOwner(), user -> {
             if (user != null) {
-                medHistoryList.addAll(user.getMedHistory()); // Add data from database
+                medHistoryList.addAll(user.getMedHistory());
                 medicalRecord(medHistoryList);
                 setSpinnerCaregiver(user.getCaregiver());
                 setSpinnerMarStat(user.getMaritalStatus());
@@ -133,8 +133,8 @@ public class EditHealthFragment extends Fragment implements AddMedicalRecordFrag
     public void onMedicalRecordAdded(inputMedHistory newMedHistory) {
         medHistoryList.add(newMedHistory);
         medicalRecord(medHistoryList);
-        // Update ViewModel and database if necessary
     }
+
     private void medicalRecord(List<inputMedHistory> medHistory){
         if (medHistory == null || medHistory.isEmpty()) {
             Log.d("ProfileHealthFragment", "Medical history is null or empty");
@@ -198,7 +198,7 @@ public class EditHealthFragment extends Fragment implements AddMedicalRecordFrag
         careGiverAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         caregiverSpinner.setAdapter(careGiverAdapter);
-        // Set selected item
+
         if (selectedCaregiver != null) {
             int position = careGiverAdapter.getPosition(selectedCaregiver);
             caregiverSpinner.setSelection(position);
@@ -212,7 +212,6 @@ public class EditHealthFragment extends Fragment implements AddMedicalRecordFrag
         maritalStatusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         maritalStatSpinner.setAdapter(maritalStatusAdapter);
 
-        // Set selected item
         if (selectedMaritalStatus != null) {
             int position = maritalStatusAdapter.getPosition(selectedMaritalStatus);
             maritalStatSpinner.setSelection(position);

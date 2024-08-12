@@ -7,7 +7,6 @@ public class News {
     private String date;
     private String category;
     private String newsContent;
-
     private String source;
     private Uri image;
 
@@ -20,14 +19,6 @@ public class News {
         this.newsContent = newsContent;
     }
 
-//    public News(String name, String date, String category, String newsContent) {
-//        this.name = name;
-//        this.date = date;
-//        this.category = category;
-//        this.newsContent = newsContent;
-//    }
-
-    // Getter methods
     public String getName() {
         return name;
     }
@@ -44,7 +35,6 @@ public class News {
         return newsContent;
     }
 
-    // Setter methods (if needed)
     public void setName(String name) {
         this.name = name;
     }

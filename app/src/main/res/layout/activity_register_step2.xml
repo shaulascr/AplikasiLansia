@@ -39,46 +39,6 @@
                         android:textSize="26sp"
                         android:textStyle="bold" />
 
-<!--                    <RelativeLayout-->
-<!--                        android:id="@+id/uploadImgReg"-->
-<!--                        android:layout_width="125dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_gravity="center"-->
-<!--                        android:gravity="center"-->
-<!--                        android:layout_marginVertical="5dp">-->
-
-<!--                        <View-->
-<!--                            android:id="@+id/stroke_view"-->
-<!--                            android:layout_width="125dp"-->
-<!--                            android:layout_height="125dp"-->
-<!--                            android:background="@drawable/outline_circle"-->
-<!--                            android:layout_centerInParent="true" />-->
-
-<!--                        <de.hdodenhof.circleimageview.CircleImageView-->
-<!--                            android:id="@+id/profile_image_reg"-->
-<!--                            android:layout_width="120dp"-->
-<!--                            android:layout_height="120dp"-->
-<!--                            android:layout_centerInParent="true"-->
-<!--                            android:src="@drawable/img"/>-->
-
-<!--                        <ImageView-->
-<!--                            android:layout_width="40dp"-->
-<!--                            android:layout_height="40dp"-->
-<!--                            android:src="@drawable/custom_ic_camera"-->
-<!--                            android:layout_alignParentBottom="true"-->
-<!--                            android:layout_alignParentEnd="true"/>-->
-<!--                    </RelativeLayout>-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginVertical="10dp"-->
-<!--                        android:paddingHorizontal="20dp"-->
-<!--                        android:text="@string/tambah_foto"-->
-<!--                        android:textAlignment="center"-->
-<!--                        android:textSize="20sp"-->
-<!--                        android:textStyle="bold" />-->
-
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -126,8 +86,6 @@
                                 android:text="@string/lamaPenyakit"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
-
-
                         </LinearLayout>
 
                         <LinearLayout
@@ -160,19 +118,6 @@
                                     android:paddingEnd="0dp"
                                     android:textSize="18sp"
                                     tools:ignore="SpeakableTextPresentCheck" />
-
-<!--                                <TextView-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="48dp"-->
-<!--                                    android:text=" Tahun"-->
-<!--                                    android:gravity="center_vertical"-->
-<!--                                    android:textSize="18sp"-->
-<!--                                    android:fontFamily="@font/inter_medium"-->
-<!--                                    android:paddingStart="0dp"-->
-<!--                                    android:layout_marginEnd="4dp"-->
-<!--                                    android:layout_marginVertical="4dp"-->
-<!--                                    android:layout_alignParentEnd="true"-->
-<!--                                    android:layout_toEndOf="@id/tv_med_years"/>-->
                             </RelativeLayout>
 
                             <Space
@@ -204,27 +149,10 @@
                                     android:text="Cth: 5 Bulan"
                                     android:textSize="18sp"
                                     tools:ignore="SpeakableTextPresentCheck" />
-
-<!--                                <TextView-->
-<!--                                    android:layout_width="wrap_content"-->
-<!--                                    android:layout_height="48dp"-->
-<!--                                    android:text="@string/bulan"-->
-<!--                                    android:textSize="18sp"-->
-<!--                                    android:fontFamily="@font/inter_medium"-->
-<!--                                    android:paddingStart="0dp"-->
-<!--                                    android:layout_marginEnd="4dp"-->
-<!--                                    android:layout_marginVertical="4dp"-->
-<!--                                    android:layout_alignParentEnd="true"-->
-<!--                                    android:layout_toEndOf="@id/tv_med_months"/>-->
                             </RelativeLayout>
                         </LinearLayout>
 
                     </LinearLayout>
-
-<!--                    <FrameLayout-->
-<!--                        android:id="@+id/input_medhistory"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"/>-->
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_add_medhistory"
@@ -277,7 +205,6 @@
                             android:layout_height="1.5dp"
                             android:layout_weight="1"
                             android:background="@color/grey" />
-
                     </LinearLayout>
 
                     <TextView

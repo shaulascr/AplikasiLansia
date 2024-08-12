@@ -55,7 +55,7 @@
             android:text="@string/delete"
             android:textSize="18sp"
             android:textStyle="bold"/>
-    </LinearLayout>
 
+    </LinearLayout>
 
 </LinearLayout>

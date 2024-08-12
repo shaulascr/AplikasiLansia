@@ -19,7 +19,7 @@ public class ForgotPassActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_pass);
-        mAuth = FirebaseAuth.getInstance(); // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
 
         backBtn = findViewById(R.id.btn_back_resetpass);
         sendEmailBtn = findViewById(R.id.btn_send_email);
@@ -47,7 +47,7 @@ public class ForgotPassActivity extends AppCompatActivity {
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 Toast.makeText(ForgotPassActivity.this, "Password reset email sent", Toast.LENGTH_SHORT).show();
-                                finish(); // Optionally close the activity after sending the email
+                                finish();
                             } else {
                                 Toast.makeText(ForgotPassActivity.this, "Error sending password reset email", Toast.LENGTH_SHORT).show();
                             }

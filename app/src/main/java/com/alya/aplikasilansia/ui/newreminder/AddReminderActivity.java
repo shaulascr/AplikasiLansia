@@ -34,15 +34,14 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class AddReminderActivity extends AppCompatActivity implements View.OnClickListener, IconReminderFragment.OnIconSelectedListener {
-
+    private AddReminderViewModel addReminderViewModel;
+    private int selectedIconResourceId;
     private TextView tvHourReminder;
     private Button btnIconReminder, btnCreateReminder, btnCancel, btnBackFromAddReminder;
     private ImageView imgIconReminder;
-    private int selectedIconResourceId;
     private EditText inputTitleReminder;
     private EditText inputDescReminder;
     private Spinner dayReminder;
-    private AddReminderViewModel addReminderViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,37 +50,33 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
 
         addReminderViewModel = new ViewModelProvider(this).get(AddReminderViewModel.class);
 
+        imgIconReminder = findViewById(R.id.img_edit_ic_reminder);
         btnIconReminder = findViewById(R.id.btn_edit_ic_reminder);
-        dialogIconReminder(btnIconReminder);
-
-        imgIconReminder = findViewById(R.id.img_edit_ic_reminder); // set the src of this to selected src in the previous fragment
-
         btnCancel = findViewById(R.id.btn_cancel_reminder);
-
         btnBackFromAddReminder = findViewById(R.id.btn_back_addreminder);
         btnBackFromAddReminder.setOnClickListener(this);
-
         btnCreateReminder = findViewById(R.id.btn_create_reminder);
         btnCreateReminder.setOnClickListener(this);
-
         tvHourReminder = findViewById(R.id.tv_hour_reminder);
-        setTimePicker(tvHourReminder);
-
         inputTitleReminder = findViewById(R.id.input_judul_reminder);
         inputDescReminder = findViewById(R.id.input_desc_reminder);
-
         dayReminder = findViewById(R.id.spinner_day_reminder);
-        CustomSpinnerAdapter dayReminderAdapter = new CustomSpinnerAdapter(
-                this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.day_array)
-        );
-        dayReminderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        dayReminder.setAdapter(dayReminderAdapter);
+
+        dialogIconReminder(btnIconReminder);
+        setTimePicker(tvHourReminder);
 
         btnCancel.setOnClickListener(v -> {
             Intent intent = new Intent(AddReminderActivity.this, ReminderActivity.class);
             startActivity(intent);
             finish();
         });
+
+        CustomSpinnerAdapter dayReminderAdapter = new CustomSpinnerAdapter(
+                this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.day_array)
+        );
+        dayReminderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dayReminder.setAdapter(dayReminderAdapter);
+
         addReminderViewModel.reminderLiveData.observe(this, new Observer<FirebaseUser>() {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
@@ -114,7 +109,6 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
             finish();
         } else if (v.getId() == R.id.btn_create_reminder){
             createNewReminder();
-//            finish();
         }
     }
 
@@ -127,13 +121,13 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
         if (selectedIconResourceId != 0 && !title.isEmpty() && !selectedDay.isEmpty() && !selectedTime.isEmpty() && !desc.isEmpty()) {
             String timestamp = calculateTimestamp(selectedDay, selectedTime);
             addReminderViewModel.createReminder(title, selectedDay, selectedTime, desc, timestamp, selectedIconResourceId);
-            Log.d("AddReminderActivity", "Attempting to schedule reminder"); // Add log here to confirm call
+            Log.d("AddReminderActivity", "Attempting to schedule reminder");
             ReminderScheduler.scheduleReminder(this, title, desc, timestamp);
-            Log.d("AddReminderActivity", "scheduleReminder should have been called"); // Add log here to confirm call
+            Log.d("AddReminderActivity", "scheduleReminder should have been called");
 
         } else {
             incompleteFormDialog();
-            Log.d("AddReminderActivity", "incomplete"); // Add log here to confirm call
+            Log.d("AddReminderActivity", "incomplete");
 
         }
 
@@ -147,7 +141,8 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
         TextView toastText = layout.findViewById(R.id.text_verif_sent);
 
         String text = "Pengingat Berhasil Ditambahkan";
-        toastIcon.setImageResource(R.drawable.ic_checkmark); // Set your desired icon here
+
+        toastIcon.setImageResource(R.drawable.ic_checkmark);
         toastText.setText(text);
 
         Toast toast = new Toast(this);
@@ -158,32 +153,25 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void incompleteFormDialog() {
-        // Inflate the custom layout for the dialog
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.incomplete_form_dialog, null);
 
-        // Build the dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(dialogView);
 
-        // Create the AlertDialog
         AlertDialog dialog = builder.create();
 
-        // Set the custom background drawable with rounded corners before showing the dialog
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.custom_corner_rounded);
 
-        // Adjust dialog size programmatically
         dialog.setOnShowListener(dialogInterface -> {
             WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
-            params.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.9); // 90% of screen width
-            params.height = WindowManager.LayoutParams.WRAP_CONTENT; // Adjust height as needed
+            params.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.9);
+            params.height = WindowManager.LayoutParams.WRAP_CONTENT;
             dialog.getWindow().setAttributes(params);
         });
 
-        // Show the dialog
         dialog.show();
 
-        // Get the close button from the custom layout and set its click listener
         Button btnClose = dialogView.findViewById(R.id.btn_close_incomplete);
         btnClose.setOnClickListener(v -> dialog.dismiss());
     }
@@ -194,16 +182,14 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
             public void onClick(View v) {
                 IconReminderFragment iconReminderFragment = new IconReminderFragment();
                 iconReminderFragment.show(getSupportFragmentManager(), "IconReminderDialog");
-//                Toast.makeText(this, "Button Clicked!", Toast.LENGTH_SHORT).show();
-                iconReminderFragment.setOnIconSelectedListener(AddReminderActivity.this); // Set listener
+                iconReminderFragment.setOnIconSelectedListener(AddReminderActivity.this);
             }
         });
     }
     @Override
     public void onIconSelected(int iconResId) {
-        // Update ImageView with selected icon
         imgIconReminder.setImageResource(iconResId);
-        selectedIconResourceId = iconResId; // Save selected icon resource ID to use later
+        selectedIconResourceId = iconResId;
     }
 
     private void setTimePicker(TextView tvHourReminder) {
@@ -234,11 +220,9 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
 
     private String calculateTimestamp(String selectedDay, String selectedTime) {
         Calendar now = Calendar.getInstance();
-
-        // Parse selected time
         String[] timeParts = selectedTime.split(":");
+
         if (timeParts.length != 2) {
-            // Handle invalid time format
             return "";
         }
 
@@ -249,20 +233,16 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
             hour = Integer.parseInt(timeParts[0]);
             minute = Integer.parseInt(timeParts[1]);
         } catch (NumberFormatException e) {
-            // Handle parsing error
             return "";
         }
 
-        // Calculate the day difference
         int dayOfWeekNow = now.get(Calendar.DAY_OF_WEEK);
         int targetDayOfWeek = getDayOfWeek(selectedDay);
         if (targetDayOfWeek == -1) {
-            // Handle invalid day
             return "";
         }
         int dayDifference = (targetDayOfWeek - dayOfWeekNow + 7) % 7;
 
-        // Set the target date and time
         Calendar targetDate = (Calendar) now.clone();
         targetDate.add(Calendar.DAY_OF_MONTH, dayDifference);
         targetDate.set(Calendar.HOUR_OF_DAY, hour);
@@ -270,7 +250,6 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
         targetDate.set(Calendar.SECOND, 0);
         targetDate.set(Calendar.MILLISECOND, 0);
 
-        // Return the timestamp
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         return sdf.format(targetDate.getTime());
     }
@@ -292,7 +271,7 @@ public class AddReminderActivity extends AppCompatActivity implements View.OnCli
             case "Minggu":
                 return Calendar.SUNDAY;
             default:
-                return -1; // Handle invalid input or edge cases
+                return -1;
         }
     }
 

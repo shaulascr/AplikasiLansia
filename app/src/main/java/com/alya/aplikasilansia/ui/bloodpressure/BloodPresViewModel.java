@@ -17,7 +17,6 @@ public class BloodPresViewModel extends ViewModel {
     private MutableLiveData<String> errorLiveData;
     private LiveData<BloodPressure> latestBloodPressureData;
 
-
     public BloodPresViewModel() {
         repository = new BloodPresRepository();
         bloodPressureData = repository.getBloodPressureLiveData();
@@ -26,12 +25,15 @@ public class BloodPresViewModel extends ViewModel {
         latestBloodPressureData = repository.getLatestBloodPressure();
 
     }
+
     public LiveData<BloodPressure> getLatestBloodPressureData() {
         return latestBloodPressureData;
     }
+
     public LiveData<List<BloodPressure>> getBloodPressureData() {
         return bloodPressureData;
     }
+
     public LiveData<FirebaseUser> getPressureLiveData() {
         return pressureLiveData;
     }
@@ -43,6 +45,7 @@ public class BloodPresViewModel extends ViewModel {
     public void fetchBloodPressureData() {
         repository.fetchingBloodPres();
     }
+
     public void addBloodPressure(String bloodPressure, String pulse, String timestamp) {
         repository.addPressure(bloodPressure, pulse, timestamp, pressureLiveData, errorLiveData);
     }

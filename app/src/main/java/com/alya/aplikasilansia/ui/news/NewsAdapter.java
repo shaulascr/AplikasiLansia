@@ -23,7 +23,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     }
 
     public void updateList(List<News> newItems) {
-        items.clear(); // Clear the existing items
+        items.clear();
         items.addAll(newItems);
         notifyDataSetChanged();
     }
@@ -82,9 +82,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             newsDate.setText(news1.getDate());
             Glide.with(itemView)
                     .load(news1.getImage())
-                    .placeholder(R.drawable.img_news) // Placeholder image
-                    .error(R.drawable.img_news) // Error image if loading fails
-                    .centerCrop() // Crop the image to fill the ImageView
+                    .placeholder(R.drawable.img_news)
+                    .error(R.drawable.img_news)
+                    .centerCrop()
 
                     .into(newsImage);
         }

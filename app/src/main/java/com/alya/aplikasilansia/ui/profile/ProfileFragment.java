@@ -24,19 +24,14 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
-
-    private FirebaseAuth mAuth;
     private ProfileViewModel profileViewModel;
+    private FirebaseAuth mAuth;
     private Button editProfile;
     private TextView personalProfile, healthProfile;
     private TextView userNameProfile;
     private ImageView imageProfile;
     private static final int EDIT_PROFILE_REQUEST_CODE = 1;
-
-    private static final int FRAGMENT_PERSONAL_DATA = 1;
-    private static final int FRAGMENT_HEALTH_DATA = 2;
     private String currentFragment;
-//    private int currentFragment;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -52,22 +47,19 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         if (mAuth.getCurrentUser() == null) {
-            // User is not logged in, redirect to LoginActivity
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
-            // Optionally, close the current activity
-//            getActivity().finish();
         } else {
-            /// Find the button
-            editProfile = view.findViewById(R.id.btn_editProfile); // Replace with your button's actual ID
+            editProfile = view.findViewById(R.id.btn_editProfile);
             editProfile.setOnClickListener(this);
+
             personalProfile = view.findViewById(R.id.btnPersonalData);
             personalProfile.setOnClickListener(this);
+
             healthProfile = view.findViewById(R.id.btnHealthData);
             healthProfile.setOnClickListener(this);
 
@@ -90,7 +82,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                     .load(user.getProfileImageUrl())
                                     .into(imageProfile);
                         } else {
-                            // Handle no profile image case
                             imageProfile.setImageResource(R.drawable.img);
                         }
                     }
@@ -111,12 +102,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 if (user != null) {
                     userNameProfile.setText(user.getUserName());
                     if (user.getProfileImageUrl() != null) {
-//                        String imageUrl = user.getProfileImageUrl() + "?t=" + System.currentTimeMillis();
                         Glide.with(ProfileFragment.this)
                                 .load(user.getProfileImageUrl())
                                 .into(imageProfile);
                     } else {
-                        // Handle no profile image case
                         imageProfile.setImageResource(R.drawable.img);
                     }
                 }
@@ -129,9 +118,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         if (v.getId() == R.id.btn_editProfile) {
             Intent intent = new Intent(getActivity(), EditProfileActivity.class);
             intent.putExtra("FRAGMENT_TYPE", currentFragment);
-//            startActivity(intent);
             startActivityForResult(intent, EDIT_PROFILE_REQUEST_CODE); // Use startActivityForResult
-
         } else if (v.getId() == R.id.btnPersonalData) {
             replaceFragment(new ProfilePersonalFragment(), "personal");
             personalProfile.setBackgroundResource(R.drawable.text_blue_underlined);
@@ -141,8 +128,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             healthProfile.setBackgroundResource(R.drawable.text_blue_underlined);
             personalProfile.setBackgroundResource(R.drawable.text_transparant);
         }
-        // Create an intent to start the EditProfileActivity
-
     }
 
     private void replaceFragment(Fragment fragment, String fragmentType) {
@@ -173,29 +158,4 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             }
         }
     }
-
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == EDIT_PROFILE_REQUEST_CODE && resultCode == FragmentActivity.RESULT_CANCELED && data != null) {
-//            String fragmentType = data.getStringExtra("FRAGMENT_TYPE");
-//            if (resultCode == FragmentActivity.RESULT_OK) {
-//                // Refresh the user data
-//                profileViewModel.fetchUser();
-//            } else {
-//                // Handle other cases if necessary
-//            }            if (fragmentType != null) {
-//                Fragment fragmentToShow;
-//                if (fragmentType.equals("personal")) {
-//                    fragmentToShow = new ProfilePersonalFragment(); // Load PersonalProfileFragment
-//                } else if (fragmentType.equals("health")) {
-//                    fragmentToShow = new ProfileHealthFragment(); // Load HealthProfileFragment
-//                } else {
-//                    // Default to PersonalProfileFragment if fragmentType is unknown
-//                    fragmentToShow = new ProfilePersonalFragment();
-//                }
-//                replaceFragment(fragmentToShow, fragmentType);
-//            }
-//        }
-//    }
 }

@@ -19,11 +19,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             app:cardCornerRadius="25dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="20dp">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -32,6 +34,7 @@
                     android:layout_marginVertical="15dp"
                     android:textSize="26sp"
                     android:textStyle="bold" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -117,6 +120,7 @@
                         android:spinnerMode="dropdown"
                         tools:ignore="TouchTargetSizeCheck"
                         android:entries="@array/gender_array"/>
+
                 </RelativeLayout>
 
                 <TextView
@@ -187,7 +191,6 @@
                         android:layout_centerVertical="true"
                         android:background="@android:color/transparent"
                         android:src="@drawable/view_password" />
-
                 </RelativeLayout>
 
                 <TextView
@@ -209,14 +212,13 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-
-
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_gravity="center"
                     android:layout_marginVertical="12dp">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -224,9 +226,11 @@
                         android:textStyle="bold"
                         android:gravity="center"
                         android:text="@string/already_have_acc" />
+
                     <Space
                         android:layout_width="6sp"
                         android:layout_height="wrap_content"/>
+
                     <TextView
                         android:id="@+id/masukRegTv"
                         android:layout_width="match_parent"
