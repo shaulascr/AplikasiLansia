@@ -198,7 +198,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintHorizontal_weight="1"
-                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginHorizontal="6dp"
                     android:layout_marginVertical="16dp"
                     android:background="@color/white"
                     app:cardCornerRadius="24dp"
@@ -208,7 +208,7 @@
                     app:layout_constraintEnd_toStartOf="@id/card_tensi_dua"
                     app:layout_constraintTop_toTopOf="parent">
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
                         android:gravity="center_horizontal"
@@ -218,27 +218,29 @@
                             android:id="@+id/tv_pressure"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="@string/angka_tensi"
+                            android:text="180/60"
                             android:fontFamily="@font/inter_bold"
-                            android:textSize="26sp"/>
+                            android:textSize="24sp"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:text="mmHg"
-                            android:layout_marginStart="14dp"
+                            android:layout_marginStart="8dp"
                             android:gravity="center_horizontal"
                             android:layout_gravity="center_horizontal"
                             android:fontFamily="@font/inter_semibold"
-                            android:textSize="20sp"/>
+                            android:textSize="20sp"
+                            android:paddingTop="3dp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/card_tensi_dua"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:padding="100dp"
                     app:layout_constraintHorizontal_weight="1"
-                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginHorizontal="6dp"
                     android:layout_marginVertical="16dp"
                     android:background="@color/white"
                     app:cardCornerRadius="24dp"
@@ -259,18 +261,19 @@
                             android:id="@+id/tv_pulse"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="@string/menit_tensi"
+                            android:text="90"
                             android:fontFamily="@font/inter_bold"
-                            android:textSize="26sp"/>
+                            android:textSize="24sp"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:text="/ menit"
-                            android:layout_marginStart="14dp"
+                            android:layout_marginStart="8dp"
                             android:gravity="center_horizontal"
                             android:layout_gravity="center_horizontal"
                             android:fontFamily="@font/inter_semibold"
-                            android:textSize="20sp"/>
+                            android:textSize="20sp"
+                            android:paddingTop="3dp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -314,6 +317,7 @@
                         android:scaleType="fitCenter" />
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_to_healthcare"
+                        style="@style/BlueRoundButtonNoOutline"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="4dp"
@@ -321,7 +325,7 @@
                         android:text="Cari Layanan Kesehatan"
                         android:textSize="18sp"
                         android:fontFamily="@font/inter_bold"
-                        android:paddingVertical="16dp"
+                        android:paddingVertical="10dp"
                         android:paddingHorizontal="32dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

@@ -27,24 +27,24 @@
         android:layout_marginStart="14dp"
         android:layout_marginTop="5dp"/>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_audio_news"
-        style="@style/WhiteRoundButtonNoOutline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/newsContentImg"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="13dp"
-        android:layout_marginBottom="24dp"
-        android:fontFamily="@font/inter_semibold"
-        android:text="@string/dengarkan"
-        android:textSize="16sp"
-        app:icon="@drawable/ic_audio"
-        app:iconPadding="5dp"
-        app:iconTint="@null"
-        app:iconTintMode="src_in" />
+<!--    <com.google.android.material.button.MaterialButton-->
+<!--        android:id="@+id/btn_audio_news"-->
+<!--        style="@style/WhiteRoundButtonNoOutline"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignBottom="@id/newsContentImg"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:layout_marginEnd="13dp"-->
+<!--        android:layout_marginBottom="24dp"-->
+<!--        android:fontFamily="@font/inter_semibold"-->
+<!--        android:text="@string/dengarkan"-->
+<!--        android:textSize="16sp"-->
+<!--        app:icon="@drawable/ic_audio"-->
+<!--        app:iconPadding="5dp"-->
+<!--        app:iconTint="@null"-->
+<!--        app:iconTintMode="src_in" />-->
 
     <LinearLayout
         android:layout_width="match_parent"

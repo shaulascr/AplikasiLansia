@@ -2,11 +2,13 @@ package com.alya.aplikasilansia.ui.bloodpressure;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,19 +74,15 @@ public class BloodPressureActivity extends AppCompatActivity {
             bloodPresViewModel.fetchBloodPressureData();
 
             // Observe the blood pressure data
-            bloodPresViewModel.getBloodPressureData().observe(this, new Observer<List<BloodPressure>>() {
-                @Override
-                public void onChanged(List<BloodPressure> bloodPressures) {
-                    // Update the adapter's data
-                    adapter.setBloodPressureList(bloodPressures);
-                }
 
-            });
-
+            bloodPressData();
             // Observe the add blood pressure result
             bloodPresViewModel.getPressureLiveData().observe(this, firebaseUser -> {
                 // Successfully added blood pressure, you can handle the success here
-                Toast.makeText(BloodPressureActivity.this, "Blood pressure added successfully", Toast.LENGTH_SHORT).show();
+                dataSavedDialog();
+//                Toast.makeText(BloodPressureActivity.this, "Blood pressure added successfully", Toast.LENGTH_SHORT).show();
+                bloodPresViewModel.fetchBloodPressureData();
+                bloodPressData();
             });
 
             // Observe any errors
@@ -117,6 +115,37 @@ public class BloodPressureActivity extends AppCompatActivity {
             });
         }
     }
+
+    public void bloodPressData() {
+        bloodPresViewModel.getBloodPressureData().observe(this, new Observer<List<BloodPressure>>() {
+            @Override
+            public void onChanged(List<BloodPressure> bloodPressures) {
+                // Update the adapter's data
+                adapter.updateList(bloodPressures);
+//                adapter.setBloodPressureList(bloodPressures);
+            }
+
+        });
+    }
+
+    private void dataSavedDialog() {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.data_saved_dialog, null);
+
+        ImageView toastIcon = layout.findViewById(R.id.img_verif_sent);
+        TextView toastText = layout.findViewById(R.id.text_verif_sent);
+
+        String text = "Data Berhasil Disimpan";
+        toastIcon.setImageResource(R.drawable.ic_checkmark);
+        toastText.setText(text);
+
+        Toast toast = new Toast(this);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+    }
+
     private void incompleteFormDialog(){
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.incomplete_form_dialog, null);

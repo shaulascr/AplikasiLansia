@@ -16,7 +16,11 @@ import java.util.List;
 
 public class BloodPressureAdapter extends RecyclerView.Adapter<BloodPressureAdapter.ViewHolder> {
     private List<BloodPressure> bloodPressureList;
-
+    public void updateList(List<BloodPressure> newItems) {
+        bloodPressureList.clear(); // Clear the existing items
+        bloodPressureList.addAll(newItems);
+        notifyDataSetChanged();
+    }
     public BloodPressureAdapter (List<BloodPressure> bloodPressureList) {
         this.bloodPressureList = bloodPressureList;
     }
