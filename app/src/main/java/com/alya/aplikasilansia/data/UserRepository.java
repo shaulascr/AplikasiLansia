@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
@@ -92,6 +93,35 @@ public class UserRepository {
                     }
                 });
     }
+
+    public void registerWithGoogle(GoogleSignInAccount account, String birthDate, String caregiver, String maritalStatus, List<inputMedHistory> medHistory, MutableLiveData<FirebaseUser> userLiveData, MutableLiveData<String> errorLiveData) {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            User additionalUserInfo = new User(
+                    account.getEmail(),
+                    birthDate,
+                    account.getDisplayName(),
+                    null, // Gender can be fetched from your UI if needed
+                    null,
+                    null,
+                    null,
+                    null
+            );
+
+            // Save the user data to your database
+            mDatabase.child("users").child(user.getUid()).setValue(additionalUserInfo)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            userLiveData.postValue(user);
+                        } else {
+                            errorLiveData.postValue("Failed to save user info: " + task.getException().getMessage());
+                        }
+                    });
+        } else {
+            errorLiveData.postValue("User is not signed in.");
+        }
+    }
+
 
 
     public void login(String email, String password, MutableLiveData<FirebaseUser> userLiveData, MutableLiveData<String> errorLiveData) {

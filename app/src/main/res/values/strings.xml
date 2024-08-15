@@ -229,4 +229,9 @@
         <item>Cerai Hidup</item>
         <item>Cerai Mati</item>
     </string-array>
+
+<!--    <resources>-->
+        <string name="server_client_id" translatable="false">256979860495-s2pdt23dusmndfv8rkoleu5jeinjeqrd.apps.googleusercontent.com</string>
+<!--    </resources>-->
+
 </resources>

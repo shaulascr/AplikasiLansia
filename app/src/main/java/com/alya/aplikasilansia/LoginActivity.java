@@ -21,8 +21,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.ui.AppBarConfiguration;
 
 import com.alya.aplikasilansia.databinding.ActivityLoginBinding;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.Objects;
 
@@ -31,11 +39,16 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     private EditText emailInput, passwordInput;
     private ImageView viewPasswordBtn;
-    private Button loginBtn;
+    private Button loginBtn, loginGoogleBtn;
     private TextView createAccBtn, forgotPassBtn;
     private FirebaseAuth mAuth;
     private static final String TAG = "LoginActivity";
     private LoginViewModel loginViewModel;
+    private RegisterViewModel registerViewModel;
+    GoogleSignInClient mGoogleSignInClient;
+//    private static final String TAG = "SignInActivityGoogle";
+    GoogleSignInClient mGoogleSignInClien;
+    private static final int RC_SIGN_IN = 9001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,16 +57,44 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         mAuth = FirebaseAuth.getInstance();
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .requestIdToken(getString(R.string.server_client_id)) // Ensure this is your Web Client ID
+                .build();
+//                .requestScopes(new Scope(Scopes.PROFILE)) // Request profile scope
+//                .requestScopes(new Scope("https://www.googleapis.com/auth/userinfo.profile"))
+
+
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+//        mGoogleSignInClient = new GoogleSignInClient.Builder(this)
+//                .enableAutoManage(this, this)
+//                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+//                .build();
+
         mAuth.signOut();
+
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
 
         emailInput = findViewById(R.id.email_input);
         passwordInput = findViewById(R.id.password_login);
         loginBtn = findViewById(R.id.btn_login);
+        loginGoogleBtn = findViewById(R.id.btn_signin_google);
 
         setPasswordToggle();
         createAccountFromLogin();
         forgotPassword();
+
+        loginGoogleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signOutAndRevokeAccess();  // Ensure the user is signed out and access is revoked
+                Intent googleSignIn = mGoogleSignInClient.getSignInIntent();
+                startActivityForResult(googleSignIn, RC_SIGN_IN);
+            }
+        });
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +138,81 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+//    @Override
+//    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+//        // Handle the connection failure here
+//        Log.e(TAG, "GoogleSignInClient connection failed: " + connectionResult.getErrorMessage());
+//        Toast.makeText(this, "Google Services connection failed", Toast.LENGTH_SHORT).show();
+//    }
+    private void signOutAndRevokeAccess() {
+        mAuth.signOut();
+
+        mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> {
+            // User is now signed out
+            Log.d(TAG, "Google Sign-Out: success");
+        });
+
+        mGoogleSignInClient.revokeAccess().addOnCompleteListener(this, task -> {
+            // Access is revoked
+            Log.d(TAG, "Google Revoke Access: success");
+        });
+    }
+
+    public void onActivityResult (int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInGoogleResult(task);
+        }
+    }
+
+    private void handleSignInGoogleResult(Task<GoogleSignInAccount> task) {
+        try {
+            // Get the signed-in account from the Task
+            GoogleSignInAccount account = task.getResult(ApiException.class);
+            Log.d(TAG, "handleGoogleSignInResult: success");
+            Log.d(TAG, "HELLO: " + account.getDisplayName());
+
+            if (account != null) {
+                firebaseAuthWithGoogle(account);  // Authenticate with Firebase
+            }
+        } catch (ApiException e) {
+            // Handle the exception
+            Log.w(TAG, "Google Sign-In failed: " + e.getStatusCode());
+            errorMessageToast("Google Sign-In failed: " + e.getStatusCode());
+        }
+    }
+
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Sign-in success
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        if (user != null) {
+                            // User is signed in
+                            Log.d(TAG, "signInWithCredential:success");
+                            String email = acct.getEmail();
+                            String name = acct.getDisplayName();
+
+                            registerViewModel.registerGoogleAcc(acct, null, null, null);
+                            // Optionally, you can now fetch additional user info
+                            // using Google People API or other means
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    } else {
+                        // Sign-in failed
+                        Log.w(TAG, "signInWithCredential:failure", task.getException());
+                        errorMessageToast("Authentication Failed.");
+                    }
+                });
     }
 
     private void createAccountFromLogin () {
