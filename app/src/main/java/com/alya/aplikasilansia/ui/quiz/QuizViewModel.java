@@ -97,9 +97,9 @@ public class QuizViewModel extends ViewModel {
         // Define the classification criteria
         if (totalScore <=4 ) {
             return "Normal";
-        } else if (totalScore > 4) {
+        } else if (totalScore > 4 && totalScore <= 8) {
             return "Depresi Ringan";
-        } else if (totalScore > 8) {
+        } else if (totalScore > 8 && totalScore <= 11) {
             return "Depresi Sedang";
         } else if (totalScore > 11) {
             return "Depresi Berat";
@@ -159,7 +159,6 @@ public class QuizViewModel extends ViewModel {
         List<Boolean> currentAnswers = userAnswers.getValue();
         List<Boolean> answeredStatus = questionAnsweredStatus.getValue();
         List<ItemQuestionModel> isQuestionAnsweredOldValue = isQuestionAnswered.getValue();
-
 
         if (currentAnswers != null) {
             while (currentAnswers.size() <= index) {

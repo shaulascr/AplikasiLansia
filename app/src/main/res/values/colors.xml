@@ -8,6 +8,10 @@
     <color name="orange">#F96900</color>
     <color name="light_orange">#DCE2C8</color>
     <color name="light_grey">#E0E5E9</color>">
+    <color name="level0">#0B60B0</color>
+    <color name="level1">#FFCC00</color>
+    <color name="level2">#FF7F00</color>
+    <color name="level3">#CC2936</color>
 
     <color name="shrine_theme_light_surface">#FFFFFFFF</color>
     <color name="shrine_theme_light_onSurfaceVariant">#ADD9F4</color>"

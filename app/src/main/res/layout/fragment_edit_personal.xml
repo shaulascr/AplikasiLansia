@@ -184,11 +184,8 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_cancel_edit"
                 style="@style/CustomWhiteRoundButton"
-                android:layout_width="0dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="8dp"
-                android:paddingHorizontal="28dp"
                 android:text="@string/cancel"
                 android:textSize="18sp"
                 android:textStyle="bold"

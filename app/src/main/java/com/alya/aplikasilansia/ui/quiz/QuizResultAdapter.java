@@ -2,6 +2,7 @@ package com.alya.aplikasilansia.ui.quiz;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alya.aplikasilansia.R;
@@ -41,11 +43,27 @@ public class QuizResultAdapter extends RecyclerView.Adapter<QuizResultAdapter.Qu
     public void onBindViewHolder(@NonNull QuizResultAdapter.QuizResultViewHolder holder, int position) {
         QuizHistoryItem item = quizHistoryItems.get(position);
         int totalScore = item.getTotalScore();
-        int maxScore = 15;
-        int percentage = (int) ((totalScore / (float) maxScore) * 100);
 
-        holder.statsProgressBar.setProgress(percentage);
-        holder.numberScoreTextView.setText(String.valueOf(percentage + "%"));
+        holder.statsProgressBar.setProgress(totalScore);
+
+        // Determine color based on the total score
+        int color;
+        if (totalScore <= 4) {
+            color = ContextCompat.getColor(holder.itemView.getContext(), R.color.level0);
+        } else if (totalScore > 4 && totalScore <= 8) {
+            color = ContextCompat.getColor(holder.itemView.getContext(), R.color.level1);
+        } else if (totalScore > 8 && totalScore <= 11) {
+            color = ContextCompat.getColor(holder.itemView.getContext(), R.color.level2);
+        } else if (totalScore > 11) {
+            color = ContextCompat.getColor(holder.itemView.getContext(), R.color.level3);
+        } else {
+            color = ContextCompat.getColor(holder.itemView.getContext(), R.color.level0);
+        }
+
+        // Apply the color to the progress bar
+        holder.statsProgressBar.getProgressDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+
+        holder.numberScoreTextView.setText(String.valueOf(totalScore));
         holder.testScoreTextView.setText(String.valueOf("Tingkat depresi Anda adalah : "+ item.getClassifiedScore()));
         holder.dateTestTextView.setText(item.getDate());
         holder.detailTestButton.setOnClickListener(v -> {

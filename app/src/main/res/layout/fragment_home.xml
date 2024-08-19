@@ -218,7 +218,7 @@
                             android:id="@+id/tv_pressure"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="180/60"
+                            android:text="-/-"
                             android:fontFamily="@font/inter_bold"
                             android:textSize="24sp"/>
                         <TextView
@@ -261,7 +261,7 @@
                             android:id="@+id/tv_pulse"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="90"
+                            android:text="-"
                             android:fontFamily="@font/inter_bold"
                             android:textSize="24sp"/>
                         <TextView

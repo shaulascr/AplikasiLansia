@@ -1,5 +1,6 @@
 package com.alya.aplikasilansia.ui.quizResult;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -7,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.alya.aplikasilansia.R;
 
@@ -39,11 +41,26 @@ public class QuizResultActivity extends AppCompatActivity {
     }
 
     private void updateDoughnutChart(int totalScore, int maxScore) {
-        // Calculate percentage
-        int percentage = (int) ((totalScore / (float) maxScore) * 100);
-        // Update ProgressBar
-        statsProgressBar.setProgress(percentage);
-        // Update score display
-        numberScoreTextView.setText(percentage + "%");
+        statsProgressBar.setProgress(totalScore);
+
+        // Determine color based on the total score
+        int color;
+        if (totalScore <=4 ) {
+            color = ContextCompat.getColor(this, R.color.level0);
+        } else if (totalScore > 4 && totalScore <= 8) {
+            color = ContextCompat.getColor(this, R.color.level1);
+        } else if (totalScore > 8 && totalScore <= 11) {
+            color = ContextCompat.getColor(this, R.color.level2);
+        } else if (totalScore > 11) {
+            color = ContextCompat.getColor(this, R.color.level3);
+        } else {
+            color = ContextCompat.getColor(this, R.color.level0);
+        }
+
+        // Apply the color to the progress bar
+        statsProgressBar.getProgressDrawable().setColorFilter(color, PorterDuff.Mode.SRC_IN);
+
+        // Update score display as a string
+        numberScoreTextView.setText(String.valueOf(totalScore));
     }
 }
